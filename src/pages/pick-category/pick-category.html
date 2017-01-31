@@ -1,0 +1,10 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Select category</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <category (categorySelected)="categorySelected($event)" [compactView]="true" [hideProducts]="true"></category>
+</ion-content>

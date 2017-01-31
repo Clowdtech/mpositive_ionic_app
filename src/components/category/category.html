@@ -1,0 +1,28 @@
+<div class="row" *ngIf="!activeCategory || hideProducts">
+    <div no-padding [class]="compactView ? 'col-xs-4' : 'col-xs-6'" *ngFor="let category of categories">
+        <ion-card [ngStyle]="{'background': category.bgColor, 'color': category.txtColor }"
+                  (click)="setActiveCategory(category)">
+            <ion-card-header [ngStyle]="{'color': category.txtColor }">
+                {{category.name}}
+            </ion-card-header>
+            <ion-card-content>
+                The British use the term "header", but the American term "head-shot" the English simply refuse to
+                adopt.
+            </ion-card-content>
+        </ion-card>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12" *ngIf="activeCategory && !hideProducts">
+        <div class="clearfix text-center">
+            <button clear ion-button (click)="setActiveCategory(null)" class="pull-left">
+                <ion-icon name="arrow-round-back"> Categories</ion-icon>
+            </button>
+            <ion-title text-center *ngIf="showTitle">
+                {{activeCategory.name}}
+            </ion-title>
+            <button *ngIf="enableDetails" clear ion-button (click)="editCategory()" class="pull-right">Edit category</button>
+        </div>
+        <product (productSelected)="productSelectedHandler($event)" [activeCategory]="activeCategory"></product>
+    </div>
+</div>

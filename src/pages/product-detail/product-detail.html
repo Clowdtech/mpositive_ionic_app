@@ -1,0 +1,73 @@
+<ion-header>
+    <ion-navbar padding>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <div clas="=row">
+        <div class="col-xs-4" no-padding>
+            <ion-list>
+                <ion-list-header>
+                    <ion-navbar padding>
+                        <ion-title>Create Product</ion-title>
+                        <ion-buttons end>
+                            <button large [ngStyle]="{'background': activeProduct.bgColor, 'color': activeProduct.txtColor}"
+                                    ion-button>Preview</button>
+                        </ion-buttons>
+                    </ion-navbar>
+                </ion-list-header>
+                <ion-item>
+                    <ion-label class="text-left" stacked>Name</ion-label>
+                    <ion-input type="text" placeholder="Type name here..."
+                               [(ngModel)]="activeProduct.name"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label class="text-left" stacked>Description</ion-label>
+                    <ion-input type="text" placeholder="This is a description for product"
+                               [(ngModel)]="activeProduct.description"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label class="text-left" stacked>Price</ion-label>
+                    <ion-input type="text" placeholder="Enter price here"
+                               [(ngModel)]="activeProduct.price"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <button [ngStyle]="{'background': activeProduct.bgColor}" large round ion-button full
+                                    (click)="pickColor('bgColor')">Background</button>
+                        </div>
+                        <div class="col-xs-6">
+                            <button [ngStyle]="{'background': activeProduct.txtColor, 'color': 'black'}"
+                                    large round ion-button full (click)="pickColor('txtColor')">Text</button>
+                        </div>
+                    </div>
+                </ion-item>
+            </ion-list>
+        </div>
+        <div class="col-xs-8">
+            <ion-toolbar>
+                <ion-title (click)="selectCategory()">Add Category</ion-title>
+            </ion-toolbar>
+            <div padding>
+                <div class="row">
+                    <div no-padding class="col-xs-6" *ngIf="selectedCategory">
+                        <ion-card [ngStyle]="{'background': selectedCategory.bgColor, 'color': selectedCategory.txtColor }">
+                            <ion-card-header [ngStyle]="{'color': selectedCategory.txtColor }">
+                                {{selectedCategory.name}}
+                            </ion-card-header>
+                            <ion-card-content>
+                                The British use the term "header", but the American term "head-shot" the English simply refuse to
+                                adopt.
+                            </ion-card-content>
+                        </ion-card>
+                    </div>
+                </div>
+                <button ion-button full (click)="saveProduct()">Save Product</button>
+            </div>
+        </div>
+    </div>
+</ion-content>

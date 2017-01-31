@@ -1,0 +1,60 @@
+<ion-header>
+    <ion-navbar padding>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <div clas="=row">
+        <div class="col-xs-4" no-padding>
+            <ion-list>
+                <ion-list-header>
+                    <ion-navbar padding>
+                        <ion-title>Create category</ion-title>
+                        <ion-buttons end>
+                            <button large [ngStyle]="{'background': activeCategory.bgColor, 'color': activeCategory.txtColor}"
+                                    ion-button>Preview</button>
+                        </ion-buttons>
+                    </ion-navbar>
+                </ion-list-header>
+                <ion-item>
+                    <ion-label class="text-left" stacked>Name</ion-label>
+                    <ion-input type="text" placeholder="Type name here..."
+                               [(ngModel)]="activeCategory.name"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <button [ngStyle]="{'background': activeCategory.bgColor}" large round ion-button full
+                                    (click)="pickColor('bgColor')">Background</button>
+                        </div>
+                        <div class="col-xs-6">
+                            <button [ngStyle]="{'background': activeCategory.txtColor, 'color': 'black'}"
+                                    large round ion-button full (click)="pickColor('txtColor')">Text</button>
+                        </div>
+                    </div>
+                </ion-item>
+                <ion-item>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <button large round ion-button full (click)="changeActive()"
+                                    [ngClass]="this.activeCategory.active ? 'active' : ''">Checkout</button>
+                        </div>
+                    </div>
+                </ion-item>
+            </ion-list>
+        </div>
+        <div class="col-xs-8">
+            <ion-toolbar>
+                <ion-title>Add Products</ion-title>
+            </ion-toolbar>
+            <div padding>
+                <product [activeCategory]="activeCategory" [compactView]="true"
+                         (productSelected)="productSelected($event)"></product>
+                <button ion-button full (click)="saveCategory()">Save Category</button>
+            </div>
+        </div>
+    </div>
+</ion-content>

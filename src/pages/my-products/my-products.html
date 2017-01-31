@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar padding>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>My Products</ion-title>
+    <ion-buttons end [hidden]="activeCategory">
+      <button ion-button (click)="openCreatePage()">{{navButton.name}}</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-segment [(ngModel)]="segment" [hidden]="activeCategory" (ionChange)="segmentChanged()">
+    <ion-segment-button value="category">
+      Categories
+    </ion-segment-button>
+    <ion-segment-button value="product">
+      Products
+    </ion-segment-button>
+  </ion-segment>
+  <div [ngSwitch]="segment">
+    <category (categorySelected)="categorySelected($event)" [enableDetails]="true" [compactView]="true" [showTitle]="true"
+              *ngSwitchCase="'category'" (productSelected)="productSelected($event)"></category>
+    <product [showAll]="true" *ngSwitchCase="'product'" (productSelected)="productSelected($event)"></product>
+  </div>
+</ion-content>

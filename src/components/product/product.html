@@ -1,0 +1,12 @@
+<div class="row">
+    <div no-padding [class]="compactView ? 'col-xs-3' : 'col-xs-2'" *ngFor="let product of products" (click)="selectProduct(product)">
+        <ion-card [ngStyle]="{'background': product.bgColor, 'color': product.txtColor }">
+            <ion-card-header>
+                {{product.name}}
+            </ion-card-header>
+            <ion-card-content>
+                {{product.price}}
+            </ion-card-content>
+        </ion-card>
+    </div>
+</div>
