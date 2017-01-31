@@ -4,3 +4,4 @@ export * from "./category-detail/category-detail";
 export * from "./product-detail/product-detail";
 export * from "./pick-color/pick-color";
 export * from "./pick-category/pick-category";
+export * from "./record-payment/record-payment";

@@ -33,6 +33,7 @@ export class ProductDetailPage {
     }
 
     isProductValid() {
+        // TODO refactor for single toat creating
         if (!this.activeProduct.name) {
             let toast = this.toastCtrl.create({
                 message: 'Product name missed',

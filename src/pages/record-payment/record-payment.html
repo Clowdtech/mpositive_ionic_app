@@ -1,0 +1,29 @@
+<ion-header>
+
+    <ion-navbar>
+
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <div class="row" no-padding>
+        <div class="col-xs-4">
+            <check-out-list [readOnly]="true" [settledOrders]="orders"></check-out-list>
+        </div>
+        <div class="col-xs-8">
+            <ion-segment [(ngModel)]="activePayment">
+                <ion-segment-button value="card">
+                    Card
+                </ion-segment-button>
+                <ion-segment-button value="cash">
+                    Cash
+                </ion-segment-button>
+                <ion-segment-button value="other">
+                    Other
+                </ion-segment-button>
+            </ion-segment>
+        </div>
+    </div>
+</ion-content>

@@ -2,8 +2,8 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { CheckOutPage, MyProductsPage, CategoryDetailPage, PickColorPage, ProductDetailPage, PickCategoryPage }
-  from '../pages';
+import { CheckOutPage, MyProductsPage, CategoryDetailPage, PickColorPage, ProductDetailPage, PickCategoryPage
+        ,RecordPaymentPage } from '../pages';
 import { CheckOutListComponent } from '../components/check-out-list';
 import { VerticalMenuComponent } from "../components/vertical-menu";
 import { CategoryComponent } from "../components/category";
@@ -21,6 +21,7 @@ import { CategoryService, ProductService, CheckoutService } from "../services";
     PickColorPage,
     ProductDetailPage,
     PickCategoryPage,
+    RecordPaymentPage,
     CheckOutListComponent,
     VerticalMenuComponent,
     CategoryComponent,
@@ -40,6 +41,7 @@ import { CategoryService, ProductService, CheckoutService } from "../services";
     PickColorPage,
     ProductDetailPage,
     PickCategoryPage,
+    RecordPaymentPage,
     CheckOutListComponent,
     VerticalMenuComponent,
     CategoryComponent,
