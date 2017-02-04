@@ -13,17 +13,21 @@
             <check-out-list [readOnly]="true" [settledOrders]="orders"></check-out-list>
         </div>
         <div class="col-xs-8">
-            <ion-segment [(ngModel)]="activePayment">
-                <ion-segment-button value="card">
-                    Card
-                </ion-segment-button>
-                <ion-segment-button value="cash">
-                    Cash
-                </ion-segment-button>
-                <ion-segment-button value="other">
-                    Other
+            <ion-toolbar>
+                <ion-title>Total: {{checkoutPrice}}</ion-title>
+            </ion-toolbar>
+            <ion-segment [(ngModel)]="activePayment.name">
+                <ion-segment-button (ionSelect)="selectPayment(payment)" *ngFor="let payment of payments" value="{{payment?.name}}">
+                    {{payment?.name}}
                 </ion-segment-button>
             </ion-segment>
+            <div [ngSwitch]="activePayment.name">
+                <div *ngSwitchCase="'Card'" padding>
+                    <p>Customer is paying by Card</p>
+                </div>
+                <keypad *ngSwitchDefault (productSelected)="productSelected()"></keypad>
+            </div>
+            <button (click)="recordPayment()" ion-button full>Record payment</button>
         </div>
     </div>
 </ion-content>

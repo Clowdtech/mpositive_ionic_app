@@ -23,7 +23,26 @@
             </ion-segment>
             <div [ngSwitch]="segment">
                 <category *ngSwitchCase="'category'" (productSelected)="productSelected($event)"></category>
-                <keypad *ngSwitchCase="'keypad'" (productSelected)="productSelected($event)"></keypad>
+                <div *ngSwitchCase="'keypad'">
+                    <div class="row">
+                        <div class="col-xs-4 col-xs-offset-4">
+                            <ion-item>
+                                <ion-label floating>Add label here...</ion-label>
+                                <ion-input type="text" #label
+                                           (keyup)="setCustomName(label.value)" label.value=''></ion-input>
+                            </ion-item>
+                        </div>
+
+                    </div>
+                    <keypad (keypadUpdated)="keypadUpdated($event)"></keypad>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button (click)="addCustomProduct()" ion-button full>
+                                Add: {{currency}}{{customPrice}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <button (click)="charge()" ion-button full>Charge: {{currency}}{{checkoutPrice}}</button>
 

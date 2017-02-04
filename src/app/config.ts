@@ -5,5 +5,6 @@ export const appConfig = {
   products_url: 'products',
   category_url: 'category',
   product_url: 'product',
+  payments_url: 'payment-types',
   defaultCurrency: '£',
 };

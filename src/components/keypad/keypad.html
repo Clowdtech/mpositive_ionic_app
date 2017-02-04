@@ -1,15 +1,4 @@
 <div class="row">
-    <div class="col-xs-4 col-xs-offset-4">
-        <ion-item>
-            <ion-label floating>Add label here...</ion-label>
-            <ion-input type="text" #label
-                       (keyup)="setLabel(label.value)"
-                       (blur)="setLabel(label.value);" label.value=''></ion-input>
-        </ion-item>
-    </div>
-
-</div>
-<div class="row">
     <div no-padding class="col-xs-4 text-center" *ngFor="let number of numbers">
         <ion-card padding (click)="addNumber(number)">
             <ion-card-title>{{number}}</ion-card-title>
@@ -29,8 +18,5 @@
         <ion-card padding (click)="changeToFloat(true)">
             <ion-card-title>00</ion-card-title>
         </ion-card>
-    </div>
-    <div class="col-xs-12">
-        <button (click)="add()" ion-button full>Add: {{currency}}{{price.integer}}.{{price.float}}</button>
     </div>
 </div>

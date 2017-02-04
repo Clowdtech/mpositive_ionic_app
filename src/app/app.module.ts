@@ -9,8 +9,8 @@ import { VerticalMenuComponent } from "../components/vertical-menu";
 import { CategoryComponent } from "../components/category";
 import { ProductComponent } from "../components/product";
 import { KeypadComponent } from "../components/keypad";
-import { requestOptionsProvider, AuthProvider, CategoryProvider, ProductProvider } from "../providers";
-import { CategoryService, ProductService, CheckoutService } from "../services";
+import { requestOptionsProvider, AuthProvider, CategoryProvider, ProductProvider, PaymentProvider } from "../providers";
+import { CategoryService, ProductService, CheckoutService, PaymentService } from "../services";
 
 @NgModule({
   declarations: [
@@ -54,9 +54,11 @@ import { CategoryService, ProductService, CheckoutService } from "../services";
     CategoryProvider,
     ProductProvider,
     requestOptionsProvider,
+    PaymentProvider,
     CategoryService,
     ProductService,
-    CheckoutService
+    CheckoutService,
+    PaymentService
   ]
 })
 export class AppModule {}
