@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { appConfig } from "../app/config";
 import { AuthProvider } from "./auth.provider";
+import { PaymentData } from "../pages/record-payment/paymentData";
 
 @Injectable()
 export class PaymentProvider{
@@ -19,6 +20,17 @@ export class PaymentProvider{
         reject(error);
       });
     });
+  }
+
+  registerPayment(paymentData: PaymentData) {
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer:${ this.auth.getToken() }`);
+
+    // let params = new URLSearchParams();
+    // params.set('orders', JSON.stringify(paymentData.orders));
+    // params.set('total', paymentData.total.toString());
+    // params.set('payment_type_id', paymentData.paymentType.id);
+    return this.http.post(appConfig.payment_url, paymentData,  { headers });
   }
 
 }

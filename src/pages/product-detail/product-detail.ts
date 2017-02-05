@@ -33,29 +33,24 @@ export class ProductDetailPage {
     }
 
     isProductValid() {
-        // TODO refactor for single toat creating
+        let toastOpt = {
+            message: '',
+            duration: 3000,
+            position: 'top'
+        };
         if (!this.activeProduct.name) {
-            let toast = this.toastCtrl.create({
-                message: 'Product name missed',
-                duration: 3000
-            });
-            toast.present();
+            toastOpt.message = 'Product name missed';
+            this.toastCtrl.create(toastOpt).present();
             return false;
         }
         if (!this.activeProduct.categoryId) {
-            let toast = this.toastCtrl.create({
-                message: 'Please select category for product',
-                duration: 3000
-            });
-            toast.present();
+            toastOpt.message = 'Please select category for product';
+            this.toastCtrl.create(toastOpt).present();
             return false;
         }
         if (!this.activeProduct.price) {
-            let toast = this.toastCtrl.create({
-                message: 'Please set price for product',
-                duration: 3000
-            });
-            toast.present();
+            toastOpt.message = 'Please set price for product';
+            this.toastCtrl.create(toastOpt).present();
             return false;
         }
         return true;

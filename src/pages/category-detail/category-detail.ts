@@ -40,22 +40,21 @@ export class CategoryDetailPage {
   }
 
   saveCategory() {
+    let toastOpt = {
+      message: '',
+      duration: 3000,
+      position: 'top'
+    };
     if (!this.activeCategory.name) {
-      let toast = this.toastCtrl.create({
-        message: 'Category name missed',
-        duration: 3000
-      });
-      toast.present();
+      toastOpt.message = 'Category name missed';
+      this.toastCtrl.create(toastOpt).present();
       return;
     }
     this.categoryProvider.saveCategory(this.activeCategory).subscribe((res) => {
       const response = res.json();
       if (response) {
-        let toast = this.toastCtrl.create({
-          message: 'Category saved',
-          duration: 3000
-        });
-        toast.present();
+        toastOpt.message = 'Category saved';
+        this.toastCtrl.create(toastOpt).present();
       }
       this.activeCategory = new Category(response.uid, response.name, response.background_color, response.font_color, response.active);
       this.categoryService.updateCategories(this.activeCategory);

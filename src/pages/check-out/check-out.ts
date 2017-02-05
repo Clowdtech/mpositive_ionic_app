@@ -17,11 +17,11 @@ export class CheckOutPage {
   private checkOutListComponent: CheckOutListComponent;
 
   private segment: string;
-  private customPrice: string;
   private customProductName: string;
   private currency: string = appConfig.defaultCurrency;
 
   private checkoutPrice: number = 0;
+  private customPrice: number = 0;
 
   private orders: Array<OrderItem>;
 
@@ -30,12 +30,12 @@ export class CheckOutPage {
   }
 
   keypadUpdated(keypadValue: { integer: number, float: number }) {
-    this.customPrice = `${keypadValue.integer}.${keypadValue.float}`
+    this.customPrice = parseFloat(`${keypadValue.integer}.${keypadValue.float}`);
   }
   addCustomProduct() {
     if (!this.customPrice && !this.customProductName) return;
     this.checkOutListComponent.productSelected(
-        new Product(UUID.UUID(), this.customProductName, null, this.customPrice, null, null, null, null)
+        new Product(UUID.UUID(), this.customProductName, null, this.customPrice.toString(), null, null, null, null)
     );
   }
   setCustomName(name: string) {
@@ -57,7 +57,8 @@ export class CheckOutPage {
     if (!this.orders) {
       let toast = this.toastCtrl.create({
         message: 'Please add items to order',
-        duration: 3000
+        duration: 3000,
+        position: 'top'
       });
       toast.present();
       return;

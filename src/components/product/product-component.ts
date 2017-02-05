@@ -38,7 +38,8 @@ export class ProductComponent implements OnInit, OnDestroy {
         if (this.products.length === 0) {
             let toast = this.toastCtrl.create({
                 message: 'This category doesn\'t has any products',
-                duration: 2000
+                duration: 2000,
+                position: 'top'
             });
             toast.present();
         }

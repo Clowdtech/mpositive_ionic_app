@@ -18,6 +18,7 @@ export class KeypadComponent implements OnDestroy, OnInit{
   }
 
   addNumber(number) {
+    // TODO works bad if add 0 at starting of float (use string for float) ?
     if (this.toFloat) {
       if (this.numeric.float.toString().length == 2) return;
       this.numeric.float = this.numeric.float * 10 + number;
@@ -32,10 +33,12 @@ export class KeypadComponent implements OnDestroy, OnInit{
   }
 
   clear() {
-    return this.numeric = {
+    this.keypadUpdated.emit(this.numeric = {
       integer: 0,
       float: 0
-    };
+    });
+    this.changeToFloat(false);
+    return this.numeric;
   }
 
   ngOnInit() {
