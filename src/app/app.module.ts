@@ -2,15 +2,15 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { CheckOutPage, MyProductsPage, CategoryDetailPage, PickColorPage, ProductDetailPage, PickCategoryPage
-        ,RecordPaymentPage } from '../pages';
+import { CheckOutPage, MyProductsPage, CategoryDetailPage, PickColorPage, ProductDetailPage, PickCategoryPage,
+        TransactionsHistoryPage ,RecordPaymentPage } from '../pages';
 import { CheckOutListComponent } from '../components/check-out-list';
 import { VerticalMenuComponent } from "../components/vertical-menu";
 import { CategoryComponent } from "../components/category";
 import { ProductComponent } from "../components/product";
 import { KeypadComponent } from "../components/keypad";
 import { requestOptionsProvider, AuthProvider, CategoryProvider, ProductProvider, PaymentProvider } from "../providers";
-import { CategoryService, ProductService, CheckoutService, PaymentService, Utils } from "../services";
+import { CategoryService, ProductService, CheckoutService, PaymentService, Utils, TransactionsService } from "../services";
 
 @NgModule({
   declarations: [
@@ -22,6 +22,7 @@ import { CategoryService, ProductService, CheckoutService, PaymentService, Utils
     ProductDetailPage,
     PickCategoryPage,
     RecordPaymentPage,
+    TransactionsHistoryPage,
     CheckOutListComponent,
     VerticalMenuComponent,
     CategoryComponent,
@@ -42,6 +43,7 @@ import { CategoryService, ProductService, CheckoutService, PaymentService, Utils
     ProductDetailPage,
     PickCategoryPage,
     RecordPaymentPage,
+    TransactionsHistoryPage,
     CheckOutListComponent,
     VerticalMenuComponent,
     CategoryComponent,
@@ -59,6 +61,7 @@ import { CategoryService, ProductService, CheckoutService, PaymentService, Utils
     ProductService,
     CheckoutService,
     PaymentService,
+    TransactionsService,
     Utils
   ]
 })

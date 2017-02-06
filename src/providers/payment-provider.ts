@@ -3,7 +3,7 @@ import { Http, Headers, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { appConfig } from "../app/config";
 import { AuthProvider } from "./auth.provider";
-import { PaymentData } from "../pages/record-payment/paymentData";
+import { PaymentData } from "../pages/record-payment/paymentData.class";
 
 @Injectable()
 export class PaymentProvider{

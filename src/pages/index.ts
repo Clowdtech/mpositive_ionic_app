@@ -5,3 +5,4 @@ export * from "./product-detail/product-detail";
 export * from "./pick-color/pick-color";
 export * from "./pick-category/pick-category";
 export * from "./record-payment/record-payment";
+export * from "./transactions-history/transactions-history";

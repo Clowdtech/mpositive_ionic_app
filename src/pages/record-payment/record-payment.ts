@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { NavParams, ToastController } from 'ionic-angular';
 import { OrderItem } from "../../components/check-out-list/orderItem.class";
 import { PaymentProvider } from "../../providers";
-import { PaymentService, Utils } from "../../services";
+import { PaymentService, Utils, TransactionsService } from "../../services";
 import { PaymentType } from "./payment";
 import { appConfig } from "../../app/config";
-import {PaymentData} from "./paymentData";
+import { PaymentData } from "./paymentData.class";
+import { Transaction } from "../transactions-history/transaction.class";
 
 @Component({
     selector: 'page-record-payment',
@@ -23,7 +24,8 @@ export class RecordPaymentPage {
     private payments: Array<PaymentType>;
 
     constructor(private navParams: NavParams, private paymentProvider: PaymentProvider, private utils: Utils,
-                private paymentService: PaymentService, private toastCtrl: ToastController) {
+                private paymentService: PaymentService, private toastCtrl: ToastController,
+                private transactionService: TransactionsService) {
         this.orders = this.navParams.get('orders').filter((order: OrderItem) => {
             return order.amount > 0;
         });
@@ -53,8 +55,8 @@ export class RecordPaymentPage {
             .subscribe(
                 data => {
                     if (data.json().success) {
-                        this.paymentService.saveTransaction(
-                            {timestamp: Date.now(), paymentType: this.activePayment.name, total: this.paymentTotal}
+                        this.transactionService.saveTransaction(
+                            new Transaction(Date.now(), this.activePayment.name, this.checkoutPrice)
                         );
                         this.utils.showToast('Payment successfully recorded');
                     }
