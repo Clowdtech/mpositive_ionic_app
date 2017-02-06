@@ -25,11 +25,6 @@ export class PaymentProvider{
   registerPayment(paymentData: PaymentData) {
     const headers = new Headers();
     headers.append('Authorization', `Bearer:${ this.auth.getToken() }`);
-
-    // let params = new URLSearchParams();
-    // params.set('orders', JSON.stringify(paymentData.orders));
-    // params.set('total', paymentData.total.toString());
-    // params.set('payment_type_id', paymentData.payment_type_id);
     return this.http.post(`${appConfig.payment_url}`, paymentData,  { headers });
   }
 
