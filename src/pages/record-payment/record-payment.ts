@@ -24,7 +24,9 @@ export class RecordPaymentPage {
 
     constructor(private navParams: NavParams, private paymentProvider: PaymentProvider, private utils: Utils,
                 private paymentService: PaymentService, private toastCtrl: ToastController) {
-        this.orders = this.navParams.get('orders');
+        this.orders = this.navParams.get('orders').filter((order: OrderItem) => {
+            return order.amount > 0;
+        });
         this.checkoutPrice = this.navParams.get('checkoutPrice');
     }
 
