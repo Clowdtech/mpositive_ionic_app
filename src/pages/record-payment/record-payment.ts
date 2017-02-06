@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavParams, ToastController } from 'ionic-angular';
 import { OrderItem } from "../../components/check-out-list/orderItem.class";
 import { PaymentProvider } from "../../providers";
-import { PaymentService } from "../../services";
+import { PaymentService, Utils } from "../../services";
 import { PaymentType } from "./payment";
 import { appConfig } from "../../app/config";
 import {PaymentData} from "./paymentData";
@@ -22,7 +22,7 @@ export class RecordPaymentPage {
     protected orders: Array<OrderItem>;
     private payments: Array<PaymentType>;
 
-    constructor(private navParams: NavParams, private paymentProvider: PaymentProvider,
+    constructor(private navParams: NavParams, private paymentProvider: PaymentProvider, private utils: Utils,
                 private paymentService: PaymentService, private toastCtrl: ToastController) {
         this.orders = this.navParams.get('orders');
         this.checkoutPrice = this.navParams.get('checkoutPrice');
@@ -44,18 +44,20 @@ export class RecordPaymentPage {
 
     recordPayment() {
         if (this.activePayment.name !== 'Card' && (this.paymentTotal < this.checkoutPrice || !this.paymentTotal)) {
-            let toast = this.toastCtrl.create({
-                message: 'Please type correct received total value',
-                duration: 3000,
-                position: 'top'
-            });
-            toast.present();
+            this.utils.showToast('Please type correct received total value');
             return;
         }
         this.paymentProvider.registerPayment(new PaymentData(this.orders, this.paymentTotal, this.activePayment))
-            .subscribe((data) => {
-                console.log(data.json());
-            });
+            .subscribe(
+                data => {
+                    if (data.json().success) {
+                        this.paymentService.saveTransaction(
+                            {timestamp: Date.now(), paymentType: this.activePayment.name, total: this.paymentTotal}
+                        );
+                        this.utils.showToast('Payment successfully recorded');
+                    }
+                }, error =>  console.log(error.json())
+            );
     }
 
     keypadUpdated(keypadValue: { integer: number, float: number }) {

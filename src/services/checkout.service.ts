@@ -10,11 +10,11 @@ export class CheckoutService {
 
     setOrders(orderItems: Array<OrderItem>) {
         this.orderItems = orderItems;
-        window.localStorage.setItem('orders', JSON.stringify(orderItems));
+        window.localStorage.setItem('mp_orders', JSON.stringify(orderItems));
     }
 
     static getOrders() {
-        return JSON.parse(window.localStorage.getItem('orders'));
+        return JSON.parse(window.localStorage.getItem('mp_orders'));
     }
 
 

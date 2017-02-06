@@ -10,7 +10,7 @@ import { CategoryComponent } from "../components/category";
 import { ProductComponent } from "../components/product";
 import { KeypadComponent } from "../components/keypad";
 import { requestOptionsProvider, AuthProvider, CategoryProvider, ProductProvider, PaymentProvider } from "../providers";
-import { CategoryService, ProductService, CheckoutService, PaymentService } from "../services";
+import { CategoryService, ProductService, CheckoutService, PaymentService, Utils } from "../services";
 
 @NgModule({
   declarations: [
@@ -58,7 +58,8 @@ import { CategoryService, ProductService, CheckoutService, PaymentService } from
     CategoryService,
     ProductService,
     CheckoutService,
-    PaymentService
+    PaymentService,
+    Utils
   ]
 })
 export class AppModule {}

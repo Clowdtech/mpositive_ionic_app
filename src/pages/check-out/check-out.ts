@@ -29,6 +29,10 @@ export class CheckOutPage {
     this.segment = 'category';
   }
 
+  productSelected(product: Product) {
+    this.checkOutListComponent.productSelected(product);
+  }
+
   keypadUpdated(keypadValue: { integer: number, float: number }) {
     this.customPrice = parseFloat(`${keypadValue.integer}.${keypadValue.float}`);
   }
@@ -54,7 +58,7 @@ export class CheckOutPage {
   }
 
   charge() {
-    if (!this.orders) {
+    if (!this.checkoutPrice) {
       let toast = this.toastCtrl.create({
         message: 'Please add items to order',
         duration: 3000,
