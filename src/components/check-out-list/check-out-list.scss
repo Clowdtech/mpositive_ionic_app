@@ -1,9 +1,11 @@
-check-out-list {
+check-out-list, .bordered-list {
   .row {
     border: 1px solid $row-border;
     border-radius: $row_border-radius;
     padding: 8px 10px;
     margin-top: 13px;
+    box-sizing: border-box;
+    min-height: 55px;
     p {
       margin: 0;
     }

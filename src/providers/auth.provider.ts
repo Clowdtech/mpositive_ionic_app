@@ -3,7 +3,7 @@ import { Http, URLSearchParams, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
 import { appConfig } from '../app/config';
-import { ToastController } from 'ionic-angular';
+import { Utils } from "../services/utils";
 
 @Injectable()
 export class AuthProvider {
@@ -15,7 +15,7 @@ export class AuthProvider {
   private uid: string;
   private token: string;
 
-  constructor(private http: Http, public toastCtrl: ToastController) {}
+  constructor(private http: Http, public utils: Utils) {}
 
   public makeAuth() {
     let params = new URLSearchParams();
@@ -27,11 +27,7 @@ export class AuthProvider {
             const res = data.json();
             this.uid = res.uid;
             this.token = res.token;
-            let toast = this.toastCtrl.create({
-                message: 'Authorization succeeded',
-                duration: 3000
-            });
-            toast.present();
+            this.utils.showToast('Authorization succeeded');
         },
         error => {
             console.log(error.json());
@@ -40,16 +36,6 @@ export class AuthProvider {
     return this.authObserver;
   }
 
-  /* auth getters */
-  public getAccessKey() {
-    return this.access_key;
-  }
-  public getAccessSecret() {
-    return this.access_secret;
-  }
-  public getUid() {
-    return this.uid;
-  }
   public getToken() {
     return this.token;
   }

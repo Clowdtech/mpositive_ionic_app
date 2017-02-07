@@ -1,12 +1,62 @@
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>transactions-history</ion-title>
-  </ion-navbar>
-
+    <ion-navbar padding>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Transactions Report</ion-title>
+        <ion-buttons end>
+            <button ion-button>Print Report</button>
+        </ion-buttons>
+    </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
+  <div class="row" no-padding>
 
+    <div class="col-xs-4">
+      <ion-toolbar>
+        <ion-title>
+          Select date to view report
+        </ion-title>
+      </ion-toolbar>
+      <div padding class="bordered-list dates-list">
+        <div class="row" *ngFor="let date of dates" (click)="filterByDate(date)"
+             [ngClass]="{'active': compareDates(activeDate, date)}">
+          <div class="col-xs-12">
+              <span>{{isDateToday(date) ? 'Today' : date | date}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-8 trans-list" padding>
+        <div class="row">
+            <div class="col-xs-12" margin-bottom>
+                <strong>{{activeDate | date}}</strong>
+                <strong class="pull-right">Total: {{currency}}{{getTotal()}}</strong>
+            </div>
+            <div class="col-xs-4">
+                <strong>Time</strong>
+            </div>
+            <div class="col-xs-4 text-center">
+                <strong>Type</strong>
+            </div>
+            <div class="col-xs-4 text-center">
+                <strong>Price</strong>
+            </div>
+        </div>
+        <div class="row" *ngFor="let trans of filteredTransactions">
+            <div class="col-xs-4">
+                <span>{{trans.timestamp | date:'mediumTime'}}</span>
+            </div>
+            <div class="col-xs-4 text-center">
+                <span>{{trans.paymentType}}</span>
+            </div>
+            <div class="col-xs-4 text-center">
+                <span>{{currency}}{{trans.total}}</span>
+            </div>
+        </div>
+    </div>
+  </div>
 </ion-content>

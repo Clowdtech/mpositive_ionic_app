@@ -1,11 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { appConfig } from "../../app/config";
 import { CheckOutListComponent } from "../../components/check-out-list";
 import { Product } from "../../components/product";
 import { OrderItem } from "../../components/check-out-list";
 import { RecordPaymentPage } from "../";
 import { UUID } from 'angular2-uuid';
+import { Utils } from "../../services";
 
 @Component({
   selector: 'page-check-out',
@@ -25,7 +26,7 @@ export class CheckOutPage {
 
   private orders: Array<OrderItem>;
 
-  constructor(private navCtrl: NavController, private toastCtrl: ToastController) {
+  constructor(private navCtrl: NavController, private utils: Utils) {
     this.segment = 'category';
   }
 
@@ -59,12 +60,7 @@ export class CheckOutPage {
 
   charge() {
     if (!this.checkoutPrice) {
-      let toast = this.toastCtrl.create({
-        message: 'Please add items to order',
-        duration: 3000,
-        position: 'top'
-      });
-      toast.present();
+      this.utils.showToast('Please add items to order');
       return;
     }
     this.navCtrl.push(RecordPaymentPage, {
