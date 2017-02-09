@@ -56,7 +56,7 @@ export class RecordPaymentPage {
                 data => {
                     if (data.json().success) {
                         this.transactionService.saveTransaction(
-                            new Transaction(Date.now(), this.activePayment.name, this.checkoutPrice)
+                            new Transaction(Date.now(), this.activePayment.name, this.checkoutPrice, this.orders)
                         );
                         this.utils.showToast('Payment successfully recorded');
                     }

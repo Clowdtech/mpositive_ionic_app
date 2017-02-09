@@ -46,7 +46,7 @@
                 <strong>Price</strong>
             </div>
         </div>
-        <div class="row" *ngFor="let trans of filteredTransactions">
+        <div class="row" *ngFor="let trans of filteredTransactions" (click)="openDetailPage(trans)">
             <div class="col-xs-4">
                 <span>{{trans.timestamp | date:'mediumTime'}}</span>
             </div>

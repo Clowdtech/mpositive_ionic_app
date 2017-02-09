@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
+import { ModalController } from 'ionic-angular';
 import { Transaction } from "./transaction.class";
 import { TransactionsService } from "../../services";
 import { appConfig } from "../../app/config";
+import { TransactionDetailPage } from "../";
 
 @Component({
   selector: 'page-transactions-history',
@@ -15,14 +17,14 @@ export class TransactionsHistoryPage {
   activeDate: Date;
   private currency: string = appConfig.defaultCurrency;
 
-  constructor(private transactionService: TransactionsService) {
+  constructor(private transactionService: TransactionsService, private modalCtrl: ModalController) {
     this.transactions = this.transactionService.getTransactions().map(trans => {
       const transDate = new Date(trans.timestamp);
       const dateInHistory = this.dates.some(date => {
         return this.compareDates(date, transDate);
       });
       if (!dateInHistory) this.dates.push(transDate);
-      return new Transaction(trans.timestamp, trans.paymentType, trans.total);
+      return new Transaction(trans.timestamp, trans.paymentType, trans.total, trans.orders);
     });
     this.filterByDate(new Date());
     this.dates.reverse();
@@ -49,6 +51,9 @@ export class TransactionsHistoryPage {
     }, 0)
   }
 
-
+  openDetailPage(transaction: Transaction) {
+    let transDetailModal = this.modalCtrl.create(TransactionDetailPage, { transaction });
+    transDetailModal.present();
+  }
 
 }

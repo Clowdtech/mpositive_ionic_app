@@ -1,0 +1,39 @@
+<ion-content>
+    <ion-item no-padding class="text-left">
+        <div class="row" *ngFor="let order of transaction?.orders" no-margin>
+            <div class="col-xs-4">
+                <p>{{order.name}}</p>
+            </div>
+            <div class="col-xs-4 text-center">
+                <p>{{order.amount}}</p>
+            </div>
+            <div class="col-xs-4 text-right">
+                <p>{{currency}}{{order.amount * order.price}}</p>
+            </div>
+        </div>
+    </ion-item>
+    <div padding>
+        <div class="row">
+            <div class="col-xs-6">
+                <p>Total</p>
+            </div>
+            <div class="col-xs-6 text-right">
+                <p>{{currency}}{{transaction.total}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <p>Transaction Type</p>
+            </div>
+            <div class="col-xs-6 text-right">
+                <p>{{transaction.paymentType}}</p>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<ion-footer padding>
+    <ion-buttons>
+        <button ion-button>Refund</button>
+        <button ion-button>Print</button>
+    </ion-buttons>
+</ion-footer>
