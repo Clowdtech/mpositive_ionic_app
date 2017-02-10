@@ -7,3 +7,4 @@ export * from "./pick-category/pick-category";
 export * from "./record-payment/record-payment";
 export * from "./transactions-history/transactions-history";
 export * from "./transaction-detail/transaction-detail";
+export * from "./products-history/products-history";

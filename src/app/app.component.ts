@@ -1,9 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
-import { CheckOutPage, MyProductsPage } from '../pages';
+import { CheckOutPage, MyProductsPage, ProductsHistoryPage, TransactionsHistoryPage } from '../pages';
 import { AuthProvider } from "../providers";
-import {TransactionsHistoryPage} from "../pages/transactions-history/transactions-history";
 
 @Component({
   templateUrl: 'app.html',
@@ -20,7 +19,8 @@ export class MyApp {
     this.pages = [
       { title: 'Checkout', component: CheckOutPage },
       { title: 'My Products', component: MyProductsPage },
-      { title: 'Transaction reports', component: TransactionsHistoryPage }
+      { title: 'Product Reports', component: ProductsHistoryPage },
+      { title: 'Transaction Reports', component: TransactionsHistoryPage }
     ];
   }
 

@@ -3,7 +3,7 @@ import { HttpModule } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { CheckOutPage, MyProductsPage, CategoryDetailPage, PickColorPage, ProductDetailPage, PickCategoryPage,
-        TransactionsHistoryPage ,RecordPaymentPage, TransactionDetailPage } from '../pages';
+        TransactionsHistoryPage ,RecordPaymentPage, TransactionDetailPage, ProductsHistoryPage } from '../pages';
 import { CheckOutListComponent } from '../components/check-out-list';
 import { VerticalMenuComponent } from "../components/vertical-menu";
 import { CategoryComponent } from "../components/category";
@@ -24,6 +24,7 @@ import { CategoryService, ProductService, CheckoutService, PaymentService, Utils
     RecordPaymentPage,
     TransactionsHistoryPage,
     TransactionDetailPage,
+    ProductsHistoryPage,
     CheckOutListComponent,
     VerticalMenuComponent,
     CategoryComponent,
@@ -46,6 +47,7 @@ import { CategoryService, ProductService, CheckoutService, PaymentService, Utils
     RecordPaymentPage,
     TransactionsHistoryPage,
     TransactionDetailPage,
+    ProductsHistoryPage,
     CheckOutListComponent,
     VerticalMenuComponent,
     CategoryComponent,
