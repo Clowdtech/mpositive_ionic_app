@@ -38,4 +38,8 @@ export class CategoryService {
         return this.categories;
     }
 
+    public clear() {
+        this.categories = null;
+    }
+
 }

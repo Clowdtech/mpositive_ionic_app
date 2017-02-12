@@ -12,6 +12,9 @@
             <button color="dark" ion-item menuClose *ngFor="let p of pages" (click)="openPage(p)">
                 {{p.title}}
             </button>
+            <button marginTop color="dark" ion-item menuClose (click)="logOut()">
+                Log Out
+            </button>
         </ion-list>
     </ion-content>
 

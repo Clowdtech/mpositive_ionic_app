@@ -1,43 +1,74 @@
-import { Injectable } from '@angular/core';
+import { Injectable, forwardRef, Inject } from '@angular/core';
 import { Http, URLSearchParams, Response } from '@angular/http';
-import 'rxjs/add/operator/map';
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import { appConfig } from '../app/config';
 import { Utils } from "../services/utils";
+import { CategoryService, ProductService } from "../services";
 
 @Injectable()
 export class AuthProvider {
 
   public authObserver: Observable<Response>;
 
-  private access_key: string = '8bwyBvZ3';
-  private access_secret: string = 'tmEgGfHK';
+  private access_key: string;
+  private access_secret: string;
   private uid: string;
   private token: string;
 
-  constructor(private http: Http, public utils: Utils) {}
+  constructor(private http: Http, public utils: Utils, @Inject(forwardRef(() => CategoryService)) private categoryService,
+    @Inject(forwardRef(() => ProductService)) private productService) {}
 
   public makeAuth() {
-    let params = new URLSearchParams();
-    params.set('access_key', this.access_key);
-    params.set('access_secret', this.access_secret);
-    this.authObserver = this.http.post(`${appConfig.auth_url}?${params}`, null);
-    this.authObserver.subscribe(
-        data => {
-            const res = data.json();
-            this.uid = res.uid;
-            this.token = res.token;
-            this.utils.showToast('Authorization succeeded');
-        },
-        error => {
-            console.log(error.json());
-        }
-    );
-    return this.authObserver;
+      return new Promise((resolve, reject) => {
+        let params = new URLSearchParams();
+        params.set('access_key', this.access_key);
+        params.set('access_secret', this.access_secret);
+        this.http.post(`${appConfig.auth_url}`, null, { search: params}).subscribe(
+            data => {
+                const res = data.json();
+                this.uid = res.uid;
+                this.token = res.token;
+                this.utils.showToast('Authorization succeeded');
+                resolve();
+            },
+            error => {
+                console.log(error.json());
+                reject();
+            }
+        );
+      });
   }
 
   public getToken() {
     return this.token;
+  }
+  public getUID() {
+    return this.uid;
+  }
+
+  public setCredentials(credentials: {access_key: string , access_secret: string}) {
+    this.access_key = credentials.access_key;
+    this.access_secret = credentials.access_secret;
+    window.localStorage.setItem('mp_credentials', JSON.stringify(credentials));
+  }
+
+  public getCredentials() {
+      let credStr = window.localStorage.getItem('mp_credentials');
+      const cred = credStr ? JSON.parse(credStr) : {};
+      this.access_secret = cred.access_secret;
+      this.access_key = cred.access_key;
+      return cred;
+  }
+
+  public hasCredentials() {
+      this.getCredentials();
+      return this.access_key && this.access_secret;
+  }
+
+  public logOut() {
+      this.access_key = this.access_secret = null;
+      this.categoryService.clear();
+      this.productService.clear();
   }
 
 }

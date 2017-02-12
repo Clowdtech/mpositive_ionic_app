@@ -19,15 +19,4 @@ export class PaymentService {
         return this.payments;
     }
 
-    saveTransaction(transaction: {timestamp: number, paymentType: string; total: number}) {
-        let transactions = this.getTransactions();
-        transactions.push(transaction);
-        window.localStorage.setItem('mp_transactions', JSON.stringify(transactions));
-    }
-
-    getTransactions() {
-        const transactions: any = window.localStorage.getItem('mp_transactions');
-        return transactions ? JSON.parse(transactions) : [];
-    }
-
 }

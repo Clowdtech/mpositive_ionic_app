@@ -24,7 +24,7 @@ export class CategoryComponent implements OnInit{
   activeCategory: Category;
 
   constructor(@Inject(forwardRef(() => CategoryService)) private categoryService,
-              private categoryProvider: CategoryProvider, private auth: AuthProvider, private navCtrl: NavController) {
+              private categoryProvider: CategoryProvider, private navCtrl: NavController) {
   }
 
   setActiveCategory(category) {
@@ -33,7 +33,7 @@ export class CategoryComponent implements OnInit{
   }
 
   getCategories() {
-    this.categories = this.categoryService.getCategories();
+    return this.categories = this.categoryService.getCategories();
   }
 
   productSelectedHandler(product) {
@@ -46,24 +46,14 @@ export class CategoryComponent implements OnInit{
     });
   }
 
-
   ngOnInit(): void {
-    if (!this.auth.getToken()){
-      this.auth.makeAuth().subscribe(
-          () => {
-            setTimeout(() => {
-              this.categoryProvider.getCategories().subscribe(
-                  (data) => {
-                    this.categoryService.setCategories(data.json());
-                    this.getCategories();
-                  }
-              );
-            }, 0);
+    if (!this.getCategories()) {
+      this.categoryProvider.getCategories().subscribe(
+          (data) => {
+            this.categoryService.setCategories(data.json());
+            this.getCategories();
           }
       );
-    }else{
-      this.getCategories()
     }
   }
-
 }

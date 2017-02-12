@@ -1,9 +1,10 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { CheckOutPage, MyProductsPage, CategoryDetailPage, PickColorPage, ProductDetailPage, PickCategoryPage,
-        TransactionsHistoryPage ,RecordPaymentPage, TransactionDetailPage, ProductsHistoryPage } from '../pages';
+  TransactionsHistoryPage ,RecordPaymentPage, TransactionDetailPage, ProductsHistoryPage, LogInPage } from '../pages';
 import { CheckOutListComponent } from '../components/check-out-list';
 import { VerticalMenuComponent } from "../components/vertical-menu";
 import { CategoryComponent } from "../components/category";
@@ -25,6 +26,7 @@ import { CategoryService, ProductService, CheckoutService, PaymentService, Utils
     TransactionsHistoryPage,
     TransactionDetailPage,
     ProductsHistoryPage,
+    LogInPage,
     CheckOutListComponent,
     VerticalMenuComponent,
     CategoryComponent,
@@ -33,7 +35,8 @@ import { CategoryService, ProductService, CheckoutService, PaymentService, Utils
   ],
   imports: [
     IonicModule.forRoot(MyApp),
-    HttpModule
+    HttpModule,
+    FormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -48,6 +51,7 @@ import { CategoryService, ProductService, CheckoutService, PaymentService, Utils
     TransactionsHistoryPage,
     TransactionDetailPage,
     ProductsHistoryPage,
+    LogInPage,
     CheckOutListComponent,
     VerticalMenuComponent,
     CategoryComponent,
@@ -55,17 +59,17 @@ import { CategoryService, ProductService, CheckoutService, PaymentService, Utils
     ProductComponent
   ],
   providers: [
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthProvider,
-    CategoryProvider,
-    ProductProvider,
-    requestOptionsProvider,
-    PaymentProvider,
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     CategoryService,
     ProductService,
     CheckoutService,
     PaymentService,
     TransactionsService,
+    AuthProvider,
+    PaymentProvider,
+    CategoryProvider,
+    ProductProvider,
+    requestOptionsProvider,
     Utils
   ]
 })

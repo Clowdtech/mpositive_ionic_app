@@ -1,7 +1,7 @@
-import {Component, Output, EventEmitter, Input, OnInit} from '@angular/core';
-import {OrderItem} from './orderItem.class';
-import {ProductService, CheckoutService} from "../../services";
-import {Product} from "../product";
+import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
+import { OrderItem } from './orderItem.class';
+import { CheckoutService } from "../../services";
+import { Product } from "../product";
 
 @Component({
     selector: 'check-out-list',
@@ -18,9 +18,7 @@ export class CheckOutListComponent implements OnInit {
     private isEditable: boolean;
     private currency: string = '£';
 
-    constructor(private productService: ProductService, private checkoutService: CheckoutService) {
-
-    }
+    constructor(private checkoutService: CheckoutService) {}
 
     productSelected(product: Product) {
         if (!product) return;
@@ -48,7 +46,7 @@ export class CheckOutListComponent implements OnInit {
 
     clearOrders() {
         this.orderItems = [];
-        this.checkoutService.setOrders(null);
+        this.checkoutService.setOrders([]);
         this.ordersChanged.emit(this.orderItems);
     }
 
@@ -58,7 +56,7 @@ export class CheckOutListComponent implements OnInit {
 
     ngOnInit(): void {
         this.enableEditing(!this.readOnly);
-        this.orderItems = this.settledOrders || CheckoutService.getOrders() || [];
+        this.orderItems = this.settledOrders || this.checkoutService.getOrders();
         this.ordersChanged.emit(this.orderItems);
     }
 

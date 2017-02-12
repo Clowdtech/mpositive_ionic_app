@@ -31,4 +31,8 @@ export class ProductService {
         return this.products;
     }
 
+    public clear() {
+        this.products = null;
+    }
+
 }

@@ -1,0 +1,31 @@
+<ion-header>
+
+  <ion-navbar>
+
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding margin-top>
+  <div class="row">
+    <div class="col-xs-8 col-xs-offset-2 text-center">
+        <form [formGroup]="credentials" (ngSubmit)="logIn()">
+            <h1 margin>Login to Device</h1>
+            <ion-item margin-top>
+                <ion-label color="primary" stacked>Secret I.D.</ion-label>
+                <ion-input formControlName="access_secret" type=""></ion-input>
+            </ion-item>
+            <ion-item margin-top>
+                <ion-label color="primary" stacked>Secret Key</ion-label>
+                <ion-input formControlName="access_key" type="password"></ion-input>
+            </ion-item>
+            <div class="row" margin-top>
+                <div class="col-xs-4 col-xs-offset-4">
+                    <button type="submit" [disabled]="!credentials.valid" ion-button full round>Continue</button>
+                </div>
+            </div>
+        </form>
+    </div>
+  </div>
+</ion-content>

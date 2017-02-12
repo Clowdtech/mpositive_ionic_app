@@ -23,7 +23,7 @@ export class ProductsHistoryPage {
       const dateInHistory = this.dates.some(date => {
         return this.compareDates(date, transDate);
       });
-      if (!dateInHistory) this.dates.push(transDate);
+      if (!dateInHistory && trans.orders) this.dates.push(transDate);
       return new Transaction(trans.timestamp, trans.paymentType, trans.total, trans.orders);
     });
     this.filterByDate(new Date());
@@ -36,13 +36,13 @@ export class ProductsHistoryPage {
       return this.compareDates(new Date(trans.timestamp), date);
     });
     this.filteredProducts = this.filteredTransactions.map(trans => {
-      return trans.orders;
+      return trans.orders || [];
     }).reduce((prevVal, order) => {
       if (prevVal){
         return prevVal.concat(order);
       }
       return order;
-    });
+    }, []);
     console.log(this.filteredProducts);
   }
 
