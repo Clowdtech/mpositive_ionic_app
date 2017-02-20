@@ -1,14 +1,11 @@
 import { Injectable, forwardRef, Inject } from '@angular/core';
-import { Http, URLSearchParams, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Http, URLSearchParams } from '@angular/http';
 import { appConfig } from '../app/config';
 import { Utils } from "../services/utils";
 import { CategoryService, ProductService } from "../services";
 
 @Injectable()
 export class AuthProvider {
-
-  public authObserver: Observable<Response>;
 
   private access_key: string;
   private access_secret: string;
@@ -66,7 +63,7 @@ export class AuthProvider {
   }
 
   public logOut() {
-      this.access_key = this.access_secret = null;
+      this.setCredentials({access_key: '', access_secret: ''});
       this.categoryService.clear();
       this.productService.clear();
   }

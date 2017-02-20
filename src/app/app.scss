@@ -24,3 +24,38 @@
   z-index: 10;
   transition: all .5s;
 }
+
+.side-list {
+  ion-navbar {
+    .toolbar-background {
+      background-color: #EAEAEA;
+    }
+  }
+  ion-scroll {
+    height: 85vh;
+    background-color: #F0F0F0;
+    .row {
+      background-color: #FFF;
+    }
+    strong {
+      font-size: 1.2em;
+    }
+    button + strong {
+      vertical-align: -webkit-baseline-middle;
+      display: inline-block;
+    }
+  }
+}
+
+.mp_gradient {
+  /* Webkit (Safari/Chrome 10) */
+  background-image: -webkit-gradient(linear, right top, left top, color-stop(0, rgb(67,206,162)), color-stop(100, rgb(24,90,157)));
+  /* Webkit (Chrome 11+) */
+  background-image: -webkit-linear-gradient(right, rgb(67,206,162) 0%, rgb(24,90,157) 100%);
+  /* W3C Markup */
+  background-image: linear-gradient(to left, rgb(67,206,162) 0%, rgb(24,90,157) 100%);
+}
+
+ion-icon {
+  font-size: 0.8em;
+}

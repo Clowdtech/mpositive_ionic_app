@@ -8,12 +8,12 @@
 </ion-header>
 
 <ion-content>
-    <div class="row" no-padding>
-        <div class="col-xs-4">
+    <div class="row" no-margin>
+        <div class="col-xs-4" no-padding>
             <check-out-list (ordersChanged)="ordersChanged($event)"></check-out-list>
         </div>
         <div class="col-xs-8">
-            <ion-segment [(ngModel)]="segment">
+            <ion-segment [(ngModel)]="segment" padding>
                 <ion-segment-button value="category">
                     Catalog
                 </ion-segment-button>
@@ -21,7 +21,8 @@
                     Keypad
                 </ion-segment-button>
             </ion-segment>
-            <div [ngSwitch]="segment">
+            <ion-scroll scrollY="true" style="height: 77vh">
+                <div [ngSwitch]="segment">
                 <category *ngSwitchCase="'category'" (productSelected)="productSelected($event)"></category>
                 <div *ngSwitchCase="'keypad'">
                     <div class="row">
@@ -32,7 +33,6 @@
                                            (keyup)="setCustomName(label.value)" label.value=''></ion-input>
                             </ion-item>
                         </div>
-
                     </div>
                     <keypad (keypadUpdated)="keypadUpdated($event)"></keypad>
                     <div class="row">
@@ -44,8 +44,8 @@
                     </div>
                 </div>
             </div>
-            <button (click)="charge()" ion-button full>Charge: {{currency}}{{checkoutPrice}}</button>
-
+            </ion-scroll>
+            <button class="mp_gradient" (click)="charge()" ion-button full>Charge: {{currency}}{{checkoutPrice}}</button>
         </div>
     </div>
 </ion-content>

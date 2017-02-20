@@ -51,7 +51,7 @@ export class RecordPaymentPage {
             this.utils.showToast('Please type correct received total value');
             return;
         }
-        this.paymentProvider.registerPayment(new PaymentData(this.orders, this.paymentTotal, this.activePayment))
+        this.paymentProvider.registerPayment(new PaymentData(this.orders, this.checkoutPrice, this.activePayment))
             .subscribe(
                 data => {
                     if (data.json().success) {

@@ -1,26 +1,30 @@
-<ion-navbar *ngIf="isEditable">
-    <ion-buttons>
-        <button clear ion-button (click)="clearOrders()">Clear Order</button>
-    </ion-buttons>
-    <ion-buttons end>
-        <button clear ion-button item-right>Print Order</button>
-    </ion-buttons>
-</ion-navbar>
-<div padding>
-    <div class="row" *ngFor="let orderItem of orderItems">
-        <div class="col-xs-7">
-            <p>{{orderItem.name}}</p>
-            <p>{{orderItem.currency}}{{orderItem.price}}</p>
+<div class="side-list">
+    <ion-navbar *ngIf="isEditable">
+        <ion-buttons>
+            <button clear ion-button (click)="clearOrders()">Clear Order</button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button clear ion-button item-right>Print Order</button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-scroll scrollY="true">
+        <div padding>
+            <div class="row" *ngFor="let orderItem of orderItems" no-margin>
+                <div class="col-xs-7">
+                    <p><strong no-padding>{{orderItem.name}}</strong></p>
+                    <p>{{orderItem.currency}}{{orderItem.price}}</p>
+                </div>
+                <div class="col-xs-5" text-center no-padding>
+                    <button no-margin *ngIf="isEditable" clear ion-button icon-only round small (click)="changeAmount(orderItem, false)">
+                        <ion-icon name="remove"></ion-icon>
+                    </button>
+                    <strong>{{orderItem.amount}}</strong>
+                    <button no-margin *ngIf="isEditable" clear ion-button icon-only round small (click)="changeAmount(orderItem, true)">
+                        <ion-icon name="add"></ion-icon>
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="col-xs-5" text-center no-padding>
-            <button *ngIf="isEditable" ion-button icon-only round small (click)="changeAmount(orderItem, true)">
-                <ion-icon name="add"></ion-icon>
-            </button>
-            <span>{{orderItem.amount}}</span>
-            <button *ngIf="isEditable" ion-button icon-only round small (click)="changeAmount(orderItem, false)">
-                <ion-icon name="remove"></ion-icon>
-            </button>
-        </div>
-    </div>
+    </ion-scroll>
 </div>
 

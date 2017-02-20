@@ -1,14 +1,10 @@
-<div class="row" *ngIf="!activeCategory || hideProducts">
+<div class="row" *ngIf="!activeCategory || hideProducts" no-margin>
     <div no-padding [class]="compactView ? 'col-xs-4' : 'col-xs-6'" *ngFor="let category of categories">
         <ion-card [ngStyle]="{'background': category.bgColor, 'color': category.txtColor }"
                   (click)="setActiveCategory(category)">
             <ion-card-header [ngStyle]="{'color': category.txtColor }">
                 {{category.name}}
             </ion-card-header>
-            <ion-card-content>
-                The British use the term "header", but the American term "head-shot" the English simply refuse to
-                adopt.
-            </ion-card-content>
         </ion-card>
     </div>
 </div>

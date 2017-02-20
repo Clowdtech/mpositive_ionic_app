@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { CheckOutPage, MyProductsPage, ProductsHistoryPage, TransactionsHistoryPage, LogInPage } from '../pages';
-import { AuthProvider } from "../providers";
+import { AuthProvider, SyncProvider } from "../providers";
 
 @Component({
   templateUrl: 'app.html',
@@ -13,7 +13,7 @@ export class MyApp implements OnInit{
   rootPage: Component;
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, private auth: AuthProvider) {
+  constructor(public platform: Platform, private auth: AuthProvider, private syncProvider: SyncProvider) {
 
     this.initializeApp();
 
@@ -48,6 +48,7 @@ export class MyApp implements OnInit{
   ngOnInit() {
     if (this.auth.hasCredentials()) {
       this.auth.makeAuth().then(() => {
+        this.syncProvider.checkChanges().setSync();
         this.rootPage = CheckOutPage;
       });
     } else {

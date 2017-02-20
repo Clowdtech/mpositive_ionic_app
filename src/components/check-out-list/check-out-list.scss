@@ -2,12 +2,26 @@ check-out-list, .bordered-list {
   .row {
     border: 1px solid $row-border;
     border-radius: $row_border-radius;
-    padding: 8px 10px;
-    margin-top: 13px;
+    padding: 3px 0px 0px 6px;
+    margin-top: 8px;
     box-sizing: border-box;
     min-height: 55px;
     p {
       margin: 0;
+    }
+  }
+}
+
+check-out-list {
+  .row {
+    button {
+      &[clear] {
+        color: #9B9B9B;
+        font-size: 1.5em;
+      }
+      &[icon-only] ion-icon {
+        padding: 0 .4em;
+      }
     }
   }
 }

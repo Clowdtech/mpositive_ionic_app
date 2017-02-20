@@ -10,7 +10,8 @@ import { VerticalMenuComponent } from "../components/vertical-menu";
 import { CategoryComponent } from "../components/category";
 import { ProductComponent } from "../components/product";
 import { KeypadComponent } from "../components/keypad";
-import { requestOptionsProvider, AuthProvider, CategoryProvider, ProductProvider, PaymentProvider } from "../providers";
+import { requestOptionsProvider, AuthProvider, CategoryProvider, ProductProvider, PaymentProvider,
+  SyncProvider } from "../providers";
 import { CategoryService, ProductService, CheckoutService, PaymentService, Utils, TransactionsService } from "../services";
 
 @NgModule({
@@ -34,7 +35,9 @@ import { CategoryService, ProductService, CheckoutService, PaymentService, Utils
     ProductComponent
   ],
   imports: [
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      mode: 'md'
+    }),
     HttpModule,
     FormsModule
   ],
@@ -70,6 +73,7 @@ import { CategoryService, ProductService, CheckoutService, PaymentService, Utils
     CategoryProvider,
     ProductProvider,
     requestOptionsProvider,
+    SyncProvider,
     Utils
   ]
 })

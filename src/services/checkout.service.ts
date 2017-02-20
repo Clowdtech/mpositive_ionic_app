@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { OrderItem } from "../components/check-out-list";
-import {AuthProvider} from "../providers/auth.provider";
+import { AuthProvider } from "../providers/auth.provider";
 
 @Injectable()
 export class CheckoutService {

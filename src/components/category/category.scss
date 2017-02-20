@@ -4,4 +4,20 @@ category {
     display: inline-block;
     vertical-align: middle;
   }
+  .card-md {
+    margin: 12px 6px 0 6px;
+    width: auto;
+    height: 114px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    position: relative;
+    ion-card-header {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      -webkit-transform: translateY(-50%, -50%);
+      font-weight: bold;
+    }
+  }
 }
