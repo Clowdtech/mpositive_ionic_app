@@ -13,6 +13,8 @@ import { KeypadComponent } from "../components/keypad";
 import { requestOptionsProvider, AuthProvider, CategoryProvider, ProductProvider, PaymentProvider,
   SyncProvider } from "../providers";
 import { CategoryService, ProductService, CheckoutService, PaymentService, Utils, TransactionsService } from "../services";
+import { ScrollHeight } from "../components/scroll-height/scroll-height";
+import { ConvertUnits } from "../pipes";
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { CategoryService, ProductService, CheckoutService, PaymentService, Utils
     VerticalMenuComponent,
     CategoryComponent,
     KeypadComponent,
-    ProductComponent
+    ProductComponent,
+    ScrollHeight
   ],
   imports: [
     IonicModule.forRoot(MyApp, {
@@ -41,6 +44,7 @@ import { CategoryService, ProductService, CheckoutService, PaymentService, Utils
     HttpModule,
     FormsModule
   ],
+  exports: [ScrollHeight],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
@@ -59,7 +63,7 @@ import { CategoryService, ProductService, CheckoutService, PaymentService, Utils
     VerticalMenuComponent,
     CategoryComponent,
     KeypadComponent,
-    ProductComponent
+    ProductComponent,
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
@@ -74,7 +78,8 @@ import { CategoryService, ProductService, CheckoutService, PaymentService, Utils
     ProductProvider,
     requestOptionsProvider,
     SyncProvider,
-    Utils
+    Utils,
+    ConvertUnits
   ]
 })
 export class AppModule {}

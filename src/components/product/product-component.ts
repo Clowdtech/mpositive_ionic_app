@@ -4,6 +4,7 @@ import {Category} from "../category";
 import {AuthProvider, ProductProvider} from "../../providers";
 import {ProductService} from "../../services";
 import {ToastController} from 'ionic-angular';
+import { appConfig } from "../../app/config";
 
 @Component({
     selector: 'product',
@@ -16,6 +17,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     @Input() showAll: boolean = false;
     @Input() compactView: boolean = false;
     products: Array<Product>;
+    currency: string = appConfig.defaultCurrency;
 
     constructor(@Inject(forwardRef(() => ProductService)) private productService, private toastCtrl: ToastController,
                 private auth: AuthProvider, private productProvider: ProductProvider) {

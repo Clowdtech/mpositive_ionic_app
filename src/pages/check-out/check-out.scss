@@ -1,3 +1,41 @@
 page-check-out {
-
+  .keypad_wrap {
+    border: 1px solid $cell_border;
+    border-top: none;
+    -webkit-border-radius: 0 0 15px 15px;
+    border-radius: 0 0 15px 15px;
+    margin: 15px 10px 0;
+  }
+  keypad {
+    & + .row{
+      button {
+        font-size: 2.3rem;
+        height: 5.3rem;
+        color: #000;
+        text-transform: none;
+      }
+    }
+  }
+  ion-input {
+    font-size: 2.2rem;
+    input {
+      margin: 6px 8px 6px 8px;
+    }
+  }
+  ion-segment {
+    /*margin-bottom: 20px;*/
+  }
+  .item-has-focus {
+    .item-inner {
+      box-shadow: none !important;
+    }
+  }
+  category {
+    & > .row {
+      padding: 0 5px;
+    }
+    .card-md {
+      margin: 8px 4px 0 4px;
+    }
+  }
 }

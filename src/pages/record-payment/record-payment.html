@@ -1,38 +1,39 @@
-<ion-header>
-
+<ion-header id="recordHeader">
     <ion-navbar>
-
     </ion-navbar>
-
 </ion-header>
 
-
 <ion-content>
-    <div class="row" no-padding>
-        <div class="col-xs-4">
+    <div class="row" no-margin>
+        <div class="col-xs-4" no-padding>
             <check-out-list [readOnly]="true" [settledOrders]="orders"></check-out-list>
         </div>
-        <div class="col-xs-8">
-            <ion-toolbar>
-                <ion-title>Total: {{currency}}{{checkoutPrice}}</ion-title>
-            </ion-toolbar>
-            <ion-segment [(ngModel)]="activePayment.name">
-                <ion-segment-button (ionSelect)="selectPayment(payment)" *ngFor="let payment of payments" value="{{payment?.name}}">
-                    {{payment?.name}}
-                </ion-segment-button>
-            </ion-segment>
-            <div [ngSwitch]="activePayment.name">
-                <div *ngSwitchCase="'Card'" padding margin-top>
-                    <p>Customer is paying by Card</p>
-                </div>
-                <div *ngSwitchDefault margin-top>
-                    <ion-toolbar>
-                        <ion-title class="text-center">{{currency}}{{paymentTotal}}</ion-title>
-                    </ion-toolbar>
-                    <keypad (keypadUpdated)="keypadUpdated($event)"></keypad>
-                </div>
+        <div class="col-xs-8" no-padding>
+            <div>
+                <ion-toolbar>
+                    <ion-title>Total: {{currency}}{{checkoutPrice}}</ion-title>
+                </ion-toolbar>
+                <ion-segment [(ngModel)]="activePayment.name">
+                    <ion-segment-button (ionSelect)="selectPayment(payment)" *ngFor="let payment of payments"
+                        value="{{payment?.name}}">
+                            {{payment?.name}}
+                    </ion-segment-button>
+                </ion-segment>
+                <ion-scroll scrollY="true" scroll-height [calcHeight]="['recordHeader', 'recordBtn']">
+                    <div [ngSwitch]="activePayment.name">
+                        <div *ngSwitchCase="'Card'" padding margin-top>
+                            <p class="no-keypad">Customer is paying by Card</p>
+                        </div>
+                        <div *ngSwitchDefault margin-top>
+                            <ion-toolbar>
+                                <ion-title class="text-center">{{currency}}{{paymentTotal}}</ion-title>
+                            </ion-toolbar>
+                            <keypad (keypadUpdated)="keypadUpdated($event)"></keypad>
+                        </div>
+                    </div>
+                </ion-scroll>
             </div>
-            <button (click)="recordPayment()" ion-button full>Record payment</button>
+            <button id="recordBtn" class="mp_gradient" (click)="recordPayment()" ion-button full>Record Payment</button>
         </div>
     </div>
 </ion-content>

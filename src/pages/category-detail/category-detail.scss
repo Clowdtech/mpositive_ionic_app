@@ -1,3 +1,8 @@
 page-category-detail {
-
+  .mp_gradient {
+    opacity: 0.8;
+    &.active {
+      opacity: 1;
+    }
+  }
 }

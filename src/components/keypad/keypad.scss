@@ -1,3 +1,31 @@
 keypad {
+  .row {
+    ion-card {
+      margin: 0;
+      width: auto;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+      border-top: 1px solid $cell_border;
+      border-left: 1px solid $cell_border;
+      background : color($colors, mp_grey, base);
 
+      ion-card-title {
+        line-height: 1.6;
+        font-size: 2.8rem;
+        color: $cell-txt_color;
+      }
+    }
+    & > div {
+      &:nth-child(3n + 1) {
+        ion-card {
+          border-left: none;
+        }
+      }
+      &:nth-child(n + 10) {
+        ion-card {
+          border-bottom: 1px solid $cell_border;
+        }
+      }
+    }
+  }
 }

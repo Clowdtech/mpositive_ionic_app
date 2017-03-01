@@ -39,10 +39,16 @@
     }
     strong {
       font-size: 1.2em;
+      &.amount{
+        position: relative;
+        top: 10px;
+      }
     }
     button + strong {
-      vertical-align: -webkit-baseline-middle;
-      display: inline-block;
+      &.amount{
+        position: relative;
+        top: 5px;
+      }
     }
   }
 }
@@ -54,6 +60,82 @@
   background-image: -webkit-linear-gradient(right, rgb(67,206,162) 0%, rgb(24,90,157) 100%);
   /* W3C Markup */
   background-image: linear-gradient(to left, rgb(67,206,162) 0%, rgb(24,90,157) 100%);
+  text-transform: none;
+  &.reverse {
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(linear, left top, right top, color-stop(0, rgb(67,206,162)), color-stop(100, rgb(24,90,157)));
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-linear-gradient(left, rgb(67,206,162) 0%, rgb(24,90,157) 100%);
+    /* W3C Markup */
+    background-image: linear-gradient(to right, rgb(67,206,162) 0%, rgb(24,90,157) 100%);
+  }
+}
+
+.report-page {
+  .bordered-list{
+    line-height: 34px;
+    .row {
+      background-color: #fff;
+    }
+  }
+  .dates-list {
+    background-color: $main_bg_color;
+    h2 {
+      padding: 25px 15px;
+      margin: 0;
+      text-align: center;
+      font-size: 1.5rem;
+      color: $title_color;
+      background-color: $title_bg_color;
+    }
+    .col-xs-12 {
+      line-height: 4.5rem;
+    }
+    span {
+      font-weight: 700;
+      font-size: 1.5rem;
+      padding: 0 10px;
+    }
+    .active {
+      @extend .mp_gradient;
+      color: #fff;
+    }
+  }
+  .trans-list {
+    & > .row {
+      font-weight: 500;
+      font-size: 1.7rem;
+      color: $title_txt_color;
+      border-bottom: 1px solid $divider_color;
+      padding-bottom: 10px;
+      margin: 0 15px;
+    }
+    ion-scroll {
+      .row {
+        border-radius: $row_border-radius;
+        padding: 13px 10px;
+        background-color: $main_bg_color;
+        margin: 15px 10px 0;
+        &:first-child {
+          margin-top: 10px;
+        }
+        &:last-child {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+  .report-header {
+    color: $title_additional_color;
+    padding: 15px 0 5px;
+    font-weight: 500;
+    font-size: 1.6rem;
+    strong {
+      &:last-child {
+        margin-right: 15px;
+      }
+    }
+  }
 }
 
 ion-icon {

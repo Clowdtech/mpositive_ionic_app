@@ -7,7 +7,7 @@
             <button clear ion-button item-right>Print Order</button>
         </ion-buttons>
     </ion-navbar>
-    <ion-scroll scrollY="true">
+    <ion-scroll scrollY="true" scroll-height [calcHeight]="['header']">
         <div padding>
             <div class="row" *ngFor="let orderItem of orderItems" no-margin>
                 <div class="col-xs-7">
@@ -18,7 +18,7 @@
                     <button no-margin *ngIf="isEditable" clear ion-button icon-only round small (click)="changeAmount(orderItem, false)">
                         <ion-icon name="remove"></ion-icon>
                     </button>
-                    <strong>{{orderItem.amount}}</strong>
+                    <strong class="amount">{{orderItem.amount}}</strong>
                     <button no-margin *ngIf="isEditable" clear ion-button icon-only round small (click)="changeAmount(orderItem, true)">
                         <ion-icon name="add"></ion-icon>
                     </button>

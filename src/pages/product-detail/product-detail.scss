@@ -1,3 +1,86 @@
-page-poduct-detail {
-
+page-product-detail, .details-info {
+  ion-list-header {
+    background-color: transparent;
+  }
+  .list-header-md {
+    margin: 0;
+    padding: 0 !important;
+  }
+  .col-xs-4 {
+    background-color: #EAEAEA;
+  }
+  .side-list {
+    .item-md {
+      padding: 20px;
+      background-color: transparent;
+      border-bottom: 1px solid $cell_border;
+      .row {
+        background-color: transparent;
+      }
+      ion-label {
+        text-align: left;
+        font-size: 1.6rem;
+        background-color: transparent;
+      }
+    }
+  }
+  .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus) .item-inner,
+  .item-md.item-input.ng-valid.input-has-value .item-inner,
+  .item-md.item-input.ng-pristine .item-inner, .item-md.item-input.ng-dirty .item-inner,
+  .item-md.item-input.ng-touched .item-inner{
+    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+  .item-input .label-md, .item-md.item-input.ng-valid.input-has-value,
+  .item-md.item-input.ng-valid.ng-pristine, .item-md.item-input.ng-valid.ng-dirty,
+  .item-md.item-input.ng-valid.ng-pristine.ng-touched{
+    ion-label {
+      color: black !important;
+      font-weight: 400;
+      padding: 0;
+    }
+  }
+  .bar-button-md {
+    padding: 0 12px;
+    height: 45px;
+  }
+  .list-md .item-block .item-inner {
+    border-bottom: none;
+    padding: 0;
+  }
+  .toolbar-title-md {
+    text-align: left;
+    padding: 0;
+  }
+  .label-md {
+    margin: 11px 0;
+  }
+  .label.label-md {
+    .row {
+      & > * {
+        padding: 0 5px;
+      }
+    }
+  }
+  .label {
+    padding: .2em .6em .3em;
+  }
+  .button-inner {
+    text-transform: none;
+  }
+  input {
+    font-size: 2.3rem;
+    color: $cell-txt_color
+  }
+  .block-title {
+    padding: 15px 15px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    text-align: center;
+    color: $cell-txt_color;
+    font-size: 1.8rem;
+    margin: 25px 10px;
+    background-color: color($colors, mp_grey, base);
+  }
 }

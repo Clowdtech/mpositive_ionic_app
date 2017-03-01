@@ -1,12 +1,37 @@
 product {
-  .card-md {
+  .product-item {
+    margin: 12px 6px 0 6px;
+    width: auto;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    position: relative;
+
+    &:before {
+      content:'';
+      padding-top: 100%; /* vertical value as  100% equals width */
+      float:left;
+    }
+
     ion-card-header {
-      position: absolute;
-      top: 50%;
-      left: 5px;
-      transform: translate(0, -50%);
-      -webkit-transform: translateY(0, -50%);
+      display: block;
+      display: -webkit-box;
       font-weight: bold;
+      padding: 8px;
+      margin: 2px;
+      font-size: 1.5rem;
+      white-space: normal;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    ion-card-content{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      font-size: 1.5rem;
+      padding: 10px;
     }
   }
 }

@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header id="productsHeader">
   <ion-navbar padding>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
@@ -10,8 +10,8 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-segment [(ngModel)]="segment" [hidden]="activeCategory" (ionChange)="segmentChanged()">
+<ion-content>
+  <ion-segment padding [(ngModel)]="segment" [hidden]="activeCategory" (ionChange)="segmentChanged()">
     <ion-segment-button value="category">
       Categories
     </ion-segment-button>
@@ -19,9 +19,11 @@
       Products
     </ion-segment-button>
   </ion-segment>
-  <div [ngSwitch]="segment">
-    <category (categorySelected)="categorySelected($event)" [enableDetails]="true" [compactView]="true" [showTitle]="true"
-              *ngSwitchCase="'category'" (productSelected)="productSelected($event)"></category>
-    <product [showAll]="true" *ngSwitchCase="'product'" (productSelected)="productSelected($event)"></product>
-  </div>
+  <ion-content scroll-height [calcHeight]="['productsHeader']" scrollY="true">
+    <div [ngSwitch]="segment">
+      <category (categorySelected)="categorySelected($event)" [enableDetails]="true" [compactView]="true" [showTitle]="true"
+                *ngSwitchCase="'category'" (productSelected)="productSelected($event)"></category>
+      <product [showAll]="true" *ngSwitchCase="'product'" (productSelected)="productSelected($event)"></product>
+    </div>
+  </ion-content>
 </ion-content>

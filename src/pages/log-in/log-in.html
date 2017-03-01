@@ -12,18 +12,16 @@
     <div class="col-xs-8 col-xs-offset-2 text-center">
         <form [formGroup]="credentials" (ngSubmit)="logIn()">
             <h1 margin>Login to Device</h1>
-            <ion-item margin-top>
-                <ion-label color="primary" stacked>Secret I.D.</ion-label>
-                <ion-input formControlName="access_secret" type=""></ion-input>
-            </ion-item>
-            <ion-item margin-top>
-                <ion-label color="primary" stacked>Secret Key</ion-label>
-                <ion-input formControlName="access_key" type="password"></ion-input>
-            </ion-item>
-            <div class="row" margin-top>
-                <div class="col-xs-4 col-xs-offset-4">
-                    <button type="submit" [disabled]="!credentials.valid" ion-button full round>Continue</button>
-                </div>
+            <div class="inp-cont">
+                <label color="primary">Secret I.D.</label>
+                <input class="text-center" formControlName="access_secret" type="text" />
+            </div>
+            <div class="inp-cont">
+                <label color="primary">Secret Key</label>
+                <input class="text-center" formControlName="access_key" type="password">
+            </div>
+            <div class="text-center">
+               <button class="mp_gradient" type="submit" [disabled]="!credentials.valid" ion-button full round>Continue</button>
             </div>
         </form>
     </div>

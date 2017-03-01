@@ -29,10 +29,28 @@ $colors: (
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       #222,
+  mp_grey: #f0f0f0,
+  mp_dark_grey: #404d59
 );
 
-$button_start_gradient_color: rgb(24, 90, 157);
+/* general variables */
+
+$main_bg_color: #f0f0f0;
+$title_txt_color: #384653;
+$divider_color: #c7c7cd;
+
+$title_bg_color:  #EAEAEA;
+$title_color: #656565;
+
+$title_additional_color: #1c68ac;
+
+$cell_border: rgba(197, 190, 194, 0.64);
+$cell-txt_color: #6e6e6e;
+
+/* end general variables */
+
+
 
 $row-border: rgb(216, 216, 216);
 $row_border-radius: 18pt;

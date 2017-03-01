@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header id="productHistHeader">
     <ion-navbar padding>
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
@@ -11,30 +11,32 @@
 </ion-header>
 
 
-<ion-content padding>
-  <div class="row" no-padding>
+<ion-content>
+  <div class="row" no-margin>
 
-    <div class="col-xs-4">
-      <ion-toolbar>
-        <ion-title>
+    <div class="col-xs-4 dates-list" no-padding>
+        <h2>
           Select date to view report
-        </ion-title>
-      </ion-toolbar>
-      <div padding class="bordered-list dates-list">
-        <div class="row" *ngFor="let date of dates" (click)="filterByDate(date)"
-             [ngClass]="{'active': compareDates(activeDate, date)}">
-          <div class="col-xs-12">
-              <span>{{isDateToday(date) ? 'Today' : date | date}}</span>
+        </h2>
+        <ion-scroll scrollY="true" scroll-height [calcHeight]="['productHistHeader']">
+          <div padding class="bordered-list">
+            <div class="row" *ngFor="let date of dates" (click)="filterByDate(date)" no-margin
+                 [ngClass]="{'active': compareDates(activeDate, date)}">
+              <div class="col-xs-12" no-padding>
+                  <span>{{isDateToday(date) ? 'Today' : date | date}}</span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </ion-scroll>
     </div>
 
-    <div class="col-xs-8 trans-list" padding>
-        <div class="row">
+    <div class="col-xs-8 trans-list" no-padding>
+        <div class="row" no-margin>
             <div class="col-xs-12" margin-bottom>
-                <strong>{{activeDate | date}}</strong>
-                <strong class="pull-right">Total: {{currency}}{{getTotal()}}</strong>
+                <p class="report-header">
+                  <strong>{{activeDate | date}}</strong>
+                  <strong class="pull-right">Total: {{currency}}{{getTotal()}}</strong>
+                </p>
             </div>
             <div class="col-xs-4">
                 <strong>Product</strong>
@@ -46,17 +48,19 @@
                 <strong>Price</strong>
             </div>
         </div>
-        <div class="row" *ngFor="let product of filteredProducts">
-            <div class="col-xs-4">
-                <span>{{product.name}}</span>
+        <ion-scroll scrollY="true" scroll-height [calcHeight]="['productHistHeader']">
+            <div class="row" *ngFor="let product of filteredProducts">
+                <div class="col-xs-4">
+                    <span>{{product.name}}</span>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <span>{{product.amount}}</span>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <span>{{currency}}{{product.price * product.amount}}</span>
+                </div>
             </div>
-            <div class="col-xs-4 text-center">
-                <span>{{product.amount}}</span>
-            </div>
-            <div class="col-xs-4 text-center">
-                <span>{{currency}}{{product.price * product.amount}}</span>
-            </div>
-        </div>
+        </ion-scroll>
     </div>
   </div>
 </ion-content>

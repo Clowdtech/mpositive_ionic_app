@@ -1,3 +1,70 @@
 page-record-payment {
+  .col-xs-8 {
+    & > div {
+      padding: 0 50px;
+    }
+    .toolbar-title {
+      @extend .text-center;
+      font-size: 3.2rem;
+      font-weight: 400;
+      padding: 12px 0;
+    }
+  }
+  .segment-md {
+    .segment-button {
+      color: color($colors, mp_dark_grey, base);
+      text-transform: none;
+      font-weight: 400;
+      border: 1px solid $cell_border;
+      background : color($colors, mp_grey, base);
+      height: 5.6rem;
+      line-height: 5.4rem;
 
+      &.segment-activated {
+        @extend .mp_gradient;
+        color: #fff;
+        border: none;
+      }
+
+      &:first-child {
+        -webkit-border-radius: 25px 0 0 25px;
+        border-radius: 25px 0 0 25px;
+      }
+
+      &:last-child {
+        @extend .reverse;
+        -webkit-border-radius: 0 25px 25px 0;
+        border-radius: 0 25px 25px 0;
+      }
+    }
+  }
+  keypad {
+    & > .row {
+      border-right: 1px solid $cell_border;
+      border-left: 1px solid $cell_border;
+    }
+  }
+  ion-scroll {
+    .toolbar-md {
+      padding: 0;
+    }
+    .toolbar-title {
+      @extend .text-center;
+      background : color($colors, mp_grey, base);
+      font-size: 3.2rem;
+      font-weight: 400;
+      padding: 12px 0;
+      border-right: 1px solid $cell_border;
+      border-left: 1px solid $cell_border;
+      border-top: 1px solid $cell_border;
+    }
+    ion-toolbar {
+      margin-top: 50px;
+    }
+    .no-keypad {
+      padding: 50px;
+      text-align: center;
+      font-size: 2rem;
+    }
+  }
 }
