@@ -12,7 +12,7 @@ export var MenuContentGesture = (function (_super) {
   __extends(MenuContentGesture, _super);
   function MenuContentGesture(plt, menu, gestureCtrl, domCtrl) {
     _super.call(this, plt, plt.doc().body, {
-      direction: 'x',
+      direction: menu.direction === 'vertical' ? 'y' : 'x',
       edge: menu.side,
       threshold: 5,
       maxEdgeStart: menu.maxEdgeStart || 50,
@@ -50,41 +50,58 @@ export var MenuContentGesture = (function (_super) {
     this.menu._swipeStart();
   };
   MenuContentGesture.prototype.onSlide = function (slide, ev) {
-    var z = (this.menu.side === 'right' ? slide.min : slide.max);
+    var z = (this.menu.side === 'right' || this.menu.side === 'bottom' ? slide.min : slide.max);
     var stepValue = (slide.distance / z);
     this.menu._swipeProgress(stepValue);
   };
   MenuContentGesture.prototype.onSlideEnd = function (slide, ev) {
-    var z = (this.menu.side === 'right' ? slide.min : slide.max);
+    var z = (this.menu.side === 'right' || this.menu.side === 'bottom' ? slide.min : slide.max);
     var currentStepValue = (slide.distance / z);
     var velocity = slide.velocity;
     z = Math.abs(z * 0.5);
-    var shouldCompleteRight = (velocity >= 0)
+    var shouldCompleteBottom;
+    var shouldCompleteRight = shouldCompleteBottom = (velocity >= 0)
         && (velocity > 0.2 || slide.delta > z);
-    var shouldCompleteLeft = (velocity <= 0)
+    var shouldCompleteTop;
+    var shouldCompleteLeft = shouldCompleteTop = (velocity <= 0)
         && (velocity < -0.2 || slide.delta < -z);
     (void 0) /* console.debug */;
-    this.menu._swipeEnd(shouldCompleteLeft, shouldCompleteRight, currentStepValue, velocity);
+    this.menu._swipeEnd(shouldCompleteLeft, shouldCompleteRight, shouldCompleteTop, shouldCompleteBottom,
+        currentStepValue, velocity);
   };
   MenuContentGesture.prototype.getElementStartPos = function (slide, ev) {
-    if (this.menu.side === 'right') {
+    if (this.menu.side === 'right' || this.menu.side === 'bottom') {
       return this.menu.isOpen ? slide.min : slide.max;
     }
-    // left menu
+    // left && top menu
     return this.menu.isOpen ? slide.max : slide.min;
   };
   MenuContentGesture.prototype.getSlideBoundaries = function () {
-    if (this.menu.side === 'right') {
+    if (this.menu.direction === 'vertical') {
+      if (this.menu.side === 'bottom') {
+        return {
+          min: -this.menu.height(),
+          max: 0
+        };
+      }
+      // top menu
       return {
-        min: -this.menu.width(),
-        max: 0
+        min: 0,
+        max: this.menu.height()
+      };
+    } else {
+      if (this.menu.side === 'right') {
+        return {
+          min: -this.menu.width(),
+          max: 0
+        };
+      }
+      // left menu
+      return {
+        min: 0,
+        max: this.menu.width()
       };
     }
-    // left menu
-    return {
-      min: 0,
-      max: this.menu.width()
-    };
   };
   return MenuContentGesture;
 }(SlideEdgeGesture));

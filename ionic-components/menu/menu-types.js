@@ -71,10 +71,16 @@ var MenuRevealType = (function (_super) {
   __extends(MenuRevealType, _super);
   function MenuRevealType(menu, plt) {
     _super.call(this, plt);
-    var openedY = (menu.height() * (menu.side === 'top' ? -1 : 1)) + 'px';
-    var openedX = (menu.width() * (menu.side === 'right' ? -1 : 1)) + 'px';
+    var opened;
     var contentOpen = new Animation(plt, menu.getContentElement());
-    contentOpen.fromTo('translateX', '0px', openedX);
+    if (menu.horizontal === 'vertical') {
+      opened = (menu.height() * (menu.side === 'top' ? 1 : -1)) + 'px';
+      direction = 'translateY';
+    } else {
+      opened = (menu.width() * (menu.side === 'right' ? -1 : 1)) + 'px';
+      direction = 'translateX';
+    }
+    contentOpen.fromTo(direction, '0px', opened);
     this.ani.add(contentOpen);
   }
   return MenuRevealType;
@@ -90,23 +96,44 @@ var MenuPushType = (function (_super) {
   __extends(MenuPushType, _super);
   function MenuPushType(menu, plt) {
     _super.call(this, plt);
-    var contentOpenedX, menuClosedX, menuOpenedX;
-    if (menu.side === 'right') {
-      // right side
-      contentOpenedX = -menu.width() + 'px';
-      menuClosedX = menu.width() + 'px';
-      menuOpenedX = '0px';
-    }
-    else {
-      contentOpenedX = menu.width() + 'px';
-      menuOpenedX = '0px';
-      menuClosedX = -menu.width() + 'px';
+    var contentOpened, menuClosed, menuOpened, direction;
+    if (menu.direction === 'vertical') {
+      var contentOpenedY, menuClosedY, menuOpenedY;
+      if (menu.side === 'top') {
+        contentOpenedY = menu.height() + 'px';
+        menuOpenedY = '0px';
+        menuClosedY = -menu.height() + 'px';
+      } else {
+        contentOpenedY = -menu.height() + 'px';
+        menuOpenedY = '0px';
+        menuClosedY = menu.height() + 'px';
+      }
+      contentOpened = contentOpenedY;
+      menuClosed = menuClosedY;
+      menuOpened = menuOpenedY;
+      direction = 'translateY';
+    } else {
+      var contentOpenedX, menuClosedX, menuOpenedX;
+      if (menu.side === 'right') {
+        contentOpenedX = -menu.width() + 'px';
+        menuClosedX = menu.width() + 'px';
+        menuOpenedX = '0px';
+      }
+      else {
+        contentOpenedX = menu.width() + 'px';
+        menuOpenedX = '0px';
+        menuClosedX = -menu.width() + 'px';
+      }
+      contentOpened = contentOpenedX;
+      menuClosed = menuClosedX;
+      menuOpened = menuOpenedX;
+      direction = 'translateX';
     }
     var menuAni = new Animation(plt, menu.getMenuElement());
-    menuAni.fromTo('translateX', menuClosedX, menuOpenedX);
+    menuAni.fromTo(direction, menuClosed, menuOpened);
     this.ani.add(menuAni);
     var contentApi = new Animation(plt, menu.getContentElement());
-    contentApi.fromTo('translateX', '0px', contentOpenedX);
+    contentApi.fromTo(direction, '0px', contentOpened);
     this.ani.add(contentApi);
   }
   return MenuPushType;
@@ -122,19 +149,35 @@ var MenuOverlayType = (function (_super) {
   __extends(MenuOverlayType, _super);
   function MenuOverlayType(menu, plt) {
     _super.call(this, plt);
-    var closedX, openedX;
-    if (menu.side === 'right') {
-      // right side
-      closedX = 8 + menu.width() + 'px';
-      openedX = '0px';
-    }
-    else {
-      // left side
-      closedX = -(8 + menu.width()) + 'px';
-      openedX = '0px';
+    var closed, opened, direction;
+    if (menu.direction === 'vertical') {
+      var closedY, openedY;
+      if (menu.side === 'top') {
+        closedY = -(8 + menu.height()) + 'px';
+        openedY = '0px';
+      } else {
+        closedY = 8 + menu.height() + 'px';
+        openedY = '0px';
+      }
+      closed = closedY;
+      opened = openedY;
+      direction = 'translateY';
+    } else {
+      var closedX, openedX;
+      if (menu.side === 'right') {
+        closedX = 8 + menu.width() + 'px';
+        openedX = '0px';
+      }
+      else {
+        closedX = -(8 + menu.width()) + 'px';
+        openedX = '0px';
+      }
+      closed = closedX;
+      opened = openedX;
+      direction = 'translateX';
     }
     var menuAni = new Animation(plt, menu.getMenuElement());
-    menuAni.fromTo('translateX', closedX, openedX);
+    menuAni.fromTo(direction, closed, opened);
     this.ani.add(menuAni);
     var backdropApi = new Animation(plt, menu.getBackdropElement());
     backdropApi.fromTo('opacity', 0.01, 0.35);

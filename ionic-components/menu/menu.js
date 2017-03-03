@@ -259,6 +259,7 @@ export var Menu = (function () {
    * @private
    */
   Menu.prototype.ngOnInit = function () {
+    //alert(1);
     var _this = this;
     this._init = true;
     var content = this.content;
@@ -268,10 +269,13 @@ export var Menu = (function () {
       return console.error('Menu: must have a [content] element to listen for drag events on. Example:\n\n<ion-menu [content]="content"></ion-menu>\n\n<ion-nav #content></ion-nav>');
     }
     // normalize the "side"
-    if (this.side !== 'left' && this.side !== 'right') {
+    if (this.side !== 'left' && this.side !== 'right' && this.side !== 'top' && this.side !== 'bottom') {
       this.side = 'left';
     }
     this.setElementAttribute('side', this.side);
+    // normilize direction
+    this.direction = this.side === 'left' || this.side === 'right' ? 'horizontal' : 'vertical';
+    this.setElementAttribute('direction', this.direction);
     // normalize the "type"
     if (!this.type) {
       this.type = this._config.get('menuType');
@@ -392,7 +396,8 @@ export var Menu = (function () {
       ionDrag.emit(stepValue);
     }
   };
-  Menu.prototype._swipeEnd = function (shouldCompleteLeft, shouldCompleteRight, stepValue, velocity) {
+  Menu.prototype._swipeEnd = function (shouldCompleteLeft, shouldCompleteRight, shouldCompleteTop,
+                                       shouldCompleteBottom, stepValue, velocity) {
     var _this = this;
     if (!this._isAnimating) {
       (void 0) /* assert */;
@@ -402,10 +407,18 @@ export var Menu = (function () {
     var opening = !this.isOpen;
     var shouldComplete = false;
     if (opening) {
-      shouldComplete = (this.side === 'right') ? shouldCompleteLeft : shouldCompleteRight;
+      if (this.direction === 'horizontal') {
+        shouldComplete = (this.side === 'right') ? shouldCompleteLeft : shouldCompleteRight;
+      } else {
+        shouldComplete = (this.side === 'bottom') ? shouldCompleteTop : shouldCompleteBottom;
+      }
     }
     else {
-      shouldComplete = (this.side === 'right') ? shouldCompleteRight : shouldCompleteLeft;
+      if (this.direction === 'horizontal') {
+        shouldComplete = (this.side === 'right') ? shouldCompleteRight : shouldCompleteLeft;
+      } else {
+        shouldComplete = (this.side === 'bottom') ? shouldCompleteBottom : shouldCompleteTop;
+      }
     }
     this._getType().setProgressEnd(shouldComplete, stepValue, velocity, function (isOpen) {
       (void 0) /* console.debug */;
@@ -528,6 +541,12 @@ export var Menu = (function () {
    */
   Menu.prototype.width = function () {
     return this.getMenuElement().offsetWidth;
+  };
+  /**
+   * @private
+   */
+  Menu.prototype.height = function () {
+    return this.getMenuElement().offsetHeight;
   };
   /**
    * @private

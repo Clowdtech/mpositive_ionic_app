@@ -230,7 +230,7 @@ export var MenuController = (function () {
    */
   MenuController.prototype.get = function (menuId) {
     var menu;
-    if (menuId === 'left' || menuId === 'right') {
+    if (menuId === 'left' || menuId === 'right' || menuId === 'top' || menuId === 'bottom') {
       // there could be more than one menu on the same side
       // so first try to get the enabled one
       menu = this._menus.find(function (m) { return m.side === menuId && m.enabled; });
