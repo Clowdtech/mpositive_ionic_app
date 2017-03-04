@@ -18,8 +18,8 @@ export class ProductComponent implements OnInit, OnDestroy {
     products: Array<Product>;
     currency: string = appConfig.defaultCurrency;
 
-    constructor(@Inject(forwardRef(() => ProductService)) private productService, private utils: Utils,
-        private productProvider: ProductProvider) {
+    constructor(@Inject(forwardRef(() => ProductService)) private productService,
+                @Inject(forwardRef(() => Utils)) private utils, private productProvider: ProductProvider) {
     }
 
     selectProduct(product: Product) {

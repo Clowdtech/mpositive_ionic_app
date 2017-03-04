@@ -158,29 +158,8 @@ ion-icon {
   opacity: 1 !important;
 }*/
 ion-backdrop {
-  background: hsla(0,0%,100%,.3);
-  box-shadow: 5px 3px 30px black;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   opacity: 1 !important;
-  &:before {
-    content: '';
-    margin: -35px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    filter: blur(20px);
-    z-index: -1;
-  }
-  &:before {
-    content: '';
-    margin: -35px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    filter: blur(20px);
-    z-index: -1;
-  }
+  background-color: rgba(256, 256, 256, 0.9);
 }

@@ -50,8 +50,8 @@ export class ProductDetailPage {
 
     pickColor(property) {
         let pickColorModal = this.modalCtrl.create(PickColorPage);
-        pickColorModal.onDidDismiss(data => {
-            this.activeProduct[property] = data;
+        pickColorModal.onDidDismiss(color => {
+            if (color) this.activeProduct[property] = color;
         });
         pickColorModal.present();
     }

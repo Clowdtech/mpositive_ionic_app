@@ -33,8 +33,8 @@ export class CategoryDetailPage {
 
   pickColor(property) {
     let pickColorModal = this.modalCtrl.create(PickColorPage);
-    pickColorModal.onDidDismiss(data => {
-      this.activeCategory[property] = data;
+    pickColorModal.onDidDismiss(color => {
+      if (color) this.activeCategory[property] = color;
     });
     pickColorModal.present();
   }

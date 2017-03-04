@@ -24,8 +24,7 @@ export class RecordPaymentPage {
     private payments: Array<PaymentType>;
 
     constructor(private navParams: NavParams, private paymentProvider: PaymentProvider, private utils: Utils,
-                private paymentService: PaymentService, private utils: Utils,
-                private transactionService: TransactionsService) {
+                private paymentService: PaymentService, private transactionService: TransactionsService) {
         this.orders = this.navParams.get('orders').filter((order: OrderItem) => {
             return order.amount > 0;
         });
