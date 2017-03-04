@@ -1,9 +1,8 @@
-import {Component, EventEmitter, Input, Output, OnInit, OnDestroy, forwardRef, Inject} from '@angular/core';
-import {Product} from "./product.class";
-import {Category} from "../category";
-import {AuthProvider, ProductProvider} from "../../providers";
-import {ProductService} from "../../services";
-import {ToastController} from 'ionic-angular';
+import { Component, EventEmitter, Input, Output, OnInit, OnDestroy, forwardRef, Inject } from '@angular/core';
+import { Product } from "./product.class";
+import { Category } from "../category";
+import { AuthProvider, ProductProvider } from "../../providers";
+import { ProductService, Utils } from "../../services";
 import { appConfig } from "../../app/config";
 
 @Component({
@@ -19,8 +18,8 @@ export class ProductComponent implements OnInit, OnDestroy {
     products: Array<Product>;
     currency: string = appConfig.defaultCurrency;
 
-    constructor(@Inject(forwardRef(() => ProductService)) private productService, private toastCtrl: ToastController,
-                private auth: AuthProvider, private productProvider: ProductProvider) {
+    constructor(@Inject(forwardRef(() => ProductService)) private productService, private utils: Utils,
+        private productProvider: ProductProvider) {
     }
 
     selectProduct(product: Product) {
@@ -38,12 +37,7 @@ export class ProductComponent implements OnInit, OnDestroy {
             });
         }
         if (this.products.length === 0) {
-            let toast = this.toastCtrl.create({
-                message: 'This category doesn\'t has any products',
-                duration: 2000,
-                position: 'top'
-            });
-            toast.present();
+            this.utils.showToast('This category doesn\'t has any products')
         }
         return this.products;
     }

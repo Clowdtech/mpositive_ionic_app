@@ -1,23 +1,7 @@
 <!--<vertical-menu></vertical-menu>-->
 
 <ion-menu [content]="content" side="top">
-    <ion-header>
-        <ion-toolbar>
-            <ion-title>Menu</ion-title>
-        </ion-toolbar>
-    </ion-header>
-
-    <ion-content>
-        <ion-list>
-            <button color="dark" ion-item menuClose *ngFor="let p of pages" (click)="openPage(p)">
-                {{p.title}}
-            </button>
-            <button marginTop color="dark" ion-item menuClose (click)="logOut()">
-                Log Out
-            </button>
-        </ion-list>
-    </ion-content>
-
+    <vertical-menu [nav]="nav"></vertical-menu>
 </ion-menu>
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->

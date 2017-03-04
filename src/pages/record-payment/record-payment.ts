@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavParams, ToastController } from 'ionic-angular';
+import { NavParams } from 'ionic-angular';
 import { OrderItem } from "../../components/check-out-list/orderItem.class";
 import { PaymentProvider } from "../../providers";
 import { PaymentService, Utils, TransactionsService } from "../../services";
@@ -24,7 +24,7 @@ export class RecordPaymentPage {
     private payments: Array<PaymentType>;
 
     constructor(private navParams: NavParams, private paymentProvider: PaymentProvider, private utils: Utils,
-                private paymentService: PaymentService, private toastCtrl: ToastController,
+                private paymentService: PaymentService, private utils: Utils,
                 private transactionService: TransactionsService) {
         this.orders = this.navParams.get('orders').filter((order: OrderItem) => {
             return order.amount > 0;

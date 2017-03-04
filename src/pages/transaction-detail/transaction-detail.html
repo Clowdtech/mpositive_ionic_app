@@ -1,13 +1,13 @@
-<ion-content>
-    <ion-item no-padding class="text-left">
+<ion-content padding>
+    <ion-item no-padding class="text-left" margin-bottom>
         <div class="row" *ngFor="let order of transaction?.orders" no-margin>
-            <div class="col-xs-4">
+            <div class="col-xs-4 text-left" no-padding>
                 <p>{{order.name}}</p>
             </div>
-            <div class="col-xs-4 text-center">
+            <div class="col-xs-4 text-center" >
                 <p>{{order.amount}}</p>
             </div>
-            <div class="col-xs-4 text-right">
+            <div class="col-xs-4 text-right" no-paddding>
                 <p>{{currency}}{{order.amount * order.price}}</p>
             </div>
         </div>
@@ -32,8 +32,12 @@
     </div>
 </ion-content>
 <ion-footer padding>
-    <ion-buttons>
-        <button ion-button>Refund</button>
-        <button ion-button>Print</button>
-    </ion-buttons>
+    <div class="row" padding>
+        <div class="col-xs-6">
+            <button class="mp_gradient" round ion-button full>Refund</button>
+        </div>
+        <div class="col-xs-6">
+            <button class="mp_gradient" round ion-button full>Print</button>
+        </div>
+    </div>
 </ion-footer>

@@ -1,22 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { CheckOutPage, MyProductsPage, ProductsHistoryPage, TransactionsHistoryPage, LogInPage } from '../../pages';
+import { AuthProvider } from "../../providers";
+import { NavController } from 'ionic-angular';
 
-/*
-  Generated class for the VerticalMenu component.
-
-  See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
-  for more info on Angular 2 Components.
-*/
 @Component({
   selector: 'vertical-menu',
   templateUrl: 'vertical-menu.html'
 })
 export class VerticalMenuComponent {
 
-  text: string;
+  @Input() nav: NavController;
 
-  constructor() {
-    console.log('Hello VerticalMenu Component');
-    this.text = 'Hello World';
+  pages: Array<{title: string, component: any}>;
+
+  constructor(private auth: AuthProvider) {
+    this.pages = [
+      // { title: 'Checkout', component: CheckOutPage },
+      { title: 'My Products', component: MyProductsPage },
+      { title: 'Product Reports', component: ProductsHistoryPage },
+      { title: 'Transaction Reports', component: TransactionsHistoryPage }
+    ];
+  }
+
+  public openPage(page) {
+    this.nav.setRoot(page.component);
+  }
+
+  public logOut() {
+    this.auth.logOut();
+    this.nav.setRoot(LogInPage);
+  }
+
+  public openCheckout() {
+    this.nav.setRoot(CheckOutPage);
   }
 
 }

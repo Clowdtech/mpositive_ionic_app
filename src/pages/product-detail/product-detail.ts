@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavParams, ModalController, ToastController } from 'ionic-angular';
+import { NavParams, ModalController } from 'ionic-angular';
 import { Product } from "../../components/product";
 import { PickColorPage } from "../";
 import { ProductProvider } from "../../providers";
-import { ProductService } from "../../services";
+import { ProductService, Utils } from "../../services";
 import { PickCategoryPage } from "../";
 import { Category} from "../../components/category";
 import { CategoryService } from "../../services/category.service";
@@ -17,7 +17,7 @@ export class ProductDetailPage {
     private activeProduct: Product;
     private selectedCategory: Category;
 
-    constructor(private toastCtrl: ToastController, private navParams: NavParams, private modalCtrl: ModalController,
+    constructor(private utils: Utils, private navParams: NavParams, private modalCtrl: ModalController,
                 private productProvider: ProductProvider, private productService: ProductService,
                 private categoryService: CategoryService) {
 
@@ -33,24 +33,16 @@ export class ProductDetailPage {
     }
 
     isProductValid() {
-        let toastOpt = {
-            message: '',
-            duration: 3000,
-            position: 'top'
-        };
         if (!this.activeProduct.name) {
-            toastOpt.message = 'Product name missed';
-            this.toastCtrl.create(toastOpt).present();
+            this.utils.showToast('Product name missed');
             return false;
         }
         if (!this.activeProduct.categoryId) {
-            toastOpt.message = 'Please select category for product';
-            this.toastCtrl.create(toastOpt).present();
+            this.utils.showToast('Please select category for product');
             return false;
         }
         if (!this.activeProduct.price) {
-            toastOpt.message = 'Please set price for product';
-            this.toastCtrl.create(toastOpt).present();
+            this.utils.showToast('Please set price for product');
             return false;
         }
         return true;
@@ -69,15 +61,11 @@ export class ProductDetailPage {
             this.productProvider.saveProduct(this.activeProduct).subscribe((res) => {
                 const response = res.json();
                 if (response) {
-                    let toast = this.toastCtrl.create({
-                        message: 'Product saved',
-                        duration: 3000
-                    });
-                    toast.present();
+                    this.utils.showToast('Product saved');
+                    this.activeProduct = new Product(response.uid, response.name, response.description, response.price, response.background_color,
+                        response.font_color, response.category_id, response.created_at);
+                    this.productService.updateProducts(this.activeProduct);
                 }
-                this.activeProduct = new Product(response.uid, response.name, response.description, response.price, response.background_color,
-                    response.font_color, response.category_id, response.created_at);
-                this.productService.updateProducts(this.activeProduct);
             });
         }
     }

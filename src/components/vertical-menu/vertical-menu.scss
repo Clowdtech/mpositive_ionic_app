@@ -1,3 +1,19 @@
 vertical-menu {
-
+  .row {
+    display: flex;
+    height: 50vh;
+    & > div {
+      align-self: center;
+    }
+    .item-md {
+      background-color: transparent;
+    }
+    ion-label {
+      font-size: 2rem;
+      font-weight: 400;
+      text-align: left;
+      padding: .3em 0 .4em;
+    }
+  }
 }
+

@@ -1,8 +1,15 @@
-<!--
-  Generated template for the VerticalMenu component.
-
-  See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
-  for more info on Angular 2 Components.
--->
-
-{{text}}
+<div class="row">
+    <div class="col-xs-3 col-xs-offset-2">
+        <img (click)="openCheckout()" menuClose src="../../assets/checkoutBtn.png" />
+    </div>
+    <div class="col-xs-5 col-xs-offset-2" no-padding>
+        <ion-list>
+            <button class="text-left" ion-item menuClose *ngFor="let p of pages" (click)="openPage(p)">
+                {{p.title}}
+            </button>
+            <button class="text-left" marginTop ion-item menuClose (click)="logOut()">
+                Log Out
+            </button>
+        </ion-list>
+    </div>
+</div>
