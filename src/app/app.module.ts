@@ -15,6 +15,7 @@ import { requestOptionsProvider, AuthProvider, CategoryProvider, ProductProvider
 import { CategoryService, ProductService, CheckoutService, PaymentService, Utils, TransactionsService } from "../services";
 import { ScrollHeight } from "../components/scroll-height/scroll-height";
 import { ConvertUnits } from "../pipes";
+import { CloseModal } from "../components/close-modal/close-modal";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ConvertUnits } from "../pipes";
     CategoryComponent,
     KeypadComponent,
     ProductComponent,
-    ScrollHeight
+    ScrollHeight,
+    CloseModal
   ],
   imports: [
     IonicModule.forRoot(MyApp, {
