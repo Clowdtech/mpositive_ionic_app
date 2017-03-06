@@ -26,9 +26,7 @@ export class ScrollHeight implements OnInit{
     }, 0);
   }
 
-  constructor(private el: ElementRef) {
-    console.log('constructor');
-  }
+  constructor(private el: ElementRef) {}
 
   ngOnInit() {
 

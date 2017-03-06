@@ -63,8 +63,8 @@ export class RecordPaymentPage {
             );
     }
 
-    keypadUpdated(keypadValue: { integer: number, float: number }) {
-        this.paymentTotal = parseFloat(`${keypadValue.integer}.${keypadValue.float}`);
+    keypadUpdated(keypadValue: number) {
+        this.paymentTotal = keypadValue;
     }
 
     ionViewCanEnter() {

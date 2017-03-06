@@ -21,8 +21,8 @@ export class CheckOutPage {
   private customProductName: string;
   private currency: string = appConfig.defaultCurrency;
 
-  private checkoutPrice: number = 0;
-  private customPrice: number = 0;
+  private checkoutPrice: number = 0.00;
+  private customPrice: number = 0.00;
 
   private orders: Array<OrderItem>;
 
@@ -34,8 +34,8 @@ export class CheckOutPage {
     this.checkOutListComponent.productSelected(product);
   }
 
-  keypadUpdated(keypadValue: { integer: number, float: number }) {
-    this.customPrice = parseFloat(`${keypadValue.integer}.${keypadValue.float}`);
+  keypadUpdated(keypadValue: number) {
+    this.customPrice = keypadValue;
   }
   addCustomProduct() {
     if (!this.customPrice && !this.customProductName) return;
@@ -54,7 +54,7 @@ export class CheckOutPage {
   calcTotalPrice() {
     this.checkoutPrice = 0;
     this.orders.forEach((orderItem: OrderItem) => {
-      this.checkoutPrice += parseFloat(orderItem.price) * orderItem.amount
+      this.checkoutPrice += parseFloat(orderItem.price) * orderItem.amount;
     });
   }
 

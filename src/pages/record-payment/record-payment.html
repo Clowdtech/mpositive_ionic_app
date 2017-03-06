@@ -11,7 +11,7 @@
         <div class="col-xs-8" no-padding>
             <div>
                 <ion-toolbar>
-                    <ion-title>Total: {{currency}}{{checkoutPrice}}</ion-title>
+                    <ion-title>Total: {{currency}}{{checkoutPrice.toFixed(2)}}</ion-title>
                 </ion-toolbar>
                 <ion-segment [(ngModel)]="activePayment.name">
                     <ion-segment-button (ionSelect)="selectPayment(payment)" *ngFor="let payment of payments"
