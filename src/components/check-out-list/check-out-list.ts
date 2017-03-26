@@ -46,7 +46,7 @@ export class CheckOutListComponent implements OnInit {
 
     clearOrders() {
         this.orderItems = [];
-        this.checkoutService.setOrders([]);
+        this.checkoutService.clearOrders();
         this.ordersChanged.emit(this.orderItems);
     }
 

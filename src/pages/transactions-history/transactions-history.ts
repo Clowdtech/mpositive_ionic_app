@@ -24,7 +24,7 @@ export class TransactionsHistoryPage {
         return this.compareDates(date, transDate);
       });
       if (!dateInHistory) this.dates.push(transDate);
-      return new Transaction(trans.timestamp, trans.paymentType, trans.total, trans.orders);
+      return new Transaction(trans.timestamp, trans.paymentType, trans.total, trans.paidTotal, trans.orders);
     });
     this.filterByDate(new Date());
     this.dates.reverse();

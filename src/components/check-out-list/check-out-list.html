@@ -9,7 +9,7 @@
     </ion-navbar>
     <ion-scroll scrollY="true" scroll-height [calcHeight]="['header']">
         <div padding>
-            <div class="row" *ngFor="let orderItem of orderItems" no-margin>
+            <div class="row" *ngFor="let orderItem of orderItems" no-margin [hidden]="!orderItem.amount">
                 <div class="col-xs-7">
                     <p><strong no-padding>{{orderItem.name}}</strong></p>
                     <p>{{orderItem.currency}}{{orderItem.price}}</p>

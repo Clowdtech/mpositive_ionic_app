@@ -23,5 +23,10 @@ export class CheckoutService {
         return orders ? JSON.parse(orders) : [];
     }
 
+    clearOrders() {
+        this.orderItems = [];
+        window.localStorage.removeItem(this.storagePath);
+    }
+
 
 }

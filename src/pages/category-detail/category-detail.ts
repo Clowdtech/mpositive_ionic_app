@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { NavParams, ModalController } from 'ionic-angular';
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { NavParams, ModalController, NavController } from 'ionic-angular';
 import { Category } from "../../components/category/category.class";
 import { Product } from "../../components/product";
-import { PickColorPage } from "../pick-color/pick-color";
+import { PickColorPage, UpdatedPage } from "../";
 import { CategoryProvider } from "../../providers";
 import { CategoryService, Utils } from "../../services";
 
@@ -15,7 +15,9 @@ export class CategoryDetailPage {
   private activeCategory: Category;
 
   constructor(private utils: Utils, private navParams: NavParams, private modalCtrl: ModalController,
-      private categoryProvider: CategoryProvider, private categoryService: CategoryService) {
+    private categoryProvider: CategoryProvider, private categoryService: CategoryService, private nav: NavController,
+    private ref: ChangeDetectorRef) {
+
     this.activeCategory = navParams.get('activeCategory') || CategoryDetailPage.generateNewCategory();
   }
 
@@ -47,10 +49,20 @@ export class CategoryDetailPage {
     this.categoryProvider.saveCategory(this.activeCategory).subscribe((res) => {
       const response = res.json();
       if (response) {
-        this.utils.showToast('Category saved');
+        this.success(response);
       }
-      this.activeCategory = new Category(response.uid, response.name, response.background_color, response.font_color, response.active);
-      this.categoryService.updateCategories(this.activeCategory);
+    });
+  }
+
+  success(response) {
+    const savedCategory = new Category(response.uid, response.name, response.background_color, response.font_color, response.active);
+    this.categoryService.updateCategories(savedCategory);
+    this.nav.push(UpdatedPage, {
+      type: 'category'
+    }).then(() => {
+      this.activeCategory = CategoryDetailPage.generateNewCategory();
+      this.ref.reattach();
+      this.ref.detectChanges();
     });
   }
 

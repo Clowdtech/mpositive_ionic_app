@@ -9,3 +9,5 @@ export * from "./transactions-history/transactions-history";
 export * from "./transaction-detail/transaction-detail";
 export * from "./products-history/products-history";
 export * from "./log-in/log-in";
+export * from "./result-page/result-page";
+export * from "./updated-page/updated-page";

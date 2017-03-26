@@ -1,4 +1,5 @@
 <ion-header id="productHistHeader">
+    <img src="../assets/logo.png" />
     <ion-navbar padding>
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
@@ -35,7 +36,7 @@
             <div class="col-xs-12" margin-bottom>
                 <p class="report-header">
                   <strong>{{activeDate | date}}</strong>
-                  <strong class="pull-right">Total: {{currency}}{{getTotal()}}</strong>
+                  <strong class="pull-right">Total: {{currency}}{{getTotal().toFixed(2)}}</strong>
                 </p>
             </div>
             <div class="col-xs-4">
@@ -57,7 +58,7 @@
                     <span>{{product.amount}}</span>
                 </div>
                 <div class="col-xs-4 text-center">
-                    <span>{{currency}}{{product.price * product.amount}}</span>
+                    <span>{{currency}}{{(product.price * product.amount).toFixed(2)}}</span>
                 </div>
             </div>
         </ion-scroll>

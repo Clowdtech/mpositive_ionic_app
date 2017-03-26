@@ -1,18 +1,25 @@
 import { Component } from '@angular/core';
-import { NavParams } from 'ionic-angular';
+import { NavParams, NavController } from 'ionic-angular';
 import { OrderItem } from "../../components/check-out-list/orderItem.class";
 import { PaymentProvider } from "../../providers";
-import { PaymentService, Utils, TransactionsService } from "../../services";
+import { PaymentService, Utils, TransactionsService, CheckoutService } from "../../services";
 import { PaymentType } from "./payment";
 import { appConfig } from "../../app/config";
 import { PaymentData } from "./paymentData.class";
 import { Transaction } from "../transactions-history/transaction.class";
+import { ResultPage } from "../";
 
 @Component({
     selector: 'page-record-payment',
     templateUrl: 'record-payment.html'
 })
 export class RecordPaymentPage {
+
+    private DEFAULT_PAYMENTS = {
+        CARD: 'Card',
+        CASH: 'Cash',
+        OTHER: 'Other'
+    };
 
     private checkoutPrice: number;
     private paymentTotal: number = 0;
@@ -24,7 +31,8 @@ export class RecordPaymentPage {
     private payments: Array<PaymentType>;
 
     constructor(private navParams: NavParams, private paymentProvider: PaymentProvider, private utils: Utils,
-                private paymentService: PaymentService, private transactionService: TransactionsService) {
+                private paymentService: PaymentService, private transactionService: TransactionsService,
+                private nav: NavController, private checkoutService: CheckoutService) {
         this.orders = this.navParams.get('orders').filter((order: OrderItem) => {
             return order.amount > 0;
         });
@@ -46,7 +54,7 @@ export class RecordPaymentPage {
     }
 
     recordPayment() {
-        if (this.activePayment.name !== 'Card' && (this.paymentTotal < this.checkoutPrice || !this.paymentTotal)) {
+        if (this.activePayment.name !== this.DEFAULT_PAYMENTS.CARD && (this.paymentTotal < this.checkoutPrice || !this.paymentTotal)) {
             this.utils.showToast('Please type correct received total value');
             return;
         }
@@ -54,10 +62,7 @@ export class RecordPaymentPage {
             .subscribe(
                 data => {
                     if (data.json().success) {
-                        this.transactionService.saveTransaction(
-                            new Transaction(Date.now(), this.activePayment.name, this.checkoutPrice, this.orders)
-                        );
-                        this.utils.showToast('Payment successfully recorded');
+                        this.paymentSuccess();
                     }
                 }, error =>  console.log(error.json())
             );
@@ -65,6 +70,15 @@ export class RecordPaymentPage {
 
     keypadUpdated(keypadValue: number) {
         this.paymentTotal = keypadValue;
+    }
+
+    private paymentSuccess() {
+        const change = this.paymentTotal > 0 ? this.paymentTotal - this.checkoutPrice : 0;
+        this.checkoutService.clearOrders();
+        this.transactionService.saveTransaction(
+            new Transaction(Date.now(), this.activePayment.name, this.checkoutPrice, this.paymentTotal, this.orders)
+        );
+        this.nav.push(ResultPage, { change });
     }
 
     ionViewCanEnter() {
