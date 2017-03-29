@@ -9,6 +9,7 @@ export class KeypadComponent implements OnDestroy, OnInit{
   @Output() keypadUpdated = new EventEmitter();
 
   numbers: Array<Number>;
+  number: number;
   numeric: { integer: number, float: number } = this.clear();
   toFloat: boolean = false;
   zeroForFloat: boolean = false;
@@ -19,34 +20,28 @@ export class KeypadComponent implements OnDestroy, OnInit{
   }
 
   addNumber(number) {
-    if (this.toFloat) {
-      if (this.numeric.float.toString().length == 4) return;
-      this.numeric.float = (!this.zeroForFloat && this.numeric.float == 0)
-          ? (number === 0 ? 0.0 : 1/10 * number) : this.numeric.float + 1/100 * number;
-      if (number === 0) this.zeroForFloat = true;
+    if (this.number == 0) {
+      this.number = (1/100 * number)
     } else {
-      this.numeric.integer = this.numeric.integer * 10 + number;
+      this.number = this.number * 10 + 0.01 * number;
     }
     this.keypadUpdated.emit(this.calcNumber());
   }
 
-  changeToFloat(toFloat) {
-    this.toFloat = toFloat;
+  multiply(number) {
+    if (this.number === 0) return;
+    this.number *= number;
+    this.keypadUpdated.emit(this.calcNumber());
   }
 
   clear() {
-    this.numeric = {
-      integer: 0,
-      float: 0
-    };
+    this.number = 0.00;
     this.keypadUpdated.emit(this.calcNumber());
-    this.zeroForFloat = false;
-    this.changeToFloat(false);
     return this.numeric;
   }
 
   calcNumber() {
-    return (this.numeric.integer + this.numeric.float).toFixed(2);
+    return this.number.toFixed(2);
   }
 
   ngOnInit() {

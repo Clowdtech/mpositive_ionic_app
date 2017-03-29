@@ -9,8 +9,8 @@ page-check-out {
   keypad {
     & + .row{
       button {
-        font-size: 2.3rem;
-        height: 5.3rem;
+        font-size: 2.5rem;
+        height: 6.1rem;
         color: #000;
         text-transform: none;
       }
@@ -22,8 +22,13 @@ page-check-out {
       margin: 6px 8px 6px 8px;
     }
   }
-  ion-segment {
-    /*margin-bottom: 20px;*/
+  .segment-md {
+    .segment-button {
+      opacity: 0.3;
+      &.segment-activated, &.activated {
+        opacity: 1;
+      }
+    }
   }
   .item-has-focus {
     .item-inner {

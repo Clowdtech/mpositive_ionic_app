@@ -1,5 +1,5 @@
 <ion-header id="header">
-    <img src="../assets/logo.png" />
+    <img src="assets/logo.png" />
     <ion-navbar padding>
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
@@ -15,38 +15,40 @@
         </div>
         <div class="col-xs-8" no-padding>
             <ion-segment [(ngModel)]="segment" padding>
-                <ion-segment-button value="category">
+                <ion-segment-button value="category" (ionSelect)="slidePrev()">
                     Catalog
                 </ion-segment-button>
-                <ion-segment-button value="keypad">
+                <ion-segment-button value="keypad"  (ionSelect)="slideNext()">
                     Keypad
                 </ion-segment-button>
             </ion-segment>
             <ion-scroll scroll-height [calcHeight]="['header', 'chargeBtn']" scrollY="true">
-                    <div [ngSwitch]="segment">
-                        <category *ngSwitchCase="'category'" (productSelected)="productSelected($event)"></category>
-                        <div *ngSwitchCase="'keypad'">
-                            <div class="row">
-                                <div class="col-xs-4 col-xs-offset-4">
-                                    <ion-item>
-                                        <ion-input type="text" #label placeholder="Add label here..."
-                                                   (keyup)="setCustomName(label.value)" label.value=''></ion-input>
-                                    </ion-item>
-                                </div>
+                <ion-slides (ionSlideDidChange)="slideChanged()">
+                    <ion-slide>
+                        <category (productSelected)="productSelected($event)"></category>
+                    </ion-slide>
+                    <ion-slide>
+                        <div class="row">
+                            <div class="col-xs-4 col-xs-offset-4">
+                                <ion-item>
+                                    <ion-input type="text" #label placeholder="Add label here..."
+                                               (keyup)="setCustomName(label.value)" label.value=''></ion-input>
+                                </ion-item>
                             </div>
-                            <div class="keypad_wrap">
-                                <keypad (keypadUpdated)="keypadUpdated($event)"></keypad>
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <button (click)="addCustomProduct()" clear ion-button full>
-                                            Add: {{currency}}{{customPrice}}
-                                        </button>
-                                    </div>
+                        </div>
+                        <div class="keypad_wrap">
+                            <keypad (keypadUpdated)="keypadUpdated($event)"></keypad>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <button (click)="addCustomProduct()" clear ion-button full>
+                                        Add: {{currency}}{{customPrice}}
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </ion-scroll>
+                    </ion-slide>
+                </ion-slides>
+            </ion-scroll>
             <button id="chargeBtn" class="mp_gradient" (click)="charge()" ion-button full>Charge: {{currency}}{{checkoutPrice.toFixed(2)}}</button>
         </div>
     </div>

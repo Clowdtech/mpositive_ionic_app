@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { Component, ViewChild, forwardRef, Inject } from '@angular/core';
+import { NavController, Slides } from 'ionic-angular';
 import { appConfig } from "../../app/config";
 import { CheckOutListComponent } from "../../components/check-out-list";
 import { Product } from "../../components/product";
@@ -14,8 +14,8 @@ import { Utils } from "../../services";
 })
 export class CheckOutPage {
 
-  @ViewChild(CheckOutListComponent)
-  private checkOutListComponent: CheckOutListComponent;
+  @ViewChild(CheckOutListComponent) checkOutListComponent : CheckOutListComponent;
+  @ViewChild(Slides) slides: Slides;
 
   private segment: string;
   private customProductName: string;
@@ -67,6 +67,26 @@ export class CheckOutPage {
       orders: this.orders,
       checkoutPrice: this.checkoutPrice
     })
+  }
+
+  slidePrev() {
+    this.slides.slideTo(0);
+  }
+
+  slideNext() {
+    this.slides.slideTo(1);
+  }
+
+  slideChanged() {
+    const ind = this.slides.getActiveIndex();
+    switch (ind) {
+      case 0:
+        this.segment = 'category';
+        break;
+      case 1:
+        this.segment = 'keypad';
+        break;
+    }
   }
 
 }
