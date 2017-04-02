@@ -1,4 +1,4 @@
-import { Component, ViewChild, forwardRef, Inject } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController, Slides } from 'ionic-angular';
 import { appConfig } from "../../app/config";
 import { CheckOutListComponent } from "../../components/check-out-list";
@@ -17,9 +17,10 @@ export class CheckOutPage {
   @ViewChild(CheckOutListComponent) checkOutListComponent : CheckOutListComponent;
   @ViewChild(Slides) slides: Slides;
 
+  currency: string = appConfig.defaultCurrency;
+
   private segment: string;
   private customProductName: string;
-  private currency: string = appConfig.defaultCurrency;
 
   private checkoutPrice: number = 0.00;
   private customPrice: number = 0.00;

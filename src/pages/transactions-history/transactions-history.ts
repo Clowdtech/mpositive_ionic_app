@@ -15,7 +15,7 @@ export class TransactionsHistoryPage {
   transactions: Array<Transaction>;
   filteredTransactions: Array<Transaction>;
   activeDate: Date;
-  private currency: string = appConfig.defaultCurrency;
+  currency: string = appConfig.defaultCurrency;
 
   constructor(private transactionService: TransactionsService, private modalCtrl: ModalController) {
     this.transactions = this.transactionService.getTransactions().map(trans => {

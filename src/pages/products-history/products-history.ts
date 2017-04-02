@@ -15,7 +15,7 @@ export class ProductsHistoryPage {
   filteredTransactions: Array<Transaction>;
   filteredProducts: Array<OrderItem>;
   activeDate: Date;
-  private currency: string = appConfig.defaultCurrency;
+  currency: string = appConfig.defaultCurrency;
 
   constructor(private transactionService: TransactionsService) {
     this.transactions = this.transactionService.getTransactions().map(trans => {

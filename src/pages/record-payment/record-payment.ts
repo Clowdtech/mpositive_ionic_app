@@ -15,6 +15,8 @@ import { ResultPage } from "../";
 })
 export class RecordPaymentPage {
 
+    currency: string = appConfig.defaultCurrency;
+
     private DEFAULT_PAYMENTS = {
         CARD: 'Card',
         CASH: 'Cash',
@@ -23,7 +25,6 @@ export class RecordPaymentPage {
 
     private checkoutPrice: number;
     private paymentTotal: number = 0;
-    private currency: string = appConfig.defaultCurrency;
 
     private activePayment: PaymentType;
 

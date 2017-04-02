@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnDestroy, forwardRef, Inject } from '@angular/core';
 import { Product } from "./product.class";
 import { Category } from "../category";
-import { AuthProvider, ProductProvider } from "../../providers";
+import { ProductProvider } from "../../providers";
 import { ProductService, Utils } from "../../services";
 import { appConfig } from "../../app/config";
 

@@ -26,11 +26,10 @@ export class AuthProvider {
                 this.uid = res.uid;
                 this.token = res.token;
                 this.utils.showToast('Authorization succeeded');
-                resolve();
+                resolve(res);
             },
             error => {
-                console.log(error.json());
-                reject();
+                reject(error.json());
             }
         );
       });

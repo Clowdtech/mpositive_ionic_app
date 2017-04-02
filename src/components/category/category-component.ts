@@ -3,7 +3,6 @@ import { NavController } from 'ionic-angular';
 import { CategoryService } from "../../services";
 import { Category } from "./category.class";
 import { CategoryProvider } from "../../providers";
-import { AuthProvider } from "../../providers";
 import { CategoryDetailPage } from "../../pages";
 
 @Component({
