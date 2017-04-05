@@ -1,0 +1,21 @@
+<div class="flex_cont">
+    <div>
+        <img src="../assets/okBtn.png"/>
+        <p>Payment Recorded</p>
+        <div class="lined">
+            <p>Change Required:</p>
+            <p><strong>{{currency}}{{change.toFixed(2)}}</strong></p>
+        </div>
+        <p>
+            Would you like to print a receipt?
+        </p>
+        <ion-buttons end>
+            <button color="light" ion-button round>
+                Yes, print a receipt
+            </button>
+            <button color="light" (click)="back()" ion-button round>
+                No, return to checkout
+            </button>
+        </ion-buttons>
+    </div>
+</div>

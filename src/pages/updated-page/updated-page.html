@@ -1,0 +1,17 @@
+<div class="flex_cont">
+  <div>
+    <img src="../assets/okBtn.png"/>
+    <p><span class="type">{{type}}</span> Saved</p>
+    <p>
+      Would you like to to create a new {{type}}?
+    </p>
+    <ion-buttons end>
+      <button (click)="reopen()" color="light" ion-button round>
+        Yes, create a new {{type}}
+      </button>
+      <button (click)="back()" color="light" ion-button round>
+        Return
+      </button>
+    </ion-buttons>
+  </div>
+</div>

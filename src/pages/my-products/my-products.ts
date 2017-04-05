@@ -38,7 +38,7 @@ export class MyProductsPage{
   }
 
   openCreatePage() {
-    this.navCtrl.push(this.navButton.page);
+    //this.navCtrl.push(this.navButton.page);
   }
 
   productSelected(product: Product) {

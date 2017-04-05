@@ -1,0 +1,6 @@
+updated-page {
+  @extend .confirm-block;
+  .type {
+    text-transform: capitalize;
+  }
+}
