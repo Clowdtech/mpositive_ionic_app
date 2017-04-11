@@ -1,58 +1,51 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Platform, Nav } from 'ionic-angular';
-//import { StatusBar, Splashscreen } from 'ionic-native';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
 import { CheckOutPage, LogInPage } from '../pages';
 import { AuthProvider, SyncProvider } from "../providers";
-/*import { Network } from '@ionic-native/network';*/
 
 @Component({
   templateUrl: 'app.html',
 })
-export class MyApp implements OnInit{
+export class MyApp implements OnInit {
 
   @ViewChild(Nav) nav: Nav;
   rootPage: Component;
 
-  constructor(public platform: Platform, private auth: AuthProvider, private syncProvider: SyncProvider/*,
-              private network: Network*/) {
+  public splashScreen: SplashScreen;
+  public statusBar: StatusBar;
+
+  constructor(public platform: Platform, private auth: AuthProvider, private syncProvider: SyncProvider) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      //StatusBar.styleDefault();
-      //Splashscreen.hide();
+      if (this.statusBar) this.statusBar.styleDefault();
+      if (this.splashScreen) this.splashScreen.hide();
     });
   }
 
   ngOnInit() {
+    if (!this.auth.hasCredentials()) {
+      // log out user if he wasn't logged in last time
+      this.rootPage = LogInPage;
+      return;
+    }
 
-/*    let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
-      console.log('network was disconnected :-(');
-    });
-
-    let connectSubscription = this.network.onConnect().subscribe(() => {
-      console.log('network connected!');
-      // We just got a connection but we need to wait briefly
-      // before we determine the connection type.  Might need to wait 
-      // prior to doing any api requests as well.
-      setTimeout(() => {
-        if (this.network.type === 'wifi') {
-          console.log('we got a wifi connection, woohoo!');
-        }
-      }, 3000);
-    });*/
-
-    if (this.auth.hasCredentials()) {
-      this.auth.makeAuth().then(() => {
+    // auth user just if internet connection is available
+    if (navigator.onLine) {
+      this.auth.authPromise.then(() => {
         this.syncProvider.checkChanges().setSync();
         this.rootPage = CheckOutPage;
+      }, () => {
+        // log out user if error received during auth
+        this.rootPage = LogInPage;
       });
     } else {
-      this.rootPage = LogInPage;
+      // open Check out page if no internet with limited access to app
+      this.rootPage = CheckOutPage;
     }
   }
-
 }

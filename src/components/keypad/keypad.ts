@@ -25,32 +25,28 @@ export class KeypadComponent implements OnDestroy, OnInit{
     } else {
       this.number = this.number * 10 + 0.01 * number;
     }
-    this.keypadUpdated.emit(this.calcNumber());
+    this.keypadUpdated.emit(this.number);
   }
 
   multiply(number) {
     if (this.number === 0) return;
     this.number *= number;
-    this.keypadUpdated.emit(this.calcNumber());
+    this.keypadUpdated.emit(this.number);
   }
 
   clear() {
     this.number = 0.00;
-    this.keypadUpdated.emit(this.calcNumber());
+    this.keypadUpdated.emit(this.number);
     return this.numeric;
   }
 
-  calcNumber() {
-    return this.number.toFixed(2);
-  }
-
   ngOnInit() {
-    this.keypadUpdated.emit(this.calcNumber());
+    this.keypadUpdated.emit(this.number);
   };
 
   ngOnDestroy() {
     this.clear();
-    this.keypadUpdated.emit(this.calcNumber());
+    this.keypadUpdated.emit(this.number);
   }
 
 }

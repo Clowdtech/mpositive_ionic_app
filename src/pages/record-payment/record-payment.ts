@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { NavParams, NavController } from 'ionic-angular';
 import { OrderItem } from "../../components/check-out-list/orderItem.class";
-import { PaymentProvider } from "../../providers";
-import { PaymentService, Utils, TransactionsService, CheckoutService } from "../../services";
+import { PaymentProvider, AuthProvider } from "../../providers";
+import { PaymentService, Utils, TransactionsService, CheckoutService, NetworkService } from "../../services";
 import { PaymentType } from "./payment";
 import { appConfig } from "../../app/config";
 import { PaymentData } from "./paymentData.class";
@@ -13,9 +13,10 @@ import { ResultPage } from "../";
     selector: 'page-record-payment',
     templateUrl: 'record-payment.html'
 })
-export class RecordPaymentPage {
+export class RecordPaymentPage implements OnDestroy {
 
     currency: string = appConfig.defaultCurrency;
+    payments: Array<PaymentType>;
 
     private DEFAULT_PAYMENTS = {
         CARD: 'Card',
@@ -25,29 +26,36 @@ export class RecordPaymentPage {
 
     private checkoutPrice: number;
     private paymentTotal: number = 0;
-
+    private connectSub;
     private activePayment: PaymentType;
 
     protected orders: Array<OrderItem>;
-    private payments: Array<PaymentType>;
 
     constructor(private navParams: NavParams, private paymentProvider: PaymentProvider, private utils: Utils,
                 private paymentService: PaymentService, private transactionService: TransactionsService,
-                private nav: NavController, private checkoutService: CheckoutService) {
+                private nav: NavController, private checkoutService: CheckoutService,
+                private networkService: NetworkService,
+                private auth: AuthProvider) {
+
         this.orders = this.navParams.get('orders').filter((order: OrderItem) => {
             return order.amount > 0;
         });
         this.checkoutPrice = this.navParams.get('checkoutPrice');
+
+        this.connectSub = this.networkService.connectSubscription.subscribe(() => {
+            this.auth.authPromise.then(() => {
+                this.getPayments();
+            });
+        });
     }
 
     getPayments() {
-        const payments = this.paymentService.getPayments() || null;
-        if (payments && payments.length > 0) {
+        return this.paymentService.getPayments().then((payments: Array<PaymentType>) => {
             this.activePayment = payments[0];
             this.payments = payments;
-            return this.payments;
-        }
-        return null;
+        }, error => {
+            console.log(error);
+        });
     }
 
     selectPayment(payment: PaymentType) {
@@ -59,11 +67,16 @@ export class RecordPaymentPage {
             this.utils.showToast('Please type correct received total value');
             return;
         }
-        this.paymentProvider.registerPayment(new PaymentData(this.orders, this.checkoutPrice, this.activePayment))
+        if (!navigator.onLine) {
+            // save transaction to storage and mark as not sync
+            this.paymentSuccess(false);
+            return;
+        }
+        this.paymentService.registerPayment(new PaymentData(this.orders, this.checkoutPrice, this.activePayment))
             .subscribe(
                 data => {
                     if (data.json().success) {
-                        this.paymentSuccess();
+                        this.paymentSuccess(true);
                     }
                 }, error =>  console.log(error.json())
             );
@@ -73,23 +86,20 @@ export class RecordPaymentPage {
         this.paymentTotal = keypadValue;
     }
 
-    private paymentSuccess() {
+    private paymentSuccess(synced: boolean) {
         const change = this.paymentTotal > 0 ? this.paymentTotal - this.checkoutPrice : 0;
         this.checkoutService.clearOrders();
         this.transactionService.saveTransaction(
-            new Transaction(Date.now(), this.activePayment.name, this.checkoutPrice, this.paymentTotal, this.orders)
+            new Transaction(Date.now(), this.activePayment, this.checkoutPrice, this.paymentTotal, this.orders, synced)
         );
         this.nav.push(ResultPage, { change });
     }
 
     ionViewCanEnter() {
-        // TODO try not use promise but return true/false or use toPromise
-        // this.nav.push(PAGE).catch(()=>{});
-        return this.paymentProvider.getPayments().then(
-            (data) => {
-                this.paymentService.setPayments(data);
-                this.getPayments();
-            }
-        );
+        return this.getPayments();
+    }
+
+    ngOnDestroy() {
+        this.connectSub.unsubscribe();
     }
 }

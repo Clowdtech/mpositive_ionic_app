@@ -31,8 +31,8 @@
                         <div class="row">
                             <div class="col-xs-4 col-xs-offset-4">
                                 <ion-item>
-                                    <ion-input type="text" #label placeholder="Add label here..."
-                                               (keyup)="setCustomName(label.value)" label.value=''></ion-input>
+                                    <ion-input type="text" placeholder="Add label here..."
+                                       [(ngModel)]="customProductName"></ion-input>
                                 </ion-item>
                             </div>
                         </div>
@@ -41,7 +41,7 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <button (click)="addCustomProduct()" clear ion-button full>
-                                        Add: {{currency}}{{customPrice}}
+                                        Add: {{currency}}{{customPrice.toFixed(2)}}
                                     </button>
                                 </div>
                             </div>

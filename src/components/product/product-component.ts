@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnDestroy, forwardRef, Inject } from '@angular/core';
 import { Product } from "./product.class";
 import { Category } from "../category";
-import { ProductProvider } from "../../providers";
-import { ProductService, Utils } from "../../services";
+import { ProductService, Utils, NetworkService } from "../../services";
 import { appConfig } from "../../app/config";
+import {AuthProvider} from "../../providers/auth.provider";
 
 @Component({
     selector: 'product',
@@ -18,42 +18,62 @@ export class ProductComponent implements OnInit, OnDestroy {
     products: Array<Product>;
     currency: string = appConfig.defaultCurrency;
 
+    private connectSub;
+
     constructor(@Inject(forwardRef(() => ProductService)) private productService,
-                @Inject(forwardRef(() => Utils)) private utils, private productProvider: ProductProvider) {
+                @Inject(forwardRef(() => Utils)) private utils,
+                @Inject(forwardRef(() => NetworkService)) private networkService,
+                @Inject(forwardRef(() => AuthProvider)) private auth) {
+
+        // subscribe to connection becomes available to get latest products
+        this.connectSub = this.networkService.connectSubscription.subscribe(() => {
+            this.auth.authPromise.then(() => {
+                this.getProducts();
+            });
+        });
     }
 
+    /**
+     * Emit event to parent component when product is selected
+     * @param product
+     */
     selectProduct(product: Product) {
         this.productSelected.emit(product);
     }
 
+    /**
+     * show all products or products for certain category
+     * @returns {any}
+     */
     getProducts() {
-        let products = this.productService.getProducts();
-        if (!products) return null;
-        if (this.showAll) {
-            this.products = products;
-        } else {
-            this.products = products.filter((product) => {
-                return product.categoryId === this.activeCategory.uid;
-            });
-        }
-        if (this.products.length === 0) {
-            this.utils.showToast('This category doesn\'t has any products')
-        }
-        return this.products;
+        this.productService.getProducts().then(products => {
+            if (this.showAll) {
+                this.products = products;
+            } else {
+                this.products = products.filter((product) => {
+                    return product.categoryId === this.activeCategory.uid;
+                });
+            }
+            if (this.products.length === 0) {
+                this.utils.showToast('This category doesn\'t has any products')
+            }
+        });
     }
 
+    /**
+     * Get products from service when component init
+     */
     ngOnInit(): void {
-        if (!this.getProducts()) {
-            this.productProvider.getProducts().subscribe(
-                (data) => {
-                    this.productService.setProducts(data.json());
-                    this.getProducts();
-                }
-            );
-        }
+        this.getProducts();
     }
 
+    /**
+     * Remove listeners and unsubscribe from events
+     */
     ngOnDestroy() {
+        // remove subscription because component is no longer available
+        // and no
+        this.connectSub.unsubscribe();
         document.removeEventListener('click', this.selectProduct.bind(null, null));
     }
 

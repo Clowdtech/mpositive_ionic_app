@@ -27,7 +27,7 @@
                         </div>
                         <div *ngSwitchDefault margin-top>
                             <ion-toolbar>
-                                <ion-title class="text-center">{{currency}}{{paymentTotal}}</ion-title>
+                                <ion-title class="text-center">{{currency}}{{paymentTotal.toFixed(2)}}</ion-title>
                             </ion-toolbar>
                             <keypad (keypadUpdated)="keypadUpdated($event)"></keypad>
                         </div>

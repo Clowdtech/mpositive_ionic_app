@@ -7,6 +7,7 @@ import { OrderItem } from "../../components/check-out-list";
 import { RecordPaymentPage } from "../";
 import { UUID } from 'angular2-uuid';
 import { Utils } from "../../services";
+import {KeypadComponent} from "../../components/keypad/keypad";
 
 @Component({
   selector: 'page-check-out',
@@ -15,6 +16,7 @@ import { Utils } from "../../services";
 export class CheckOutPage {
 
   @ViewChild(CheckOutListComponent) checkOutListComponent : CheckOutListComponent;
+  @ViewChild(KeypadComponent) keypadComponent : KeypadComponent;
   @ViewChild(Slides) slides: Slides;
 
   currency: string = appConfig.defaultCurrency;
@@ -31,27 +33,53 @@ export class CheckOutPage {
     this.segment = 'category';
   }
 
+  /**
+   * New product selected, so is needed to update check out list
+   * @param product
+   */
   productSelected(product: Product) {
     this.checkOutListComponent.productSelected(product);
   }
 
+  /**
+   * Received new value from keypad
+   * @param keypadValue
+   */
   keypadUpdated(keypadValue: number) {
     this.customPrice = keypadValue;
   }
+
+  /**
+   * Add product typed with keypad
+   */
   addCustomProduct() {
     if (!this.customPrice && !this.customProductName) return;
     this.checkOutListComponent.productSelected(
         new Product(UUID.UUID(), this.customProductName, null, this.customPrice.toString(), null, null, null, null)
     );
-  }
-  setCustomName(name: string) {
-    this.customProductName = name;
+    this.clearCustomProduct();
   }
 
+  /**
+   * Clear custom product after added to orders
+   */
+  clearCustomProduct() {
+    this.customProductName = name;
+    this.keypadComponent.clear();
+  }
+
+  /**
+   * handler when order is changed (listed products, amount)
+   * @param orders
+   */
   ordersChanged(orders: Array<OrderItem>) {
     this.orders = orders;
     this.calcTotalPrice();
   }
+
+  /**
+   * Calculate total price for order
+   */
   calcTotalPrice() {
     this.checkoutPrice = 0;
     this.orders.forEach((orderItem: OrderItem) => {
@@ -59,6 +87,9 @@ export class CheckOutPage {
     });
   }
 
+  /**
+   * Open record payment page with selecting payment type
+   */
   charge() {
     if (!this.checkoutPrice) {
       this.utils.showToast('Please add items to order');
@@ -70,14 +101,23 @@ export class CheckOutPage {
     })
   }
 
+  /**
+   * Slide to catalog page
+   */
   slidePrev() {
     this.slides.slideTo(0);
   }
 
+  /**
+   * Slide to keypad page
+   */
   slideNext() {
     this.slides.slideTo(1);
   }
 
+  /**
+   * Detect when slides changed to highlight correct button
+   */
   slideChanged() {
     const ind = this.slides.getActiveIndex();
     switch (ind) {

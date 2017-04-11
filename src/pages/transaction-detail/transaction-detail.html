@@ -27,7 +27,7 @@
                 <p>Transaction Type</p>
             </div>
             <div class="col-xs-6 text-right">
-                <p>{{transaction.paymentType}}</p>
+                <p>{{transaction.paymentType.name}}</p>
             </div>
         </div>
         <div class="row">
@@ -44,6 +44,14 @@
             </div>
             <div class="col-xs-6 text-right">
                 <p>{{(transaction.paidTotal ? transaction.paidTotal - transaction.total : 0).toFixed(2)}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <p>Synchronized</p>
+            </div>
+            <div class="col-xs-6 text-right">
+                <p>{{(transaction.synced ? 'Yes' : 'No')}}</p>
             </div>
         </div>
     </div>

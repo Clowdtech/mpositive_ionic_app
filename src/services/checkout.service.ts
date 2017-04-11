@@ -9,23 +9,24 @@ export class CheckoutService {
 
     private storagePath: string;
 
-    constructor(auth: AuthProvider) {
-        this.storagePath = `mp_orders_${auth.getUID()}`;
+    constructor(private auth: AuthProvider) {
+        this.storagePath = `mp_orders_`;
     }
 
     setOrders(orderItems: Array<OrderItem>) {
         this.orderItems = orderItems;
-        window.localStorage.setItem(this.storagePath, JSON.stringify(orderItems));
+        if (!this.orderItems) return;
+        window.localStorage.setItem(`${this.storagePath}${this.auth.getKey()}`, JSON.stringify(orderItems));
     }
 
     getOrders() {
-        const orders = window.localStorage.getItem(this.storagePath);
+        const orders = window.localStorage.getItem(`${this.storagePath}${this.auth.getKey()}`);
         return orders ? JSON.parse(orders) : [];
     }
 
     clearOrders() {
         this.orderItems = [];
-        window.localStorage.removeItem(this.storagePath);
+        window.localStorage.removeItem(`${this.storagePath}${this.auth.getKey()}`);
     }
 
 

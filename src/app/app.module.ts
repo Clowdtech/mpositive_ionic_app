@@ -14,10 +14,12 @@ import { ProductComponent } from "../components/product";
 import { KeypadComponent } from "../components/keypad";
 import { requestOptionsProvider, AuthProvider, CategoryProvider, ProductProvider, PaymentProvider,
   SyncProvider } from "../providers";
-import { CategoryService, ProductService, CheckoutService, PaymentService, Utils, TransactionsService } from "../services";
+import { CategoryService, ProductService, CheckoutService, PaymentService, Utils, TransactionsService,
+  NetworkService} from "../services";
 import { ScrollHeight } from "../components/scroll-height/scroll-height";
 import { ConvertUnits } from "../pipes";
 import { CloseModal } from "../components/close-modal/close-modal";
+import { Network } from '@ionic-native/network';
 
 const components: Array<any> = [
   MyApp,
@@ -42,12 +44,14 @@ const components: Array<any> = [
 ];
 
 const providers: Array<any> = [
+  Network,
+  NetworkService,
+  AuthProvider,
   CategoryService,
   ProductService,
   CheckoutService,
   PaymentService,
   TransactionsService,
-  AuthProvider,
   PaymentProvider,
   CategoryProvider,
   ProductProvider,

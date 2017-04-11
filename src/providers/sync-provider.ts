@@ -1,20 +1,37 @@
 import { Injectable, forwardRef, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
-import {appConfig} from "../app/config";
-import {AuthProvider} from "./auth.provider";
+import { appConfig } from "../app/config";
+import { AuthProvider } from "./auth.provider";
+import { NetworkService } from "../services";
 
 @Injectable()
 export class SyncProvider {
 
-  constructor(private http: Http, @Inject(forwardRef(() => AuthProvider)) private auth) {}
+  private syncDelay = 60000;
+
+  constructor(private http: Http, @Inject(forwardRef(() => AuthProvider)) private auth,
+              @Inject(forwardRef(() => NetworkService)) private networkService) {
+
+    this.networkService.connectSubscription.subscribe(() => {
+      this.setSync();
+    });
+
+    this.networkService.disconnectSubscription.subscribe(() => {
+      this.clearSync();
+    });
+  }
 
   private syncInterval: number;
 
   public setSync() {
     this.syncInterval = setInterval(() => {
       this.checkChanges();
-    }, 60000);
+    }, this.syncDelay);
+  }
+
+  public clearSync() {
+    clearInterval(this.syncInterval);
   }
 
   public checkChanges() {
@@ -30,9 +47,7 @@ export class SyncProvider {
   }
 
   private syncData(changes: Array<any>) {
-    changes.forEach(() => {
-
-    });
+    // console.log(changes);
   }
 
 }

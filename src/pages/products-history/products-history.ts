@@ -23,18 +23,22 @@ export class ProductsHistoryPage {
       const dateInHistory = this.dates.some(date => {
         return this.compareDates(date, transDate);
       });
+
       if (!dateInHistory && trans.orders) this.dates.push(transDate);
-      return new Transaction(trans.timestamp, trans.paymentType, trans.total, trans.paidTotal, trans.orders);
+      return new Transaction(trans.timestamp, trans.paymentType, trans.total, trans.paidTotal, trans.orders, trans.synced);
     });
+
     this.filterByDate(new Date());
     this.dates.reverse();
   }
 
   filterByDate(date: Date) {
     this.activeDate = date;
+
     this.filteredTransactions = this.transactions.filter(trans => {
       return this.compareDates(new Date(trans.timestamp), date);
     });
+
     this.filteredProducts = this.filteredTransactions.map(trans => {
       return trans.orders || [];
     }).reduce((prevVal, order) => {
@@ -43,7 +47,6 @@ export class ProductsHistoryPage {
       }
       return order;
     }, []);
-    console.log(this.filteredProducts);
   }
 
   compareDates(dateTo: Date, dateWith: Date) {
