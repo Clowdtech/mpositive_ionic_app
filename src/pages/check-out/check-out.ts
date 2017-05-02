@@ -22,6 +22,7 @@ export class CheckOutPage {
   currency: string = appConfig.defaultCurrency;
 
   private segment: string;
+  private manualTransaction: string = 'manual transaction';
   private customProductName: string;
 
   private checkoutPrice: number = 0.00;
@@ -53,9 +54,8 @@ export class CheckOutPage {
    * Add product typed with keypad
    */
   addCustomProduct() {
-    if (!this.customPrice && !this.customProductName) return;
     this.checkOutListComponent.productSelected(
-        new Product(UUID.UUID(), this.customProductName, null, this.customPrice.toString(), null, null, null, null)
+        new Product(UUID.UUID(), this.customProductName || this.manualTransaction, null, this.customPrice.toFixed(2), null, null, null, null)
     );
     this.clearCustomProduct();
   }

@@ -14,8 +14,8 @@ export class CheckoutService {
     }
 
     setOrders(orderItems: Array<OrderItem>) {
-        this.orderItems = orderItems;
         if (!this.orderItems) return;
+        this.orderItems = orderItems;
         window.localStorage.setItem(`${this.storagePath}${this.auth.getKey()}`, JSON.stringify(orderItems));
     }
 
