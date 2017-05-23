@@ -23,7 +23,7 @@ export class MyProductsPage{
     }
   };
 
-  private navButton: {name: string, page: Component};
+  private navButton: {name: string, page: any};
 
   private segment: string;
   private activeCategory: Category;
@@ -38,7 +38,7 @@ export class MyProductsPage{
   }
 
   openCreatePage() {
-    //this.navCtrl.push(this.navButton.page);
+    this.navCtrl.push(this.navButton.page);
   }
 
   productSelected(product: Product) {

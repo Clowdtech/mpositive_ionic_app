@@ -5,6 +5,7 @@ import { AuthProvider } from "../../providers";
 import { CheckOutPage } from "../check-out/check-out";
 import {Utils} from "../../services/utils";
 import {ProductService, CategoryService, PaymentService} from "../../services";
+import { RegisterPage } from "../";
 
 @Component({
   selector: 'page-log-in',
@@ -18,8 +19,8 @@ export class LogInPage {
               private utils: Utils, private productService: ProductService, private categoryService: CategoryService,
               private paymentService: PaymentService) {
     this.credentials = this.formBuilder.group({
-      access_key: ['8bwyBvZ3', Validators.required],
-      access_secret: ['tmEgGfHK', Validators.required],
+      access_key: ['KHSiPh9m', Validators.required],
+      access_secret: ['YRxLgzi5', Validators.required],
     });
   }
 
@@ -33,5 +34,9 @@ export class LogInPage {
       }, res => {
         this.utils.showToast(res.error);
       });
+  }
+
+  openRegister() {
+    this.nav.setRoot(RegisterPage);
   }
 }

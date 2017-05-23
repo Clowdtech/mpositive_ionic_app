@@ -6,7 +6,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { CheckOutPage, MyProductsPage, CategoryDetailPage, PickColorPage, ProductDetailPage, PickCategoryPage,
   TransactionsHistoryPage ,RecordPaymentPage, TransactionDetailPage, ProductsHistoryPage, LogInPage, ResultPage,
-  UpdatedPage } from '../pages';
+  UpdatedPage, RegisterPage } from '../pages';
 import { CheckOutListComponent } from '../components/check-out-list';
 import { VerticalMenuComponent } from "../components/vertical-menu";
 import { CategoryComponent } from "../components/category";
@@ -36,6 +36,7 @@ const components: Array<any> = [
   LogInPage,
   ResultPage,
   UpdatedPage,
+  RegisterPage,
   CheckOutListComponent,
   VerticalMenuComponent,
   CategoryComponent,

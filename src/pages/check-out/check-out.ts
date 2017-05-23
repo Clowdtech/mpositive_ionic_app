@@ -55,7 +55,7 @@ export class CheckOutPage {
    */
   addCustomProduct() {
     this.checkOutListComponent.productSelected(
-        new Product(UUID.UUID(), this.customProductName || this.manualTransaction, null, this.customPrice.toFixed(2), null, null, null, null)
+        new Product(null, this.customProductName || this.manualTransaction, null, this.customPrice.toFixed(2), null, null, null, null)
     );
     this.clearCustomProduct();
   }

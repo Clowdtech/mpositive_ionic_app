@@ -1,0 +1,69 @@
+<ion-header>
+  <img src="assets/logo.png" />
+  <ion-navbar>
+
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding margin-top>
+  <div class="row">
+    <div class="col-xs-8 col-xs-offset-2 text-center">
+      <form [formGroup]="regData" (ngSubmit)="register()" [ngSwitch]="step">
+
+        <div *ngSwitchCase="steps.email">
+          <h1 margin>Welcome to MPOSITIVE</h1>
+          <p>
+            First time? Enter your email address below to create account, take live transactions
+            and record payments today with MPOSITIVE
+          </p>
+          <div class="inp-cont">
+            <label color="primary">Email Address</label>
+            <input class="text-center" formControlName="email" type="text" placeholder="name@name.com" />
+          </div>
+          <div class="text-center">
+            <button class="mp_gradient" (click)="completeRegisterData()" [disabled]="!email.valid" ion-button full round>Continue</button>
+          </div>
+          <p>Already have an account?<a (click)="openLogin()">Login to device</a></p>
+        </div>
+
+        <div *ngSwitchCase="steps.complete">
+          <p>
+            Great! You're only a few steps away from exploring all the great features MPOSITIVE has to offer...
+          </p>
+          <div class="inp-cont">
+            <label color="primary">Create account password</label>
+            <input class="text-center" formControlName="pass" type="password" />
+          </div>
+          <div class="inp-cont">
+            <label color="primary">First Name</label>
+            <input class="text-center" formControlName="firstName" type="text" />
+          </div>
+          <div class="inp-cont">
+            <label color="primary">Last Name</label>
+            <input class="text-center" formControlName="lastName" type="text" />
+          </div>
+          <div class="inp-cont">
+            <label color="primary">Mobile Number</label>
+            <input class="text-center" formControlName="mobile" type="number" />
+          </div>
+          <div class="inp-cont">
+            <label color="primary">Company Address</label>
+            <input class="text-center" formControlName="address1" type="text" placeholder="Address line 1" />
+            <input class="text-center" formControlName="address2" type="text" placeholder="Address line 2" />
+            <input class="text-center" formControlName="town" type="text" placeholder="Town/City" />
+            <input class="text-center" formControlName="postcode" type="text" placeholder="Postcode" />
+            <input class="text-center" formControlName="country" type="text" placeholder="Country" />
+          </div>
+          <div class="text-center">
+            <button class="mp_gradient" type="submit" [disabled]="!regData.valid" ion-button full round>
+              Create Account
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</ion-content>
