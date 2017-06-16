@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { OrderItem } from "../components/check-out-list";
-import { AuthProvider } from "../providers/auth.provider";
+import { AuthService } from "./auth.service";
 
 @Injectable()
 export class CheckoutService {
@@ -9,7 +9,7 @@ export class CheckoutService {
 
     private storagePath: string;
 
-    constructor(private auth: AuthProvider) {
+    constructor(private auth: AuthService) {
         this.storagePath = `mp_orders_`;
     }
 

@@ -1,8 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NavParams, NavController } from 'ionic-angular';
 import { OrderItem } from "../../components/check-out-list/orderItem.class";
-import { PaymentProvider, AuthProvider } from "../../providers";
-import { PaymentService, Utils, TransactionsService, CheckoutService, NetworkService } from "../../services";
+import { PaymentProvider } from "../../providers";
+import { PaymentService, Utils, TransactionsService, CheckoutService, NetworkService, AuthService } from "../../services";
 import { PaymentType } from "./payment";
 import { appConfig } from "../../app/config";
 import { PaymentData } from "./paymentData.class";
@@ -35,7 +35,7 @@ export class RecordPaymentPage implements OnDestroy {
                 private paymentService: PaymentService, private transactionService: TransactionsService,
                 private nav: NavController, private checkoutService: CheckoutService,
                 private networkService: NetworkService,
-                private auth: AuthProvider) {
+                private auth: AuthService) {
 
         this.orders = this.navParams.get('orders').filter((order: OrderItem) => {
             return order.amount > 0;

@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Network } from '@ionic-native/network';
-import {Utils} from "./utils";
+import { Utils } from "./utils";
 
 @Injectable()
 export class NetworkService implements OnDestroy{

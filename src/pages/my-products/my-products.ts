@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { ProductService } from "../../services";
 import { Product } from "../../components/product";
 import { Category } from "../../components/category";
 import { CategoryDetailPage } from "../";
@@ -28,7 +27,7 @@ export class MyProductsPage{
   private segment: string;
   private activeCategory: Category;
 
-  constructor(private productService: ProductService, public navCtrl: NavController) {
+  constructor(public navCtrl: NavController) {
     this.segment = 'category';
     this.setNavBtn(this.segment);
   }

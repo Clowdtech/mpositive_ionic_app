@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy, forwardRef, Inject, Input, Output, EventEmitter } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { CategoryService, NetworkService } from "../../services";
+import { CategoryService, NetworkService, AuthService } from "../../services";
 import { Category } from "./category.class";
 import { CategoryDetailPage } from "../../pages";
-import {AuthProvider} from "../../providers/auth.provider";
 
 @Component({
   selector: 'category',
@@ -26,7 +25,7 @@ export class CategoryComponent implements OnInit, OnDestroy{
 
   constructor(@Inject(forwardRef(() => CategoryService)) private categoryService,
       @Inject(forwardRef(() => NetworkService)) private networkService,
-      @Inject(forwardRef(() => AuthProvider)) private auth,
+      @Inject(forwardRef(() => AuthService)) private auth,
       private navCtrl: NavController) {
 
     // get latest categories when connection is established

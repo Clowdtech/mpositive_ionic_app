@@ -1,9 +1,10 @@
 <ion-header>
   <img src="assets/logo.png" />
   <ion-navbar>
-
+    <button ion-button [hidden]="step === steps.email" clear>
+      <ion-icon md="md-arrow-back" name="arrow-back" (click)="toPrevStep()"></ion-icon>
+    </button>
   </ion-navbar>
-
 </ion-header>
 
 
@@ -14,18 +15,21 @@
 
         <div *ngSwitchCase="steps.email">
           <h1 margin>Welcome to MPOSITIVE</h1>
-          <p>
+          <p margin>
             First time? Enter your email address below to create account, take live transactions
             and record payments today with MPOSITIVE
           </p>
           <div class="inp-cont">
             <label color="primary">Email Address</label>
-            <input class="text-center" formControlName="email" type="text" placeholder="name@name.com" />
+            <input class="text-center" formControlName="email" type="email" placeholder="name@name.com" />
           </div>
           <div class="text-center">
             <button class="mp_gradient" (click)="completeRegisterData()" [disabled]="!email.valid" ion-button full round>Continue</button>
           </div>
-          <p>Already have an account?<a (click)="openLogin()">Login to device</a></p>
+          <p class="redirect">
+            <strong>Already have an account?</strong>
+            <a (click)="openLogin()"><strong>Login to device</strong></a>
+          </p>
         </div>
 
         <div *ngSwitchCase="steps.complete">
@@ -46,7 +50,11 @@
           </div>
           <div class="inp-cont">
             <label color="primary">Mobile Number</label>
-            <input class="text-center" formControlName="mobile" type="number" />
+            <input class="text-center" formControlName="mobile" type="text" />
+          </div>
+          <div class="inp-cont">
+            <label color="primary">Company Name</label>
+            <input class="text-center" formControlName="companyName" type="text" />
           </div>
           <div class="inp-cont">
             <label color="primary">Company Address</label>
@@ -57,7 +65,7 @@
             <input class="text-center" formControlName="country" type="text" placeholder="Country" />
           </div>
           <div class="text-center">
-            <button class="mp_gradient" type="submit" [disabled]="!regData.valid" ion-button full round>
+            <button margin class="mp_gradient" type="submit" ion-button full round>
               Create Account
             </button>
           </div>

@@ -5,9 +5,8 @@ import { CheckOutListComponent } from "../../components/check-out-list";
 import { Product } from "../../components/product";
 import { OrderItem } from "../../components/check-out-list";
 import { RecordPaymentPage } from "../";
-import { UUID } from 'angular2-uuid';
 import { Utils } from "../../services";
-import {KeypadComponent} from "../../components/keypad/keypad";
+import { KeypadComponent } from "../../components/keypad/keypad";
 
 @Component({
   selector: 'page-check-out',

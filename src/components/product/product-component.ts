@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnDestroy, forwardRef, Inject } from '@angular/core';
 import { Product } from "./product.class";
 import { Category } from "../category";
-import { ProductService, Utils, NetworkService } from "../../services";
+import { ProductService, Utils, NetworkService, AuthService } from "../../services";
 import { appConfig } from "../../app/config";
-import {AuthProvider} from "../../providers/auth.provider";
 
 @Component({
     selector: 'product',
@@ -23,7 +22,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     constructor(@Inject(forwardRef(() => ProductService)) private productService,
                 @Inject(forwardRef(() => Utils)) private utils,
                 @Inject(forwardRef(() => NetworkService)) private networkService,
-                @Inject(forwardRef(() => AuthProvider)) private auth) {
+                @Inject(forwardRef(() => AuthService)) private auth) {
 
         // subscribe to connection becomes available to get latest products
         this.connectSub = this.networkService.connectSubscription.subscribe(() => {

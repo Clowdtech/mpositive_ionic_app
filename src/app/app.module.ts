@@ -12,14 +12,16 @@ import { VerticalMenuComponent } from "../components/vertical-menu";
 import { CategoryComponent } from "../components/category";
 import { ProductComponent } from "../components/product";
 import { KeypadComponent } from "../components/keypad";
-import { requestOptionsProvider, AuthProvider, CategoryProvider, ProductProvider, PaymentProvider,
-  SyncProvider } from "../providers";
 import { CategoryService, ProductService, CheckoutService, PaymentService, Utils, TransactionsService,
-  NetworkService} from "../services";
+  NetworkService, AuthService} from "../services";
+import { requestOptionsProvider, CategoryProvider, ProductProvider, PaymentProvider,
+  SyncProvider, AuthProvider } from "../providers";
 import { ScrollHeight } from "../components/scroll-height/scroll-height";
 import { ConvertUnits } from "../pipes";
 import { CloseModal } from "../components/close-modal/close-modal";
 import { Network } from '@ionic-native/network';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 const components: Array<any> = [
   MyApp,
@@ -46,8 +48,9 @@ const components: Array<any> = [
 
 const providers: Array<any> = [
   Network,
-  NetworkService,
   AuthProvider,
+  AuthService,
+  NetworkService,
   CategoryService,
   ProductService,
   CheckoutService,
@@ -79,6 +82,8 @@ const providers: Array<any> = [
   bootstrap: [IonicApp],
   entryComponents: components,
   providers: providers.concat([
+    StatusBar,
+    SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ])
 })

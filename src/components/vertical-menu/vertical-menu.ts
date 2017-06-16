@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CheckOutPage, MyProductsPage, ProductsHistoryPage, TransactionsHistoryPage, LogInPage } from '../../pages';
-import { AuthProvider } from "../../providers";
 import { NavController } from 'ionic-angular';
-import { NetworkService, CategoryService, ProductService, PaymentService } from "../../services";
+import { NetworkService, CategoryService, ProductService, PaymentService, AuthService } from "../../services";
 
 @Component({
   selector: 'vertical-menu',
@@ -33,7 +32,7 @@ export class VerticalMenuComponent {
     { title: 'Transaction Reports', component: TransactionsHistoryPage }
   ];
 
-  constructor(private auth: AuthProvider, private networkService: NetworkService,
+  constructor(private auth: AuthService, private networkService: NetworkService,
               private categoryService: CategoryService, private productService: ProductService,
               private paymentService: PaymentService) {
     this.pages = navigator.onLine ? this.onlineMenu : this.offlineMenu;

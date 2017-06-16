@@ -1,7 +1,7 @@
 import { Injectable, Inject, forwardRef, EventEmitter } from '@angular/core';
 import { Transaction } from "../pages/transactions-history/transaction.class";
-import { AuthProvider } from "../providers/auth.provider";
-import { NetworkService, PaymentService } from "./";
+import { AuthService } from "./auth.service";
+import { NetworkService, PaymentService } from "../services";
 import { PaymentData } from "../pages/record-payment/paymentData.class";
 
 @Injectable()
@@ -12,7 +12,7 @@ export class TransactionsService {
 
     transactionsChanged: EventEmitter<Transaction[]> = new EventEmitter();
 
-    constructor(private auth: AuthProvider,
+    constructor(private auth: AuthService,
                 @Inject(forwardRef(() => NetworkService)) private networkService,
                 @Inject(forwardRef(() => PaymentService)) private paymentService) {
 

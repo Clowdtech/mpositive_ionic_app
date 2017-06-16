@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, forwardRef, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { appConfig } from "../app/config";
-import { AuthProvider } from "./auth.provider";
+import { AuthService } from "../services";
 import { PaymentData } from "../pages/record-payment/paymentData.class";
 
 @Injectable()
 export class PaymentProvider{
 
-  constructor(public http: Http, private auth: AuthProvider) {}
+  constructor(public http: Http, @Inject(forwardRef(() => AuthService)) private auth) {}
 
   getPayments() {
     return new Promise((resolve, reject) => {

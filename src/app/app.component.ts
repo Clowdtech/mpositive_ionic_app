@@ -3,7 +3,8 @@ import { Platform, Nav } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { CheckOutPage, LogInPage } from '../pages';
-import { AuthProvider, SyncProvider } from "../providers";
+import { SyncProvider } from "../providers";
+import { AuthService } from "../services";
 
 @Component({
   templateUrl: 'app.html',
@@ -16,7 +17,7 @@ export class MyApp implements OnInit {
   public splashScreen: SplashScreen;
   public statusBar: StatusBar;
 
-  constructor(public platform: Platform, private auth: AuthProvider, private syncProvider: SyncProvider) {
+  constructor(public platform: Platform, private auth: AuthService, private syncProvider: SyncProvider) {
     this.initializeApp();
   }
 

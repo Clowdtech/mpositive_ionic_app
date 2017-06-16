@@ -1,8 +1,7 @@
 import { Injectable, Inject, forwardRef } from '@angular/core';
 import { Category } from "../components/category";
-import {AuthProvider} from "../providers/auth.provider";
-import {CategoryProvider} from "../providers/category.provider";
-import {NetworkService} from "./network.service";
+import { AuthService, NetworkService } from "./";
+import { CategoryProvider } from "../providers";
 
 @Injectable()
 export class CategoryService {
@@ -12,7 +11,7 @@ export class CategoryService {
     private connectSub;
     private disconnectSub;
 
-    constructor(@Inject(forwardRef(() => AuthProvider)) private auth: AuthProvider,
+    constructor(@Inject(forwardRef(() => AuthService)) private auth: AuthService,
                 @Inject(forwardRef(() => CategoryProvider)) private categoryProvider,
                 @Inject(forwardRef(() => NetworkService)) private networkService) {
 

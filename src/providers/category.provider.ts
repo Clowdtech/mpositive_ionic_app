@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, forwardRef, Inject } from '@angular/core';
 import { Http, Headers, URLSearchParams } from '@angular/http';
 import { appConfig } from "../app/config";
-import { AuthProvider } from "./auth.provider";
+import { AuthService } from "../services";
 import "rxjs/add/operator/map";
 import {Category} from "../components/category/category.class";
 
 @Injectable()
 export class CategoryProvider {
 
-  constructor(private http: Http, private auth: AuthProvider) {}
+  constructor(private http: Http, @Inject(forwardRef(() => AuthService)) private auth) {}
 
   getCategories() {
     const token = this.auth.getToken();
@@ -21,10 +21,12 @@ export class CategoryProvider {
     const token = this.auth.getToken();
     const headers = new Headers();
     headers.append('Authorization', `Bearer:${token}`);
+
     let params = new URLSearchParams();
     params.set('name', category.name);
     params.set('background_color', category.bgColor);
     params.set('font_color', category.txtColor);
+
     if (category.uid) {
       return this.http.put(`${appConfig.category_url}/${category.uid || ''}?${params}`, null, { headers })/*.map((response: Response) => { response.json() })*/;
     } else {

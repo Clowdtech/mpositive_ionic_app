@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Validators,  FormBuilder, FormGroup } from '@angular/forms';
-import { Http, URLSearchParams } from '@angular/http';
 import { LogInPage } from "../";
-import { appConfig } from "../../app/config";
+import { ProductService, CategoryService, PaymentService, Utils, AuthService } from "../../services";
+import { CheckOutPage } from "../check-out/check-out";
 
 @Component({
   selector: 'page-register',
@@ -16,7 +16,11 @@ export class RegisterPage {
   steps;
   step: number;
 
-  constructor(public navCtrl: NavController, private formBuilder: FormBuilder, private http: Http) {
+  constructor(public navCtrl: NavController, private formBuilder: FormBuilder,
+              private auth: AuthService, private nav: NavController, private utils: Utils,
+              private productService: ProductService, private categoryService: CategoryService,
+              private paymentService: PaymentService) {
+
     this.regData = this.formBuilder.group({
       email: ['', Validators.email],
       pass: ['', Validators.required],
@@ -44,27 +48,26 @@ export class RegisterPage {
     this.step = this.steps.complete;
   }
 
+  toPrevStep() {
+    this.step = this.steps.email;
+  }
+
   openLogin() {
     this.navCtrl.setRoot(LogInPage);
   }
 
   register() {
-    let params = new URLSearchParams();
     const data = this.regData.value;
-    params.set('company_name', data.companyName);
-    params.set('first_name', data.firstName);
-    params.set('last_name', data.lastName);
-    params.set('phone_number', data.mobile);
-    params.set('contact_email', data.email);
-    params.set('address', `${data.address1} ${data.address2} ${data.town}, ${data.postcode}, ${data.country}`);
-    this.http.post(`${appConfig.register_url}`, null, { search: params}).subscribe(
-        data => {
-          const res = data.json();
-          console.log(res);
-        },
-        error => {
 
-        }
-    );
+    this.auth.register(data).then(() => {
+      this.auth.logIn();
+      this.productService.logIn();
+      this.categoryService.logIn();
+      this.paymentService.logIn();
+
+      this.nav.setRoot(CheckOutPage);
+    }, res => {
+      this.utils.showToast(res.json().error);
+    });
   }
 }

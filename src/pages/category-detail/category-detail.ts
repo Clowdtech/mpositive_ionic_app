@@ -21,18 +21,33 @@ export class CategoryDetailPage {
     this.activeCategory = navParams.get('activeCategory') || CategoryDetailPage.generateNewCategory();
   }
 
+  /**
+   * Handler to catch products selection inside category page
+   * @param product
+   */
   productSelected(product: Product) {
 
   }
 
+  /**
+   * Create placeholder for new category
+   * @return {Category}
+   */
   static generateNewCategory() {
     return new Category(null, null, '#000', '#fff', 1);
   }
 
+  /**
+   * Change active property for category
+   */
   changeActive() {
     this.activeCategory.active ? this.activeCategory.active = 0 : this.activeCategory.active = 1;
   }
 
+  /**
+   * Color picker popUp functionality
+   * @param property
+   */
   pickColor(property) {
     let pickColorModal = this.modalCtrl.create(PickColorPage);
     pickColorModal.onDidDismiss(color => {
@@ -41,6 +56,9 @@ export class CategoryDetailPage {
     pickColorModal.present();
   }
 
+  /**
+   * Make request to save new category
+   */
   saveCategory() {
     if (!this.activeCategory.name) {
       this.utils.showToast('Category name missed');
@@ -54,6 +72,10 @@ export class CategoryDetailPage {
     });
   }
 
+  /**
+   * Success handler to save category
+   * @param response
+   */
   success(response) {
     const savedCategory = new Category(response.uid, response.name, response.background_color, response.font_color, response.active);
     this.categoryService.updateCategories(savedCategory);
@@ -61,6 +83,7 @@ export class CategoryDetailPage {
       type: 'category'
     }).then(() => {
       this.activeCategory = CategoryDetailPage.generateNewCategory();
+      // update layout with changes
       this.ref.reattach();
       this.ref.detectChanges();
     });

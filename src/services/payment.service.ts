@@ -1,8 +1,8 @@
 import { Injectable, Inject, forwardRef } from '@angular/core';
 import { PaymentType } from "../pages/record-payment/payment";
-import { AuthProvider, PaymentProvider } from "../providers";
-import { NetworkService } from "../services";
-import {PaymentData} from "../pages/record-payment/paymentData.class";
+import { PaymentProvider } from "../providers";
+import { NetworkService, AuthService } from "../services";
+import { PaymentData } from "../pages/record-payment/paymentData.class";
 
 @Injectable()
 export class PaymentService {
@@ -27,7 +27,7 @@ export class PaymentService {
         }
     ];
 
-    constructor(@Inject(forwardRef(() => AuthProvider)) private auth,
+    constructor(@Inject(forwardRef(() => AuthService)) private auth,
                 @Inject(forwardRef(() => NetworkService)) private networkService,
                 @Inject(forwardRef(() => PaymentProvider)) private paymentProvider) {
 

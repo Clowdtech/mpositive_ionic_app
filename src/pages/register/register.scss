@@ -1,3 +1,10 @@
 page-register {
   @extend .form-data;
+  [type=submit] {
+    margin: 50px 0 !important;
+  }
+  [name="arrow-back"] {
+    color: #000;
+    font-size: 3rem;
+  }
 }

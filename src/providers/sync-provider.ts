@@ -2,15 +2,14 @@ import { Injectable, forwardRef, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { appConfig } from "../app/config";
-import { AuthProvider } from "./auth.provider";
-import { NetworkService } from "../services";
+import { NetworkService, AuthService } from "../services";
 
 @Injectable()
 export class SyncProvider {
 
   private syncDelay = 60000;
 
-  constructor(private http: Http, @Inject(forwardRef(() => AuthProvider)) private auth,
+  constructor(private http: Http, @Inject(forwardRef(() => AuthService)) private auth,
               @Inject(forwardRef(() => NetworkService)) private networkService) {
 
     this.networkService.connectSubscription.subscribe(() => {
