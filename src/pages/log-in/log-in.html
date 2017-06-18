@@ -14,11 +14,11 @@
             <h1 margin>Login to Device</h1>
             <div class="inp-cont">
                 <label color="primary">Secret I.D.</label>
-                <input class="text-center" formControlName="access_secret" type="text" />
+                <input class="text-center" formControlName="access_key" type="text" />
             </div>
             <div class="inp-cont">
                 <label color="primary">Secret Key</label>
-                <input class="text-center" formControlName="access_key" type="password">
+                <input class="text-center" formControlName="access_secret" type="password">
             </div>
             <div class="text-center">
                <button class="mp_gradient" type="submit" [disabled]="!credentials.valid" ion-button full round>Continue</button>
