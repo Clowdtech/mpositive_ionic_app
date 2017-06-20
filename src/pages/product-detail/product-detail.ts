@@ -32,22 +32,6 @@ export class ProductDetailPage {
         return new Product(null, null, null, null, '#000', '#fff', null, null);
     }
 
-    isProductValid() {
-        if (!this.activeProduct.name) {
-            this.utils.showToast('Product name missed');
-            return false;
-        }
-        if (!this.activeProduct.categoryId) {
-            this.utils.showToast('Please select category for product');
-            return false;
-        }
-        if (!this.activeProduct.price) {
-            this.utils.showToast('Please set price for product');
-            return false;
-        }
-        return true;
-    }
-
     pickColor(property) {
         let pickColorModal = this.modalCtrl.create(PickColorPage);
         pickColorModal.onDidDismiss(color => {
@@ -57,20 +41,21 @@ export class ProductDetailPage {
     }
 
     saveProduct() {
-        if (this.isProductValid()) {
-            this.productProvider.saveProduct(this.activeProduct).subscribe((res) => {
-                const response = res.json();
-                if (response) {
-                    this.success(response);
-                }
-            });
-        }
+        this.productProvider.saveProduct(this.activeProduct).subscribe((res) => {
+            const response = res.json();
+            if (response) {
+                this.success(response);
+            }
+        }, res => {
+            this.utils.showToast(res.json().error);
+        });
     }
 
     success(response) {
         this.utils.showToast('Product saved');
         const updatedProduct = new Product(response.uid, response.name, response.description, response.price, response.background_color,
             response.font_color, response.category_id, response.created_at);
+
         this.productService.updateProducts(updatedProduct);
         this.nav.push(UpdatedPage, {
             type: 'product'
@@ -81,6 +66,7 @@ export class ProductDetailPage {
 
     selectCategory() {
         let pickCategoryModal = this.modalCtrl.create(PickCategoryPage);
+
         pickCategoryModal.onDidDismiss((category: Category) => {
             if (!category) return;
             this.selectedCategory = category;

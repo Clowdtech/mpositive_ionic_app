@@ -115,11 +115,12 @@ export class AuthService {
   }
 
   public getCredentials() {
-      let credStr = window.localStorage.getItem('mp_credentials');
-      const cred = credStr ? JSON.parse(credStr) : {};
-      this.access_secret = cred.access_secret;
-      this.access_key = cred.access_key;
-      return cred;
+    let credStr = window.localStorage.getItem('mp_credentials');
+    const cred = credStr ? JSON.parse(credStr) : {};
+
+    this.access_secret = cred.access_secret;
+    this.access_key = cred.access_key;
+    return cred;
   }
 
   public hasCredentials() {
@@ -132,6 +133,7 @@ export class AuthService {
   }
 
   public logOut() {
+      this.saveLastCredentials();
       this.clearCredentials();
       this.clearToken();
       this.connectSub.unsubscribe();
@@ -142,6 +144,15 @@ export class AuthService {
       // subscribe to internet connection handlers
       this.subWhenConnected();
       this.subWhenDisconnected();
+  }
+
+  /**
+   * Retrieve last saved cred from storage
+   * @return {access_key, access_secret}
+   */
+  public static getLastCredentials() {
+      let credStr = window.localStorage.getItem('mp_last_used_credentials');
+      return credStr ? JSON.parse(credStr) : {};
   }
 
   private subWhenConnected() {
@@ -159,10 +170,23 @@ export class AuthService {
       });
   }
 
+  /**
+   * Save last used credentials to storage, to use them on login
+   */
+  private saveLastCredentials() {
+      window.localStorage.setItem('mp_last_used_credentials', JSON.stringify({
+          access_secret: this.access_secret,
+          access_key: this.access_key
+      }));
+  }
+
+  /**
+   * Clear credentials from auth and storage
+   */
   private clearCredentials() {
-      delete this.access_secret;
-      delete this.access_key;
       window.localStorage.removeItem('mp_credentials');
+      this.access_secret = '';
+      this.access_key = '';
   }
 
   private clearToken() {

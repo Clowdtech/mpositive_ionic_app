@@ -57,6 +57,11 @@ export class RegisterPage {
   }
 
   register() {
+    if (this.regData.invalid) {
+      this.utils.showToast('Please fill mandatory fields');
+      return;
+    }
+
     const data = this.regData.value;
 
     this.auth.register(data).then(() => {

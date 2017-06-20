@@ -330,6 +330,9 @@ ion-header {
         -webkit-box-shadow: none;
         box-shadow: none;
       }
+      &.ng-invalid {
+        border: 1px solid #f53d3d;
+      }
     }
     .inp-cont {
       margin-top: 5px;

@@ -17,9 +17,11 @@ export class LogInPage {
               private utils: Utils, private productService: ProductService, private categoryService: CategoryService,
               private paymentService: PaymentService) {
 
+    const lastCredentials = AuthService.getLastCredentials();
+
     this.credentials = this.formBuilder.group({
-      access_key: ['KHSiPh9m', Validators.required],
-      access_secret: ['YRxLgzi5', Validators.required],
+      access_key: [lastCredentials.access_key || '', Validators.required],
+      access_secret: [lastCredentials.access_secret || '', Validators.required],
     });
   }
 
