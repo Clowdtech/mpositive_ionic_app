@@ -11,7 +11,8 @@
 <ion-content padding margin-top>
   <div class="row">
     <div class="col-xs-8 col-xs-offset-2 text-center">
-      <form [formGroup]="regData" (ngSubmit)="register()" [ngSwitch]="step">
+      <form [formGroup]="regData" (ngSubmit)="register()" [ngSwitch]="step"
+            [ngClass]="{'validated': this.validationFailed}">
 
         <div *ngSwitchCase="steps.email">
           <h1 margin>Welcome to MPOSITIVE</h1>

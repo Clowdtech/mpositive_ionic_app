@@ -13,6 +13,8 @@ export class RegisterPage {
 
   private regData: FormGroup;
 
+
+  validationFailed: boolean = false; // check if form was already validated
   steps;
   step: number;
 
@@ -58,10 +60,12 @@ export class RegisterPage {
 
   register() {
     if (this.regData.invalid) {
+      this.validationFailed  = true;
       this.utils.showToast('Please fill mandatory fields');
       return;
     }
 
+    this.validationFailed  = false;
     const data = this.regData.value;
 
     this.auth.register(data).then(() => {

@@ -6,7 +6,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { CheckOutPage, MyProductsPage, CategoryDetailPage, PickColorPage, ProductDetailPage, PickCategoryPage,
   TransactionsHistoryPage ,RecordPaymentPage, TransactionDetailPage, ProductsHistoryPage, LogInPage, ResultPage,
-  UpdatedPage, RegisterPage } from '../pages';
+  UpdatedPage, RegisterPage, Settings } from '../pages';
 import { CheckOutListComponent } from '../components/check-out-list';
 import { VerticalMenuComponent } from "../components/vertical-menu";
 import { CategoryComponent } from "../components/category";
@@ -22,6 +22,7 @@ import { CloseModal } from "../components/close-modal/close-modal";
 import { Network } from '@ionic-native/network';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Keyboard } from '@ionic-native/keyboard';
 
 const components: Array<any> = [
   MyApp,
@@ -39,6 +40,7 @@ const components: Array<any> = [
   ResultPage,
   UpdatedPage,
   RegisterPage,
+  Settings,
   CheckOutListComponent,
   VerticalMenuComponent,
   CategoryComponent,
@@ -62,7 +64,8 @@ const providers: Array<any> = [
   requestOptionsProvider,
   SyncProvider,
   Utils,
-  ConvertUnits
+  ConvertUnits,
+  Keyboard
 ];
 
 @NgModule({

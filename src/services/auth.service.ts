@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Utils, NetworkService } from "./";
 import { AuthProvider } from "../providers";
+import 'rxjs/Rx';
 
 @Injectable()
 export class AuthService {
@@ -13,9 +14,9 @@ export class AuthService {
   uid: string;
   token: string;
   authPromise: Promise<any>;
+  user: Object;
 
   constructor(private utils: Utils, private authProvider: AuthProvider, private networkService: NetworkService) {
-
       if (this.hasCredentials()) {
           this.makeAuth({ access_key: this.access_key, access_secret: this.access_secret }).then(null, error => {
               console.log(error);
@@ -24,7 +25,6 @@ export class AuthService {
           this.subWhenConnected();
           this.subWhenDisconnected();
       }
-
   }
 
   /**
@@ -98,6 +98,21 @@ export class AuthService {
     return this.access_key;
   }
 
+  public getUser() {
+    return new Promise((resolve, reject) => {
+      this.authProvider.getUser(this.getToken())
+        .subscribe(data => {
+            if (data) this.user = data.json();
+            resolve(data);
+        }, error => {
+            this.clearUserData();
+            this.utils.showToast(error);
+            reject(error);
+        }
+      )
+    });
+  }
+
   /**
    * Store current credentials to know if should log in automatically
    * after refresh
@@ -133,6 +148,7 @@ export class AuthService {
   }
 
   public logOut() {
+      this.clearUserData();
       this.saveLastCredentials();
       this.clearCredentials();
       this.clearToken();
@@ -153,6 +169,10 @@ export class AuthService {
   public static getLastCredentials() {
       let credStr = window.localStorage.getItem('mp_last_used_credentials');
       return credStr ? JSON.parse(credStr) : {};
+  }
+
+  private clearUserData() {
+      this.user = null;
   }
 
   private subWhenConnected() {

@@ -14,7 +14,6 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-
 .ion-top-menu {
   position: absolute;
   height: 0;
@@ -33,6 +32,12 @@ ion-header {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
+  }
+  ion-navbar {
+    &.toolbar[padding] {
+      padding: 0 10px;
+      min-height: 65px;
+    }
   }
 }
 
@@ -330,7 +335,7 @@ ion-header {
         -webkit-box-shadow: none;
         box-shadow: none;
       }
-      &.ng-invalid {
+      &.ng-invalid.ng-touched {
         border: 1px solid #f53d3d;
       }
     }
@@ -346,6 +351,15 @@ ion-header {
       margin-top: 80px;
       display: inline-block;
       max-width: 250px;
+    }
+    form {
+      &.validated {
+        input {
+          &.ng-invalid {
+            border: 1px solid #f53d3d;
+          }
+        }
+      }
     }
   }
   .redirect {

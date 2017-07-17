@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CheckOutPage, MyProductsPage, ProductsHistoryPage, TransactionsHistoryPage, LogInPage } from '../../pages';
+import { CheckOutPage, MyProductsPage, ProductsHistoryPage, TransactionsHistoryPage, LogInPage, Settings } from '../../pages';
 import { NavController } from 'ionic-angular';
 import { NetworkService, CategoryService, ProductService, PaymentService, AuthService } from "../../services";
 
@@ -20,7 +20,8 @@ export class VerticalMenuComponent {
   private onlineMenu : Array<{title: string, component: any}> = [
     { title: 'My Products', component: MyProductsPage },
     { title: 'Product Reports', component: ProductsHistoryPage },
-    { title: 'Transaction Reports', component: TransactionsHistoryPage }
+    { title: 'Transaction Reports', component: TransactionsHistoryPage },
+    { title: 'Settings', component: Settings }
   ];
 
   /**

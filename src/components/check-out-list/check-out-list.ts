@@ -24,7 +24,7 @@ export class CheckOutListComponent implements OnInit {
         if (!product) return;
         let item;
         const ind = this.orderItems.findIndex((orderItem) => {
-            return orderItem.uid === product.uid;
+            return orderItem.uid === product.uid && product.uid !== null;
         });
         if (ind === -1) {
             item = new OrderItem(product.uid, product.name, 0, product.price, this.currency);

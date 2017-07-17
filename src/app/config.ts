@@ -3,6 +3,7 @@ export const appConfig = {
   api_ur: 'https://api.mpositive.co.uk/api/v1/',
   auth_url: 'authenticate',
   register_url: 'register',
+  user_info_url: 'me',
   categories_url: 'categories',
   products_url: 'products',
   category_url: 'category',

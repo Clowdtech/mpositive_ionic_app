@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, URLSearchParams } from '@angular/http';
+import { Http, Headers, URLSearchParams } from '@angular/http';
 import { appConfig } from '../app/config';
 
 @Injectable()
@@ -37,4 +37,13 @@ export class AuthProvider {
     return this.http.post(`${appConfig.register_url}`, null, { search: params});
   }
 
+  /**
+   * Get all available data for user
+   * @return {Observable<Response>}
+   */
+  public getUser(token: string) {
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer:${ token }`);
+    return this.http.get(`${appConfig.user_info_url}`, {headers});
+  }
 }
