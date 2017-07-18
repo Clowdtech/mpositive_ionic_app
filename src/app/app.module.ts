@@ -13,9 +13,9 @@ import { CategoryComponent } from "../components/category";
 import { ProductComponent } from "../components/product";
 import { KeypadComponent } from "../components/keypad";
 import { CategoryService, ProductService, CheckoutService, PaymentService, Utils, TransactionsService,
-  NetworkService, AuthService} from "../services";
+  NetworkService, AuthService, UserService} from "../services";
 import { requestOptionsProvider, CategoryProvider, ProductProvider, PaymentProvider,
-  SyncProvider, AuthProvider } from "../providers";
+  SyncProvider, AuthProvider, UserProvider } from "../providers";
 import { ScrollHeight } from "../components/scroll-height/scroll-height";
 import { ConvertUnits } from "../pipes";
 import { CloseModal } from "../components/close-modal/close-modal";
@@ -58,11 +58,13 @@ const providers: Array<any> = [
   CheckoutService,
   PaymentService,
   TransactionsService,
+  UserService,
   PaymentProvider,
   CategoryProvider,
   ProductProvider,
   requestOptionsProvider,
   SyncProvider,
+  UserProvider,
   Utils,
   ConvertUnits,
   Keyboard

@@ -4,6 +4,7 @@ export const appConfig = {
   auth_url: 'authenticate',
   register_url: 'register',
   user_info_url: 'me',
+  reset_pass_url: 'customer/forgot/request',
   categories_url: 'categories',
   products_url: 'products',
   category_url: 'category',

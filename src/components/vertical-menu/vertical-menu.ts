@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CheckOutPage, MyProductsPage, ProductsHistoryPage, TransactionsHistoryPage, LogInPage, Settings } from '../../pages';
 import { NavController } from 'ionic-angular';
-import { NetworkService, CategoryService, ProductService, PaymentService, AuthService } from "../../services";
+import { NetworkService, CategoryService, ProductService, PaymentService, AuthService, UserService } from "../../services";
 
 @Component({
   selector: 'vertical-menu',
@@ -35,7 +35,7 @@ export class VerticalMenuComponent {
 
   constructor(private auth: AuthService, private networkService: NetworkService,
               private categoryService: CategoryService, private productService: ProductService,
-              private paymentService: PaymentService) {
+              private paymentService: PaymentService, private userService: UserService) {
     this.pages = navigator.onLine ? this.onlineMenu : this.offlineMenu;
 
     this.networkService.connectSubscription.subscribe(() => {
@@ -63,6 +63,7 @@ export class VerticalMenuComponent {
     this.categoryService.logOut();
     this.productService.logOut();
     this.paymentService.logOut();
+    this.userService.clearUserData();
     this.nav.setRoot(LogInPage);
   }
 

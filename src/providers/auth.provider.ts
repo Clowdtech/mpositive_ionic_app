@@ -36,14 +36,4 @@ export class AuthProvider {
     params.set('address', `${data.address1} ${data.address2} ${data.town}, ${data.postcode}, ${data.country}`);
     return this.http.post(`${appConfig.register_url}`, null, { search: params});
   }
-
-  /**
-   * Get all available data for user
-   * @return {Observable<Response>}
-   */
-  public getUser(token: string) {
-    const headers = new Headers();
-    headers.append('Authorization', `Bearer:${ token }`);
-    return this.http.get(`${appConfig.user_info_url}`, {headers});
-  }
 }
