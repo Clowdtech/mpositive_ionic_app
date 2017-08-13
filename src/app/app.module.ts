@@ -23,73 +23,106 @@ import { Network } from '@ionic-native/network';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Keyboard } from '@ionic-native/keyboard';
+import { HttpInterceptor } from "../providers/app.http.interceptor";
+import { XHRBackend, RequestOptions }
+    from '@angular/http';
 
-const components: Array<any> = [
-  MyApp,
-  CheckOutPage,
-  MyProductsPage,
-  CategoryDetailPage,
-  PickColorPage,
-  ProductDetailPage,
-  PickCategoryPage,
-  RecordPaymentPage,
-  TransactionsHistoryPage,
-  TransactionDetailPage,
-  ProductsHistoryPage,
-  LogInPage,
-  ResultPage,
-  UpdatedPage,
-  RegisterPage,
-  Settings,
-  CheckOutListComponent,
-  VerticalMenuComponent,
-  CategoryComponent,
-  KeypadComponent,
-  ProductComponent,
-];
-
-const providers: Array<any> = [
-  Network,
-  AuthProvider,
-  AuthService,
-  NetworkService,
-  CategoryService,
-  ProductService,
-  CheckoutService,
-  PaymentService,
-  TransactionsService,
-  UserService,
-  PaymentProvider,
-  CategoryProvider,
-  ProductProvider,
-  requestOptionsProvider,
-  SyncProvider,
-  UserProvider,
-  Utils,
-  ConvertUnits,
-  Keyboard
-];
+export function httpConfig (backend: XHRBackend, defaultOptions: RequestOptions) {
+    return new HttpInterceptor(backend, defaultOptions);
+}
 
 @NgModule({
-  declarations: components.concat([
+  declarations: [
+    MyApp,
+    CheckOutPage,
+    MyProductsPage,
+    CategoryDetailPage,
+    PickColorPage,
+    ProductDetailPage,
+    PickCategoryPage,
+    RecordPaymentPage,
+    TransactionsHistoryPage,
+    TransactionDetailPage,
+    ProductsHistoryPage,
+    LogInPage,
+    ResultPage,
+    UpdatedPage,
+    RegisterPage,
+    Settings,
+    CheckOutListComponent,
+    VerticalMenuComponent,
+    CategoryComponent,
+    KeypadComponent,
+    ProductComponent,
     ScrollHeight,
-    CloseModal
-  ]),
+    CloseModal,
+    ConvertUnits,
+  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp, {
-      mode: 'md'
+      mode: 'md',
+      scrollPadding: false,
+      scrollAssist: false,
+      autoFocusAssist: false
     }),
     HttpModule,
     FormsModule
   ],
-  exports: [ScrollHeight],
   bootstrap: [IonicApp],
-  entryComponents: components,
-  providers: providers.concat([
+  entryComponents: [
+    MyApp,
+    CheckOutPage,
+    MyProductsPage,
+    CategoryDetailPage,
+    PickColorPage,
+    ProductDetailPage,
+    PickCategoryPage,
+    RecordPaymentPage,
+    TransactionsHistoryPage,
+    TransactionDetailPage,
+    ProductsHistoryPage,
+    LogInPage,
+    ResultPage,
+    UpdatedPage,
+    RegisterPage,
+    Settings,
+    CheckOutListComponent,
+    VerticalMenuComponent,
+    CategoryComponent,
+    KeypadComponent,
+    ProductComponent
+  ],
+  providers: [
+    Network,
+    AuthProvider,
+    AuthService,
+    NetworkService,
+    CategoryService,
+    ProductService,
+    CheckoutService,
+    PaymentService,
+    TransactionsService,
+    UserService,
+    PaymentProvider,
+    CategoryProvider,
+    ProductProvider,
+    requestOptionsProvider,
+    SyncProvider,
+    UserProvider,
+    Utils,
+    Keyboard,
     StatusBar,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
-  ])
+    {
+      provide: ErrorHandler,
+      useClass: IonicErrorHandler
+    },
+    {
+      provide: HttpInterceptor,
+      useFactory: httpConfig,
+      deps: [ XHRBackend, RequestOptions]
+    }
+  ]
 })
 export class AppModule {}

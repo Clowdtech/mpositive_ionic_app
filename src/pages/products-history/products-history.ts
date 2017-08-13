@@ -76,13 +76,26 @@ export class ProductsHistoryPage {
    * Sum products amount from different transactions and show as total per day
    */
   sumEqualProducts() {
-    const sum = [];
+    const uniqueProducts = [];
     this.filteredProducts.forEach(product => {
-      const matched = sum.findIndex(el => el.uid === product.uid);
-      matched >= 0 ? sum[matched].amount += product.amount : sum.push(product);
+      // unique product is detected by name
+      const matched = uniqueProducts.findIndex(el => el.name === product.name);
+      if (matched >= 0) {
+          uniqueProducts[matched].total += product.amount * parseFloat(product.price);
+          uniqueProducts[matched].amount += product.amount;
+      } else {
+        // if few manula transactions are with diff price their amount and total sum should be summed
+        const productReport = {
+          name: product.name,
+          amount: product.amount,
+          total: product.amount * parseFloat(product.price)
+        };
+        uniqueProducts.push(productReport);
+      }
     });
 
-    this.filteredProducts = sum;
+    // output is an array with unique product reports without duplicated
+    this.filteredProducts = uniqueProducts;
   }
 
   /**

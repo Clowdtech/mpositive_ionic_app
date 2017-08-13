@@ -33,7 +33,7 @@
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "1.3.0",
+    "@ionic/app-scripts": "1.3.1",
     "typescript": "~2.2.1"
   },
   "cordovaPlugins": [
@@ -50,6 +50,11 @@
       "platform": "ios",
       "version": "",
       "locator": "ios"
+    },
+    {
+      "platform": "android",
+      "version": "",
+      "locator": "android"
     }
   ],
   "description": "MPositive: An Ionic project"

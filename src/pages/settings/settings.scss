@@ -1,0 +1,20 @@
+page-settings {
+  section {
+    font-size: 16px;
+    .row{
+      padding: 15px 20px;
+      &:first-child {
+        background-color: color($colors, mp_grey, base);
+        padding: 20px 20px 15px;
+        border-bottom: 1px solid $cell_border;
+        border-top: 1px solid $cell_border;
+        text-transform: uppercase;
+        color: $cell-txt_color;
+        font-size: 15px;
+      }
+      &:not(:last-child) {
+        border-bottom: 1px solid $cell_border;
+      }
+    }
+  }
+}

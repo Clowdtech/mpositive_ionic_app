@@ -17,14 +17,17 @@ export class MyApp implements OnInit {
   public splashScreen: SplashScreen;
   public statusBar: StatusBar;
 
-  constructor(public platform: Platform, private auth: AuthService, private syncProvider: SyncProvider) {
+  constructor(public platform: Platform, private auth: AuthService, private syncProvider: SyncProvider,
+              public _SplashScreen: SplashScreen) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       if (this.statusBar) this.statusBar.styleDefault();
-      if (this.splashScreen) this.splashScreen.hide();
+        setTimeout(() => {
+          this._SplashScreen.hide();
+        }, 100);
     });
   }
 
