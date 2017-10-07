@@ -54,12 +54,22 @@
                 <p>{{(transaction.synced ? 'Yes' : 'No')}}</p>
             </div>
         </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <p>Refunded</p>
+            </div>
+            <div class="col-xs-6 text-right">
+                <p>{{(transaction.refunded ? 'Yes' : 'No')}}</p>
+            </div>
+        </div>
     </div>
 </ion-content>
 <ion-footer padding>
     <div class="row" padding>
         <div class="col-xs-6">
-            <button class="mp_gradient" round ion-button full>Refund</button>
+            <button (click)="refund()" [disabled]="transaction.refunded" class="mp_gradient" round ion-button full>
+                {{transaction.refunded ? 'Refunded' : 'Refund'}}
+            </button>
         </div>
         <div class="col-xs-6">
             <button class="mp_gradient" round ion-button full>Print</button>

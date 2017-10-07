@@ -45,7 +45,7 @@ export class TransactionsHistoryPage implements OnDestroy{
       });
 
       if (!dateInHistory) this.dates.push(transDate);
-      return new Transaction(trans.timestamp, trans.paymentType, trans.total, trans.paidTotal, trans.orders, trans.synced);
+      return trans;
     });
   }
 

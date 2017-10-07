@@ -12,5 +12,6 @@ export const appConfig = {
   payments_url: 'payment-types',
   payment_url: 'payment',
   sync_url: 'syncs',
+  refund_url: 'refund',
   defaultCurrency: '£',
 };

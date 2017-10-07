@@ -69,14 +69,14 @@ export class RecordPaymentPage implements OnDestroy {
         }
         if (!navigator.onLine) {
             // save transaction to storage and mark as not sync
-            this.paymentSuccess(false);
+            this.paymentSuccess(false , null);
             return;
         }
         this.paymentService.registerPayment(new PaymentData(this.orders, this.checkoutPrice, this.activePayment))
             .subscribe(
                 data => {
                     if (data.json().success) {
-                        this.paymentSuccess(true);
+                        this.paymentSuccess(true, data.json().transaction_uid);
                     }
                 }, error =>  console.log(error.json())
             );
@@ -86,11 +86,11 @@ export class RecordPaymentPage implements OnDestroy {
         this.paymentTotal = keypadValue;
     }
 
-    private paymentSuccess(synced: boolean) {
+    private paymentSuccess(synced: boolean , transaction_uid: string) {
         const change = this.paymentTotal > 0 ? this.paymentTotal - this.checkoutPrice : 0;
         this.checkoutService.clearOrders();
         this.transactionService.saveTransaction(
-            new Transaction(Date.now(), this.activePayment, this.checkoutPrice, this.paymentTotal, this.orders, synced)
+            new Transaction(transaction_uid, Date.now(), this.activePayment, this.checkoutPrice, this.paymentTotal, this.orders, synced)
         );
         this.nav.push(ResultPage, { change });
     }

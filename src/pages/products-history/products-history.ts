@@ -35,7 +35,7 @@ export class ProductsHistoryPage {
 
       // avoid dates duplicates if transactions made in the same day
       if (!dateInHistory && trans.orders) this.dates.push(transDate);
-      return new Transaction(trans.timestamp, trans.paymentType, trans.total, trans.paidTotal, trans.orders, trans.synced);
+      return trans;
     });
     return this;
   }

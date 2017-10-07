@@ -53,7 +53,7 @@
             </div>
         </div>
         <ion-scroll scrollY="true" scroll-height [calcHeight]="['transactionListHeader']">
-            <div class="row" *ngFor="let trans of filteredTransactions" (click)="openDetailPage(trans)">
+            <div class="row" [ngClass]="{'refunded': trans.refunded}" *ngFor="let trans of filteredTransactions" (click)="openDetailPage(trans)">
                 <div class="col-xs-4">
                     <span>{{trans.timestamp | date:'mediumTime'}}</span>
                 </div>

@@ -1,3 +1,6 @@
 page-transactions-history {
   @extend .report-page;
+  .refunded {
+    color: #f53d3d;
+  }
 }

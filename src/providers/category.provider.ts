@@ -1,14 +1,15 @@
 import { Injectable, forwardRef, Inject } from '@angular/core';
-import { Http, Headers, URLSearchParams } from '@angular/http';
+import { Headers, URLSearchParams } from '@angular/http';
 import { appConfig } from "../app/config";
 import { AuthService } from "../services";
 import "rxjs/add/operator/map";
-import {Category} from "../components/category/category.class";
+import { Category } from "../components/category/category.class";
+import { HttpInterceptor } from "./app.http.interceptor";
 
 @Injectable()
 export class CategoryProvider {
 
-  constructor(private http: Http, @Inject(forwardRef(() => AuthService)) private auth) {}
+  constructor(private http: HttpInterceptor, @Inject(forwardRef(() => AuthService)) private auth) {}
 
   getCategories() {
     const token = this.auth.getToken();

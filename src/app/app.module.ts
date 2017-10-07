@@ -15,7 +15,7 @@ import { KeypadComponent } from "../components/keypad";
 import { CategoryService, ProductService, CheckoutService, PaymentService, Utils, TransactionsService,
   NetworkService, AuthService, UserService} from "../services";
 import { requestOptionsProvider, CategoryProvider, ProductProvider, PaymentProvider,
-  SyncProvider, AuthProvider, UserProvider } from "../providers";
+  SyncProvider, AuthProvider, UserProvider, TransactionProvider } from "../providers";
 import { ScrollHeight } from "../components/scroll-height/scroll-height";
 import { ConvertUnits } from "../pipes";
 import { CloseModal } from "../components/close-modal/close-modal";
@@ -110,6 +110,7 @@ export function httpConfig (backend: XHRBackend, defaultOptions: RequestOptions)
     requestOptionsProvider,
     SyncProvider,
     UserProvider,
+    TransactionProvider,
     Utils,
     Keyboard,
     StatusBar,

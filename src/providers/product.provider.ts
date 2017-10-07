@@ -1,15 +1,16 @@
 import { Injectable, forwardRef, Inject } from '@angular/core';
-import { Http, Headers, URLSearchParams } from '@angular/http';
+import { Headers, URLSearchParams } from '@angular/http';
 import { appConfig } from "../app/config";
 
 import "rxjs/add/operator/map";
 import { Product } from "../components/product";
 import { AuthService } from "../services";
+import { HttpInterceptor } from "./app.http.interceptor";
 
 @Injectable()
 export class ProductProvider {
 
-  constructor(private http: Http, @Inject(forwardRef(() => AuthService)) private auth) {}
+  constructor(private http: HttpInterceptor, @Inject(forwardRef(() => AuthService)) private auth) {}
 
   getProducts() {
     const headers = new Headers();

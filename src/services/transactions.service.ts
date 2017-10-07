@@ -3,18 +3,23 @@ import { Transaction } from "../pages/transactions-history/transaction.class";
 import { AuthService } from "./auth.service";
 import { NetworkService, PaymentService } from "../services";
 import { PaymentData } from "../pages/record-payment/paymentData.class";
+import {TransactionProvider} from "../providers/transaction.provider";
+import {Utils} from "./utils";
 
 @Injectable()
 export class TransactionsService {
 
     private storagePath: string;
     private connectSub;
+    private transactions: Array<Transaction>;
 
     transactionsChanged: EventEmitter<Transaction[]> = new EventEmitter();
 
     constructor(private auth: AuthService,
                 @Inject(forwardRef(() => NetworkService)) private networkService,
-                @Inject(forwardRef(() => PaymentService)) private paymentService) {
+                @Inject(forwardRef(() => PaymentService)) private paymentService,
+                @Inject(forwardRef(() => TransactionProvider)) private transactionProvider,
+                @Inject(forwardRef(() => Utils)) private utils) {
 
         this.storagePath = `mp_transactions_`;
 
@@ -31,7 +36,16 @@ export class TransactionsService {
 
     getTransactions() {
         const transactions: any = window.localStorage.getItem(`${this.storagePath}${this.auth.getKey()}`);
-        return transactions ? JSON.parse(transactions) : [];
+
+        let transactionsArr = transactions ? JSON.parse(transactions) : [];
+        transactionsArr.map(trans => {
+            return new Transaction(trans.timestamp, trans.paymentType, trans.total, trans.paidTotal, trans.orders,
+                trans.synced, trans.refunded);
+        });
+
+        this.transactions = transactionsArr;
+
+        return transactionsArr;
     }
 
     saveAllTransactions(transactions: Array<Transaction>) {
@@ -43,6 +57,16 @@ export class TransactionsService {
         this.connectSub = this.networkService.connectSubscription.subscribe(() => {
             this.saveUnSyncTransactions();
         });
+    }
+
+    makeRefund(transaction: Transaction) {
+        this.transactionProvider.makeRefund(transaction).subscribe(data => {
+            console.log(data);
+            transaction.refunded = true;
+            this.updateTransaction(transaction);
+            this.utils.showToast('Your Transactions has been refunded');
+        });
+
     }
 
     /**
@@ -57,7 +81,7 @@ export class TransactionsService {
                     new PaymentData(
                         trans.orders, trans.total, trans.paymentType
                     )
-                ).subscribe(this.syncSuccess.bind(this, trans, allTransactions))
+                ).subscribe(this.syncSuccess.bind(this, trans))
             }
         });
     }
@@ -73,16 +97,23 @@ export class TransactionsService {
 
     /**
      * Update storage with synced transactions
-     * @param trans
-     * @param allTrans
+     * @param transaction
+     * @param data
      */
-    private syncSuccess(trans: Transaction, allTrans: Array<Transaction>) {
-        const ind = allTrans.findIndex(tran => tran.timestamp === trans.timestamp);
+    private syncSuccess(transaction: Transaction, data: any) {
+        transaction.uid = data.json().transaction_uid;
+        transaction.synced = true;
+        this.updateTransaction(transaction);
+    }
+
+    private updateTransaction(transaction: Transaction) {
+        const ind = this.transactions.findIndex(tran => tran.timestamp === transaction.timestamp);
         if (ind !== -1) {
-            allTrans[ind] = new Transaction(Date.now(), trans.paymentType, trans.total, trans.paidTotal, trans.orders, true);
+            this.transactions[ind] = transaction;
         }
-        this.saveAllTransactions(allTrans);
-        this.transactionsChanged.emit(allTrans);
+
+        this.saveAllTransactions(this.transactions);
+        this.transactionsChanged.emit(this.transactions);
     }
 
 }

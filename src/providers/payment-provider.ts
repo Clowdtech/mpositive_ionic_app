@@ -1,14 +1,15 @@
 import { Injectable, forwardRef, Inject } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { appConfig } from "../app/config";
 import { AuthService } from "../services";
 import { PaymentData } from "../pages/record-payment/paymentData.class";
+import { HttpInterceptor } from "./app.http.interceptor";
 
 @Injectable()
 export class PaymentProvider{
 
-  constructor(public http: Http, @Inject(forwardRef(() => AuthService)) private auth) {}
+  constructor(public http: HttpInterceptor, @Inject(forwardRef(() => AuthService)) private auth) {}
 
   getPayments() {
     return new Promise((resolve, reject) => {
@@ -27,5 +28,4 @@ export class PaymentProvider{
     headers.append('Authorization', `Bearer:${ this.auth.getToken() }`);
     return this.http.post(`${appConfig.payment_url}`, paymentData,  { headers });
   }
-
 }

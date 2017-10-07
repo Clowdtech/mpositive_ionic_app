@@ -7,6 +7,8 @@ import {PaymentType} from "../record-payment/payment";
  */
 @Injectable()
 export class Transaction {
-    constructor(public timestamp: number, public paymentType: PaymentType, public total: number, public paidTotal: number,
-      public orders: Array<OrderItem>, public synced: boolean) {}
+    constructor(public uid: string, public timestamp: number, public paymentType: PaymentType, public total: number, public paidTotal: number,
+      public orders: Array<OrderItem>, public synced: boolean, public refunded?: boolean) {
+        // by default all new transactions has not been refunded yet
+    }
 }
