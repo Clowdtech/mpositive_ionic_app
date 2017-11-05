@@ -46,9 +46,11 @@ export class CategoryService {
     }
 
     public getCategoryBy(propertyName: string, propertyValue: any) : Category {
-        return this.categories.find(() => {
-            return this.categories[propertyName] = propertyValue;
-        })
+        const matchedCategory = this.categories.find(category => {
+            return category[propertyName] === propertyValue;
+        });
+
+        return matchedCategory;
     }
 
     public getCategories() : Promise<any> {

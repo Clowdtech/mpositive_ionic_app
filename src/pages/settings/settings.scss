@@ -17,4 +17,19 @@ page-settings {
       }
     }
   }
+
+  .printer-select {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .row {
+    &.hovered {
+      cursor: pointer;
+    }
+    & > div > div {
+      display: inline-block;
+    }
+  }
 }

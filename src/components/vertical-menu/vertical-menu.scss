@@ -13,6 +13,15 @@ vertical-menu {
       font-weight: 400;
       text-align: left;
       padding: .3em 0 .4em;
+      margin: 7px 8px 0;
+    }
+  }
+}
+
+@media (max-width: 732px) {
+  vertical-menu {
+    .row {
+      height: 80vh;
     }
   }
 }

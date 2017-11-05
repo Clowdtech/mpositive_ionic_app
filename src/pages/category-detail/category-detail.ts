@@ -2,9 +2,13 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { NavParams, ModalController, NavController } from 'ionic-angular';
 import { Category } from "../../components/category/category.class";
 import { Product } from "../../components/product";
-import { PickColorPage, UpdatedPage } from "../";
+import { UpdatedPage } from "../";
+import { PickColorPage } from "../../components/pick-color/pick-color";
 import { CategoryProvider } from "../../providers";
 import { CategoryService, Utils } from "../../services";
+import {PickProductPage} from "../../components/pick-product/pick-product";
+import {ProductProvider} from "../../providers/product.provider";
+import {ProductService} from "../../services/product.service";
 
 @Component({
   selector: 'page-product-detail',
@@ -16,7 +20,7 @@ export class CategoryDetailPage {
 
   constructor(private utils: Utils, private navParams: NavParams, private modalCtrl: ModalController,
     private categoryProvider: CategoryProvider, private categoryService: CategoryService, private nav: NavController,
-    private ref: ChangeDetectorRef) {
+    private ref: ChangeDetectorRef, private productProvider: ProductProvider, private productService: ProductService) {
 
     this.activeCategory = navParams.get('activeCategory') || CategoryDetailPage.generateNewCategory();
   }
@@ -27,6 +31,27 @@ export class CategoryDetailPage {
    */
   productSelected(product: Product) {
 
+  }
+
+  addProducts() {
+      let pickProductModal = this.modalCtrl.create(PickProductPage, { excludedCategory: this.activeCategory });
+
+      pickProductModal.onDidDismiss((product: Product) => {
+          if (!product) return;
+
+          product.categoryId = this.activeCategory.uid;
+          this.productProvider.saveProduct(product).subscribe(response => {
+              response = response.json();
+              const updatedProduct = new Product(response.uid, response.name, response.description, response.price, response.background_color,
+                  response.font_color, response.category_id, response.created_at);
+
+              this.productService.updateProducts(updatedProduct);
+          }, error => {
+              this.utils.showToast(error)
+          });
+
+      });
+      pickProductModal.present();
   }
 
   /**

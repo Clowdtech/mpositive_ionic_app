@@ -11,6 +11,10 @@ import { ProductDetailPage } from "../";
 })
 export class MyProductsPage{
 
+  /**
+   * Array of buttons for header right sections
+   * @type {{product: {}; category: {}}
+   */
   private buttons = {
     product: {
       name: 'Create Product',
@@ -32,24 +36,42 @@ export class MyProductsPage{
     this.setNavBtn(this.segment);
   }
 
+  /**
+   * Set button to be active in header
+   * @param btnKey
+   */
   setNavBtn(btnKey) {
     this.navButton = this.buttons[btnKey];
   }
 
+  /**
+   * Open page to create a new product/category
+   */
   openCreatePage() {
     this.navCtrl.push(this.navButton.page);
   }
 
+  /**
+   * Fires when user selected product (used as Output inside Product component)
+   * @param {Product} product
+   */
   productSelected(product: Product) {
     this.navCtrl.push(ProductDetailPage, {
       activeProduct: product
     });
   }
 
+  /**
+   * Fires when user selected category (used as Output inside Category component)
+   * @param {Category} activeCategory
+   */
   categorySelected(activeCategory) {
     this.activeCategory = activeCategory;
   }
 
+  /**
+   * Change switcher for page segments
+   */
   segmentChanged() {
     this.setNavBtn(this.segment);
   }

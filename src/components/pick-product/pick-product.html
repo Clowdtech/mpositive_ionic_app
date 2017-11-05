@@ -1,0 +1,10 @@
+<ion-header>
+  <img src="assets/logo.png" />
+  <ion-navbar>
+    <ion-title>Select product</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <product [excludeCategory]="excludedCategory"  (productSelected)="productSelected($event)"></product>
+</ion-content>

@@ -6,6 +6,7 @@
 $menu-width:                 304px !default;
 $menu-small-width:           $menu-width - 40px !default;
 $menu-height:                50vh !default;
+$menu-height-mobile:         80vh !default;
 
 
 ion-menu {
@@ -124,4 +125,14 @@ ion-menu[type=overlay] {
 
 ion-menu[type=overlay] .show-backdrop {
   display: block;
+}
+
+@media screen and (max-width: 732px) {
+  ion-menu {
+    &[side=top], &[side=bottom] {
+      & > .menu-inner {
+        height: 80vh !important;
+      }
+    }
+  }
 }

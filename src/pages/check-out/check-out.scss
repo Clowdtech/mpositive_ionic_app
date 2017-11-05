@@ -43,4 +43,9 @@ page-check-out {
       margin: 8px 4px 0 4px;
     }
   }
+  product {
+    .-hidden {
+      display: none;
+    }
+  }
 }

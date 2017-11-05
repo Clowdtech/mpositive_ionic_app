@@ -1,19 +1,22 @@
-import { Injectable, Inject, forwardRef} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Product } from "../components/product";
 import { ProductProvider } from "../providers";
 import { NetworkService, AuthService } from "../services";
+import { BehaviorSubject } from "rxjs/BehaviorSubject"
 
 @Injectable()
-export class ProductService {
+export class ProductService{
 
     private products: Array<Product>;
     private storagePath: string;
     private connectSub;
     private disconnectSub;
 
-    constructor(@Inject(forwardRef(() => AuthService)) private auth,
-        @Inject(forwardRef(() => ProductProvider)) private productProvider,
-        @Inject(forwardRef(() => NetworkService)) private networkService) {
+    public productUpdated;
+    
+    constructor(private auth: AuthService,
+        private productProvider: ProductProvider,
+        private networkService: NetworkService) {
 
         this.storagePath = `mp_products_`;
 
@@ -22,8 +25,9 @@ export class ProductService {
             this.getProducts();
             this.subWhenConnected();
             this.subWhenDisconnected();
-        }
 
+            this.productUpdated = new BehaviorSubject(this.products);
+        }
     }
 
     /**
@@ -54,6 +58,9 @@ export class ProductService {
         } else{
             this.products[ind] = product;
         }
+
+        // notify all subscribers about products changes
+        this.productUpdated.next(this.products);
 
         // each time products are modified save them to cache
         this.saveCache();

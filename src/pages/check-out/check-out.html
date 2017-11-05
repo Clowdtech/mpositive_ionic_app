@@ -25,7 +25,10 @@
             <ion-scroll scroll-height [calcHeight]="['header', 'chargeBtn']" scrollY="true">
                 <ion-slides (ionSlideDidChange)="slideChanged()">
                     <ion-slide>
-                        <category (productSelected)="productSelected($event)"></category>
+                        <product [hidden]="!!openedCategory" (productSelected)="productSelected($event)"
+                                 [activeCategory]="noCategory"></product>
+                        <category (categorySelected)="categoryOpened($event)"
+                                  (productSelected)="productSelected($event)"></category>
                     </ion-slide>
                     <ion-slide>
                         <div class="row">
@@ -49,7 +52,9 @@
                     </ion-slide>
                 </ion-slides>
             </ion-scroll>
-            <button id="chargeBtn" class="mp_gradient" (click)="charge()" ion-button full>Charge: {{currency}}{{checkoutPrice.toFixed(2)}}</button>
+            <button id="chargeBtn" class="mp_gradient" (click)="charge()" ion-button full>
+                Charge: {{currency}}{{checkoutPrice.toFixed(2)}}
+            </button>
         </div>
     </div>
 </ion-content>

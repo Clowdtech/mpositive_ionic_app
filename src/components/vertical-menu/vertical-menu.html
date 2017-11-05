@@ -2,10 +2,10 @@
     <img src="assets/closeBtn.png" />
 </button>
 <div class="row">
-    <div class="col-xs-3 col-xs-offset-2">
+    <div class="col-xs-4 col-xs-offset-2 col-md-3 col-md-offset-2">
         <img (click)="openCheckout()" menuClose src="assets/checkoutBtn.png" />
     </div>
-    <div class="col-xs-5 col-xs-offset-2" no-padding>
+    <div class="col-xs-5 col-xs-offset-1 col-md-offset-1" no-padding>
         <ion-list>
             <button class="text-left" ion-item menuClose *ngFor="let p of pages" (click)="openPage(p)">
                 {{p.title}}

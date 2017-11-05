@@ -7,6 +7,7 @@ import { OrderItem } from "../../components/check-out-list";
 import { RecordPaymentPage } from "../";
 import { Utils } from "../../services";
 import { KeypadComponent } from "../../components/keypad/keypad";
+import { Category } from "../../components/category/category.class";
 
 @Component({
   selector: 'page-check-out',
@@ -28,9 +29,12 @@ export class CheckOutPage {
   private customPrice: number = 0.00;
 
   private orders: Array<OrderItem>;
+  private noCategory: Category;
+  private openedCategory: Category;
 
   constructor(private navCtrl: NavController, private utils: Utils) {
     this.segment = 'category';
+    this.noCategory = new Category(null, null, null, null, null);
   }
 
   /**
@@ -39,6 +43,14 @@ export class CheckOutPage {
    */
   productSelected(product: Product) {
     this.checkOutListComponent.productSelected(product);
+  }
+
+  /**
+   * Triggers when category selected and its products shown
+   * @param {Category} category
+   */
+  categoryOpened(category: Category) {
+    this.openedCategory = category;
   }
 
   /**
@@ -128,5 +140,4 @@ export class CheckOutPage {
         break;
     }
   }
-
 }

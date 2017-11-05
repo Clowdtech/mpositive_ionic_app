@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit, OnDestroy, forwardRef, Inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, OnDestroy, forwardRef, Inject, NgZone, ChangeDetectorRef } from '@angular/core';
 import { Product } from "./product.class";
 import { Category } from "../category";
 import { ProductService, Utils, NetworkService, AuthService } from "../../services";
@@ -12,17 +12,20 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     @Output() productSelected = new EventEmitter();
     @Input() activeCategory: Category;
+    @Input() excludeCategory: Category;
     @Input() showAll: boolean = false;
     @Input() compactView: boolean = false;
     products: Array<Product>;
     currency: string = appConfig.defaultCurrency;
 
     private connectSub;
+    private productUpdatedSub;
 
     constructor(@Inject(forwardRef(() => ProductService)) private productService,
                 @Inject(forwardRef(() => Utils)) private utils,
                 @Inject(forwardRef(() => NetworkService)) private networkService,
-                @Inject(forwardRef(() => AuthService)) private auth) {
+                @Inject(forwardRef(() => AuthService)) private auth,
+                private ref: ChangeDetectorRef) {
 
         // subscribe to connection becomes available to get latest products
         this.connectSub = this.networkService.connectSubscription.subscribe(() => {
@@ -30,6 +33,14 @@ export class ProductComponent implements OnInit, OnDestroy {
                 this.getProducts();
             });
         });
+    }
+
+    getClasses(product: Product) {
+        return {
+            'col-xs-4 col-md-3': this.compactView,
+            'col-xs-3 col-md-2': !this.compactView,
+            '-hidden': product.hidden
+        };
     }
 
     /**
@@ -46,17 +57,28 @@ export class ProductComponent implements OnInit, OnDestroy {
      */
     getProducts() {
         this.productService.getProducts().then(products => {
-            if (this.showAll) {
-                this.products = products;
-            } else {
-                this.products = products.filter((product) => {
-                    return product.categoryId === this.activeCategory.uid;
-                });
-            }
-            if (this.products.length === 0) {
-                this.utils.showToast('This category doesn\'t has any products')
-            }
+            this.filterProducts(products);
         });
+    }
+
+    filterProducts(products: Array<any>) {
+        if (this.showAll) {
+            this.products = products;
+        } else {
+            this.products = products.filter((product) => {
+                if (this.activeCategory) {
+                    return product.categoryId == this.activeCategory.uid
+                        || (this.activeCategory.uid === null && product.categoryId === 0);
+                }
+
+                if (this.excludeCategory) {
+                    return product.categoryId !== this.excludeCategory.uid
+                }
+            });
+        }
+        if (this.products.length === 0) {
+            this.utils.showToast('This category doesn\'t has any products')
+        }
     }
 
     /**
@@ -64,6 +86,15 @@ export class ProductComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         this.getProducts();
+
+        this.productUpdatedSub = this.productService.productUpdated.subscribe(products => {
+            if (!products) return;
+
+            this.filterProducts(products);
+
+            this.ref.reattach();
+            this.ref.detectChanges();
+        })
     }
 
     /**
@@ -71,8 +102,8 @@ export class ProductComponent implements OnInit, OnDestroy {
      */
     ngOnDestroy() {
         // remove subscription because component is no longer available
-        // and no
         this.connectSub.unsubscribe();
+        this.productUpdatedSub.unsubscribe();
         document.removeEventListener('click', this.selectProduct.bind(null, null));
     }
 

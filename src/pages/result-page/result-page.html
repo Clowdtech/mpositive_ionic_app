@@ -10,7 +10,7 @@
             Would you like to print a receipt?
         </p>
         <ion-buttons end>
-            <button color="light" ion-button round>
+            <button (click)="printReceipt()" color="light" ion-button round>
                 Yes, print a receipt
             </button>
             <button color="light" (click)="back()" ion-button round>

@@ -325,6 +325,26 @@ ion-header {
   }
 }
 
+@media (max-width: 723px) {
+  .confirm-block {
+    img {
+      width: 30px;
+      margin-bottom: 15px;
+    }
+    p {
+      margin-bottom: 25px;
+    }
+
+    .lined {
+      padding: 10px 0;
+      margin-bottom: 30px;
+    }
+    .button-md {
+      height: 5.5rem;
+    }
+  }
+}
+
 .button-full {
   margin: 0;
 }

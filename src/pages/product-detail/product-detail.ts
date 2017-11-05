@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { NavParams, ModalController, NavController } from 'ionic-angular';
 import { Product } from "../../components/product";
-import { PickColorPage } from "../";
+import { PickColorPage } from "../../components/pick-color/pick-color";
 import { ProductProvider } from "../../providers";
 import { ProductService, Utils } from "../../services";
-import { PickCategoryPage, UpdatedPage } from "../";
+import { UpdatedPage } from "../";
+import { PickCategoryPage } from "../../components/pick-category/pick-category";
 import { Category} from "../../components/category";
 import { CategoryService } from "../../services/category.service";
 
@@ -23,7 +24,7 @@ export class ProductDetailPage {
 
         const productFromParams = navParams.get('activeProduct');
         if (productFromParams) {
-            this.selectedCategory = this.categoryService.getCategoryBy('id', productFromParams.categoryId);
+            this.selectedCategory = this.categoryService.getCategoryBy('uid', productFromParams.categoryId);
         }
         this.activeProduct = productFromParams || ProductDetailPage.generateProduct();
     }
@@ -76,4 +77,8 @@ export class ProductDetailPage {
 
     }
 
+    changeVisibility() {
+        // TODO remove return when saving products is working
+        this.activeProduct.hidden = !this.activeProduct.hidden;
+    }
 }

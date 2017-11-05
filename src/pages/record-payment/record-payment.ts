@@ -88,11 +88,12 @@ export class RecordPaymentPage implements OnDestroy {
 
     private paymentSuccess(synced: boolean , transaction_uid: string) {
         const change = this.paymentTotal > 0 ? this.paymentTotal - this.checkoutPrice : 0;
-        this.checkoutService.clearOrders();
         this.transactionService.saveTransaction(
             new Transaction(transaction_uid, Date.now(), this.activePayment, this.checkoutPrice, this.paymentTotal, this.orders, synced)
         );
-        this.nav.push(ResultPage, { change });
+        this.nav.push(ResultPage, { change, orders: this.orders });
+
+        this.checkoutService.clearOrders();
     }
 
     ionViewCanEnter() {

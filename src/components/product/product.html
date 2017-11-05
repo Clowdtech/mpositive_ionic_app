@@ -1,5 +1,5 @@
 <div class="row" no-margin>
-    <div no-padding [class]="compactView ? 'col-xs-3' : 'col-xs-2'" *ngFor="let product of products" (click)="selectProduct(product)">
+    <div no-padding [ngClass]="getClasses(product)" *ngFor="let product of products" (click)="selectProduct(product)">
         <ion-card [ngStyle]="{'background': product.bgColor, 'color': product.txtColor }" class="product-item">
             <ion-card-header>
                 {{product.name}}

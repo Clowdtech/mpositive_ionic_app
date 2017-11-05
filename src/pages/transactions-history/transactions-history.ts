@@ -1,9 +1,12 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ModalController } from 'ionic-angular';
+import { ModalController, Platform } from 'ionic-angular';
 import { Transaction } from "./transaction.class";
 import { TransactionsService } from "../../services";
 import { appConfig } from "../../app/config";
 import { TransactionDetailPage } from "../";
+import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
+import { StarPrinterService } from "../../services/starPrinter.service";
+import {Utils} from "../../services/utils";
 
 @Component({
   selector: 'page-transactions-history',
@@ -19,7 +22,9 @@ export class TransactionsHistoryPage implements OnDestroy{
 
   private subTransChanged;
 
-  constructor(private transactionService: TransactionsService, private modalCtrl: ModalController) {
+  constructor(private transactionService: TransactionsService, private modalCtrl: ModalController,
+              private platform: Platform, private bluetoothSerial: BluetoothSerial, private printer: StarPrinterService,
+              private utils: Utils) {
     this.transactions = this.mapTransactions(transactionService.getTransactions());
     this.filterByDate(new Date());
     this.dates.reverse();
@@ -98,6 +103,12 @@ export class TransactionsHistoryPage implements OnDestroy{
   openDetailPage(transaction: Transaction) {
     let transDetailModal = this.modalCtrl.create(TransactionDetailPage, { transaction });
     transDetailModal.present();
+  }
+
+  printReport() {
+    this.printer.print('\n\n\n\n\n\n Transaction history list \n\n\n\n\n\n')
+        .then(success => this.utils.showToast('Transaction list is printed successfully'),
+            error => this.utils.showToast(error));
   }
 
   ngOnDestroy(): void {

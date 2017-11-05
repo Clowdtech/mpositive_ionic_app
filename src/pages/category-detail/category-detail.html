@@ -50,7 +50,7 @@
             </ion-list>
         </div>
         <div class="col-xs-8" no-padding>
-            <p class="block-title">Add Products</p>
+            <p class="block-title" (click)="addProducts()">Add Products</p>
             <ion-scroll scrollY="true" scroll-height [calcHeight]="['categoryHeader', 'saveCategory']">
                 <product [activeCategory]="activeCategory" [compactView]="true"
                          (productSelected)="productSelected($event)"></product>

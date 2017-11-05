@@ -1,5 +1,7 @@
 category {
-  padding: 15px;
+  .--header {
+    padding: 10px;
+  }
   ion-title{
     display: inline-block;
     vertical-align: middle;
@@ -24,5 +26,13 @@ category {
     transform: translate(-50%, -50%);
     -webkit-transform: translateY(-50%, -50%);
     font-weight: bold;
+  }
+}
+
+@media (max-width: 723px) {
+  category {
+    .--header {
+      padding: 5px;
+    }
   }
 }
