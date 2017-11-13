@@ -34,7 +34,7 @@ export class CheckOutPage {
 
   constructor(private navCtrl: NavController, private utils: Utils) {
     this.segment = 'category';
-    this.noCategory = new Category(null, null, null, null, null);
+    this.noCategory = new Category('', null, null, null, null);
   }
 
   /**

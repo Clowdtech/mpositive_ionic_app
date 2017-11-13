@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { CategoryService, NetworkService, AuthService } from "../../services";
 import { Category } from "./category.class";
 import { CategoryDetailPage } from "../../pages";
+import { ProductService } from "../../services/product.service";
 
 @Component({
   selector: 'category',
@@ -17,6 +18,7 @@ export class CategoryComponent implements OnInit, OnDestroy{
   @Input() showTitle: boolean = false;
   @Input() enableDetails: boolean = false;
   @Input() hideProducts: boolean = false;
+  @Input() hideEmptyCategory: boolean = false;
 
   categories: Array<Category>;
   activeCategory: Category;
@@ -26,6 +28,7 @@ export class CategoryComponent implements OnInit, OnDestroy{
   constructor(@Inject(forwardRef(() => CategoryService)) private categoryService,
       @Inject(forwardRef(() => NetworkService)) private networkService,
       @Inject(forwardRef(() => AuthService)) private auth,
+      @Inject(forwardRef(() => ProductService)) private productService,
       private navCtrl: NavController) {
 
     // get latest categories when connection is established
@@ -69,6 +72,16 @@ export class CategoryComponent implements OnInit, OnDestroy{
     this.navCtrl.push(CategoryDetailPage, {
       activeCategory: this.activeCategory
     });
+  }
+
+  /**
+   * Hide category without products if required
+   * @param {Category} category
+   * @return {boolean}
+   */
+  isHidden(category: Category) {
+      return !this.productService.products.some(product => product.categoryId === category.uid)
+          && this.hideEmptyCategory;
   }
 
   ngOnInit(): void {

@@ -66,7 +66,10 @@ export class ProductDetailPage {
     }
 
     selectCategory() {
-        let pickCategoryModal = this.modalCtrl.create(PickCategoryPage);
+        let pickCategoryModal = this.modalCtrl.create(PickCategoryPage, {
+            activeProduct: this.activeProduct,
+            selectedCategory: this.selectedCategory
+        });
 
         pickCategoryModal.onDidDismiss((category: Category) => {
             if (!category) return;

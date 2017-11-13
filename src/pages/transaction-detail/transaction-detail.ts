@@ -3,6 +3,8 @@ import { NavParams } from 'ionic-angular';
 import { Transaction } from "../transactions-history/transaction.class";
 import { appConfig } from "../../app/config";
 import { TransactionsService } from "../../services";
+import {StarPrinterService} from "../../services/starPrinter.service";
+import {Utils} from "../../services/utils";
 
 @Component({
   selector: 'page-transaction-detail',
@@ -14,7 +16,8 @@ export class TransactionDetailPage {
   transaction: Transaction;
   currency: string = appConfig.defaultCurrency;
 
-  constructor(private navParams: NavParams, private transactionsService: TransactionsService) {
+  constructor(private navParams: NavParams, private transactionsService: TransactionsService,
+              private printer: StarPrinterService, private utils: Utils) {
     this.transaction = navParams.get('transaction');
   }
 
@@ -22,4 +25,13 @@ export class TransactionDetailPage {
     this.transactionsService.makeRefund(this.transaction);
   }
 
+  print() {
+    this.printer.printReceipt(this.transaction.orders, this.transaction.timestamp).then(response => {
+        console.log(response);
+        this.utils.showToast('Receipt was printed successfully');
+    }, error => {
+        console.log(error);
+        this.utils.showToast(error);
+    });
+  }
 }

@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
+import { DatePipe } from '@angular/common';
 import { Utils } from "./utils";
-import {Bluetooth} from "./bluetooth.service";
+import { Bluetooth } from "./bluetooth.service";
+import { OrderItem } from "../components/check-out-list/orderItem.class";
+import { appConfig } from "../app/config";
 
 @Injectable()
 export class StarPrinterService {
@@ -9,6 +12,7 @@ export class StarPrinterService {
     private starPlugin: any = null;
     private preferredPrinter: any = null;
     private printers: Array<any>;
+    private currency: string = appConfig.defaultCurrency;
     private _receipt: { header: string, footer: string } = { header: '', footer: '' };
     private storagePrinterPath: string = 'mp_prefer_printer';
     private storageReceiptPath: string = 'mp_receipt';
@@ -101,7 +105,7 @@ export class StarPrinterService {
     print(receipt: string) {
         return new Promise((resolve, reject) => {
             if (!this.preferredPrinter) {
-                reject('Add printer via Settings');
+                reject('No printer found. Please add in Settings');
                 return;
             }
 
@@ -145,5 +149,57 @@ export class StarPrinterService {
 
     chunkString(str, length) {
         return str.match(new RegExp('.{1,' + length + '}', 'g'));
+    }
+
+    /**
+     * Create receipt body
+     * @return {string}
+     **/
+    public formReceiptBody(orders: Array<OrderItem>, transactionTimestamp? : number) {
+        let receiptStr = '',
+            total = 0;
+
+        orders.map(order => {
+            const subTotal = order.amount * parseFloat(order.price),
+                orderName = `${order.amount.toFixed(2)} ${order.name}`.toUpperCase(),
+                subTotalStr = `${this.currency}${subTotal}`,
+                orderChunks = this.chunkString(orderName, this.receiptWidth - 10 - 4); // 8 - $000000.00
+
+            orderChunks.forEach((chunk, pos) => {
+                if (pos === 0) {
+                    const firstLine = `\n${chunk}${this.alignRight(subTotalStr, chunk.length)}`;
+                    receiptStr += firstLine;
+                    return;
+                }
+                receiptStr += `\n  ${chunk}`;
+            });
+
+            total += subTotal;
+        });
+
+        // line divider after all orders
+        receiptStr += `\n${this.alignRight('--------')}`;
+
+        // total value for orders
+        const totalTxt = ` Total Due`,
+            totalValueStr = `${this.currency}${total.toFixed(2)}`;
+        receiptStr += `\n${totalTxt}${this.alignRight(totalValueStr, totalTxt.length)}`;
+
+        // transaction recording time
+        const date = new DatePipe('en-UK').transform(transactionTimestamp || new Date(Date.now()),
+            'dd/MM/yyyy H:mm:ss');
+        receiptStr += `\n\n  ${date}`;
+
+        return receiptStr;
+    }
+
+    public printReceipt(orders: Array<OrderItem>, transactionTimestamp? : number) {
+        const receiptBody = this.formReceiptBody(orders, transactionTimestamp);
+        console.log(receiptBody);
+
+        return this.print(`\n\n${this.alignCenter(this.receipt.header)}
+        \n\n${receiptBody}
+        \n\n${this.receipt.footer}
+        \n\n\n\``);
     }
 }

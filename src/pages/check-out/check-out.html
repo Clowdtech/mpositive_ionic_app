@@ -27,7 +27,7 @@
                     <ion-slide>
                         <product [hidden]="!!openedCategory" (productSelected)="productSelected($event)"
                                  [activeCategory]="noCategory"></product>
-                        <category (categorySelected)="categoryOpened($event)"
+                        <category (categorySelected)="categoryOpened($event)" [hideEmptyCategory]="true"
                                   (productSelected)="productSelected($event)"></category>
                     </ion-slide>
                     <ion-slide>

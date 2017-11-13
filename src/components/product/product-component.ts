@@ -68,7 +68,8 @@ export class ProductComponent implements OnInit, OnDestroy {
             this.products = products.filter((product) => {
                 if (this.activeCategory) {
                     return product.categoryId == this.activeCategory.uid
-                        || (this.activeCategory.uid === null && product.categoryId === 0);
+                        || (this.activeCategory.uid === '' && product.categoryId === 0);
+                            // show stand alone products if '' categoryId
                 }
 
                 if (this.excludeCategory) {
