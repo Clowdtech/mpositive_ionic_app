@@ -26,8 +26,9 @@ export class ProductService{
             this.subWhenConnected();
             this.subWhenDisconnected();
 
-            this.productUpdated = new BehaviorSubject(this.products);
         }
+
+        this.productUpdated = new BehaviorSubject(this.products);
     }
 
     /**

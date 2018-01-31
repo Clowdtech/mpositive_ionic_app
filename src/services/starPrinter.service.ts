@@ -124,6 +124,43 @@ export class StarPrinterService {
         });
     }
 
+    openCashDrawer() {
+        return new Promise((resolve, reject) => {
+            if (!this.preferredPrinter) {
+                reject('No printer found. Please add in Settings');
+                return;
+            }
+
+            if (!this.bluetooth.isEnabled) {
+                reject('Turn on Bluetooth to print!');
+                return;
+            }
+            //TODO investigate how to save a whole object ot this.preferredPrinter on Settings page
+            this.starPlugin.openCashDrawer(this.preferredPrinter, (error, result) => {
+                if (error) {
+                    reject(error);
+                    return;
+                }
+                resolve(result);
+            });
+        });
+    }
+
+    checkPrinter() {
+        return new Promise((resolve, reject) => {
+            if (!this.preferredPrinter) {
+                reject('No printer found. Please add in Settings');
+                return;
+            }
+
+            if (!this.bluetooth.isEnabled) {
+                reject('Turn on Bluetooth to print!');
+                return;
+            }
+            resolve();
+        });
+    }
+
     alignRight (txt: string, offset: number = 0): string {
         let output = '';
         if (txt.length <= this.receiptWidth) {

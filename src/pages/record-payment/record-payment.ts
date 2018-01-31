@@ -1,8 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NavParams, NavController } from 'ionic-angular';
 import { OrderItem } from "../../components/check-out-list/orderItem.class";
-import { PaymentProvider } from "../../providers";
-import { PaymentService, Utils, TransactionsService, CheckoutService, NetworkService, AuthService } from "../../services";
+import { PaymentService, Utils, TransactionsService, CheckoutService, NetworkService, AuthService} from "../../services";
 import { PaymentType } from "./payment";
 import { appConfig } from "../../app/config";
 import { PaymentData } from "./paymentData.class";
@@ -31,7 +30,7 @@ export class RecordPaymentPage implements OnDestroy {
 
     protected orders: Array<OrderItem>;
 
-    constructor(private navParams: NavParams, private paymentProvider: PaymentProvider, private utils: Utils,
+    constructor(private navParams: NavParams, private utils: Utils,
                 private paymentService: PaymentService, private transactionService: TransactionsService,
                 private nav: NavController, private checkoutService: CheckoutService,
                 private networkService: NetworkService,
@@ -91,7 +90,8 @@ export class RecordPaymentPage implements OnDestroy {
         this.transactionService.saveTransaction(
             new Transaction(transaction_uid, Date.now(), this.activePayment, this.checkoutPrice, this.paymentTotal, this.orders, synced)
         );
-        this.nav.push(ResultPage, { change, orders: this.orders });
+
+        this.nav.push(ResultPage, { change, orders: this.orders, payment: this.activePayment });
 
         this.checkoutService.clearOrders();
     }

@@ -1,0 +1,11 @@
+<ion-header>
+  <img src="assets/logo.png" />
+  <ion-navbar>
+    <ion-title>Receipt Header</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <textarea [placeholder]="placeholder" [(ngModel)]="textArea"></textarea>
+    <button class="mp_gradient" (click)="save()" ion-button round>Save</button>
+</ion-content>
