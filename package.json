@@ -32,7 +32,8 @@
     "ionicons": "3.0.0",
     "rxjs": "^5.4.3",
     "sw-toolbox": "3.4.0",
-    "zone.js": "^0.8.4"
+    "zone.js": "^0.8.4",
+    "cordova-android": "~6.1.2"
   },
   "devDependencies": {
     "@ionic/app-scripts": "^3.0.0",
@@ -59,5 +60,10 @@
       "locator": "android"
     }
   ],
-  "description": "MPositive: An Ionic project"
+  "description": "MPositive: An Ionic project",
+  "cordova": {
+    "platforms": [
+      "android"
+    ]
+  }
 }

@@ -173,7 +173,7 @@ export class ProductService{
             this.saveCache();
 
             // logOut products because are out dated (product component still has latest products)
-            this.products = null;
+            // this.products = null;
         });
     }
 }

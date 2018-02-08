@@ -17,6 +17,7 @@ npm-debug.log*
 .tmp/
 .versions/
 .sourcemaps/
+package-lock.json
 coverage/
 dist/
 node_modules/
