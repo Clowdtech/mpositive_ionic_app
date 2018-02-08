@@ -8,6 +8,7 @@ $menu-width:                 304px !default;
 
 /// @prop - Width of the menu on small devices (under 340px)
 $menu-small-width:           $menu-width - 40px !default;
+$menu-height:                50vh !default;
 
 
 ion-menu {
@@ -35,6 +36,7 @@ ion-menu.show-menu {
 
   width: $menu-width;
   height: 100%;
+  bottom: auto;
 
   contain: strict;
 }
@@ -63,6 +65,22 @@ ion-menu[side=right] > .menu-inner {
 
 ion-menu[side=end] > .menu-inner {
   @include position-horizontal(auto, 0);
+}
+
+ion-menu {
+  &[side=top], &[side=bottom] {
+    & > .menu-inner {
+      width: 100%;
+      height: $menu-height;
+      transform: translate3d(0, -9999px, 0);
+    }
+  }
+  &[side=bottom] {
+    & > .menu-inner {
+      top: auto;
+      bottom: 0;
+    }
+  }
 }
 
 ion-menu ion-backdrop {
