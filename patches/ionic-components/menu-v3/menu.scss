@@ -33,12 +33,26 @@ ion-menu.show-menu {
   position: absolute;
 
   display: block;
-
+  bottom: auto;
   width: $menu-width;
   height: 100%;
-  bottom: auto;
-
   contain: strict;
+}
+
+ion-menu {
+  &[side=top], &[side=bottom] {
+     & > .menu-inner {
+       width: 100%;
+      height: $menu-height;
+      transform: translate3d(0, -9999px, 0);
+    }
+  }
+  &[side=bottom] {
+    & > .menu-inner {
+      top: auto;
+      bottom: 0;
+    }
+  }
 }
 
 .menu-inner > ion-header,
@@ -65,22 +79,6 @@ ion-menu[side=right] > .menu-inner {
 
 ion-menu[side=end] > .menu-inner {
   @include position-horizontal(auto, 0);
-}
-
-ion-menu {
-  &[side=top], &[side=bottom] {
-    & > .menu-inner {
-      width: 100%;
-      height: $menu-height;
-      transform: translate3d(0, -9999px, 0);
-    }
-  }
-  &[side=bottom] {
-    & > .menu-inner {
-      top: auto;
-      bottom: 0;
-    }
-  }
 }
 
 ion-menu ion-backdrop {
